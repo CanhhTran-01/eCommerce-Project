@@ -1,0 +1,20 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /eCommerce
+
+spring:
+  application:
+    name: eCommerce
+  datasource:
+    url: jdbc:mysql://localhost:3306/ecommerce?useSSL=false&serverTimezone=UTC
+    username: root
+    password: canhtran2005
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+
