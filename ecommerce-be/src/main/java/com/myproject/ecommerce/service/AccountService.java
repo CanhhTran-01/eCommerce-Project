@@ -4,6 +4,8 @@ import com.myproject.ecommerce.dto.request.AccountRequest;
 import com.myproject.ecommerce.dto.response.AccountResponse;
 import com.myproject.ecommerce.entity.CustomerEntity;
 import com.myproject.ecommerce.entity.AccountEntity;
+import com.myproject.ecommerce.enums.ErrorCode;
+import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.mapper.AccountEntityMapper;
 import com.myproject.ecommerce.repository.AccountRepository;
 import com.myproject.ecommerce.utils.CustomerNameRandomUtils;
@@ -23,7 +25,7 @@ public class AccountService {
     public AccountResponse creataUserAccount(AccountRequest accountRequest){
 
         if (accountRepository.existsByUsername(accountRequest.getUsername())){
-            throw new RuntimeException("Username existed !");
+            throw new BaseException(ErrorCode.USERNAME_EXISTED);
         }
 
         // MapStruct convert DTO->Entity
@@ -50,12 +52,12 @@ public class AccountService {
 
     public AccountResponse getUserAccount(Long id){
         return accountEntityMapper.toResponse(accountRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException ("User not found !")) );
+                .orElseThrow( () -> new BaseException (ErrorCode.ACCOUNT_NOT_FOUND)) );
     }
 
     public AccountResponse updateAccount(Long id, AccountRequest accountRequest){
         AccountEntity accountEntity = accountRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found !"));
+                .orElseThrow(() ->  new BaseException (ErrorCode.ACCOUNT_NOT_FOUND));
 
         // dùng map struct thay vì phải map bằng tay
         accountEntityMapper.updateAccount(accountEntity, accountRequest);

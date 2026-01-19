@@ -1,5 +1,7 @@
 package com.myproject.ecommerce.exception;
 
+import com.myproject.ecommerce.dto.response.ApiResponse;
+import com.myproject.ecommerce.enums.ErrorCode;
 import org.hibernate.TransientObjectException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,13 +14,42 @@ import java.util.Objects;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<String> handlingRuntimeException(RuntimeException ex){
-        return ResponseEntity.badRequest().body(ex.getMessage());
+    public ResponseEntity<ApiResponse<?>> handlingRuntimeException(RuntimeException exception){
+
+        ApiResponse<?> apiResponse = new ApiResponse<>(
+                false,
+                null,
+                exception.getMessage()
+        );
+
+        return ResponseEntity.badRequest().body(apiResponse);
+    }
+
+    @ExceptionHandler(BaseException.class)
+    public ResponseEntity<ApiResponse<?>> handlingBaseException(BaseException exception){
+
+        ApiResponse<?> apiResponse = new ApiResponse<>(
+                false,
+                exception.getErrorCode().getMessage(),
+                null
+        );
+
+        return ResponseEntity.badRequest().body(apiResponse);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> handlingValidation(MethodArgumentNotValidException ex){
-        return ResponseEntity.badRequest().body(Objects.requireNonNull(ex.getFieldError()).getDefaultMessage());
+    public ResponseEntity<ApiResponse<?>> handlingValidation(MethodArgumentNotValidException exception){
+        
+        String enumKey = Objects.requireNonNull(exception.getFieldError()).getDefaultMessage();
+        ErrorCode errorCode = ErrorCode.valueOf(enumKey);
+
+        ApiResponse<?> apiResponse = new ApiResponse<>(
+                false,
+                errorCode.getMessage(),
+                null
+        );
+
+        return ResponseEntity.badRequest().body(apiResponse);
     }
 
     @ExceptionHandler(TransientObjectException.class)

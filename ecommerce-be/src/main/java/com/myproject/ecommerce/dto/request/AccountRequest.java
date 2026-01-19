@@ -10,12 +10,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountRequest {
-    @Size(min = 5, message = "Username must be at least 5 characters")
+    @Size(min = 5, message = "USERNAME_INVALID")
     private String username;
 
-    @Email(message = "Incorrect email format")
+    @Email(message = "EMAIL_INVALID")
     private String email;
 
-    @Size(min = 5, message = "Password must be at least 5 characters")
+    @Size(min = 5, message = "PASSWORD_INVALID")
     private String password;
 }
