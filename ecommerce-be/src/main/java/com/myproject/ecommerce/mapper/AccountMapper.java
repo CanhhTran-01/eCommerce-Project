@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
-public interface AccountEntityMapper {
+public interface AccountMapper {
     AccountEntity toEntity(AccountRequest accountRequest);
     AccountResponse toResponse(AccountEntity accountEntity);
     void updateAccount(@MappingTarget AccountEntity accountEntity, AccountRequest accountRequest);

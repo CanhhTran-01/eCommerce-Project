@@ -3,7 +3,7 @@ package com.myproject.ecommerce.service;
 import com.myproject.ecommerce.dto.request.CustomerRequest;
 import com.myproject.ecommerce.dto.response.CustomerResponse;
 import com.myproject.ecommerce.entity.CustomerEntity;
-import com.myproject.ecommerce.mapper.CustomerEntityMapper;
+import com.myproject.ecommerce.mapper.CustomerMapper;
 import com.myproject.ecommerce.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,12 +16,12 @@ import java.util.List;
 @Transactional
 public class CustomerService {
     private final CustomerRepository customerRepository;
-    private final CustomerEntityMapper customerEntityMapper;
+    private final CustomerMapper customerMapper;
 
     // thêm mới customer
     public CustomerResponse createCustomer(CustomerRequest customerRequest){
-        CustomerEntity customerEntity = customerEntityMapper.toEntity(customerRequest);
-        return customerEntityMapper.toResponse(customerRepository.save(customerEntity));
+        CustomerEntity customerEntity = customerMapper.toEntity(customerRequest);
+        return customerMapper.toResponse(customerRepository.save(customerEntity));
 
     }
 
@@ -30,7 +30,7 @@ public class CustomerService {
     public List<CustomerResponse> getCustomerList(){
         return customerRepository.findAll()
                 .stream()
-                .map(customerEntityMapper::toResponse)
+                .map(customerMapper::toResponse)
                 .toList();
     }
 
@@ -39,8 +39,8 @@ public class CustomerService {
         CustomerEntity customerEntity = customerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
 
-        customerEntityMapper.updateCustomer(customerEntity, customerRequest);
-        return customerEntityMapper.toResponse(customerRepository.save(customerEntity));
+        customerMapper.updateCustomer(customerEntity, customerRequest);
+        return customerMapper.toResponse(customerRepository.save(customerEntity));
     }
 
     // delete customer

@@ -3,8 +3,7 @@ package com.myproject.ecommerce.service;
 import com.myproject.ecommerce.dto.request.ProductImageRequest;
 import com.myproject.ecommerce.dto.response.ProductImageResponse;
 import com.myproject.ecommerce.entity.ProductImageEntity;
-import com.myproject.ecommerce.mapper.ProductEntityMapper;
-import com.myproject.ecommerce.mapper.ProductImageEntityMapper;
+import com.myproject.ecommerce.mapper.ProductImageMapper;
 import com.myproject.ecommerce.repository.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,18 +16,18 @@ import java.util.List;
 @Transactional
 public class ProductImageService {
     private final ProductImageRepository productImageRepository;
-    private final ProductImageEntityMapper productImageEntityMapper;
+    private final ProductImageMapper productImageMapper;
 
     public ProductImageResponse createProductImage(ProductImageRequest productImageRequest){
-        ProductImageEntity productImageEntity = productImageEntityMapper.toEntity(productImageRequest);
-        return productImageEntityMapper.toResponse(productImageRepository.save(productImageEntity));
+        ProductImageEntity productImageEntity = productImageMapper.toEntity(productImageRequest);
+        return productImageMapper.toResponse(productImageRepository.save(productImageEntity));
     }
 
     @Transactional(readOnly = true)
     public List<ProductImageResponse> getProductImageList(){
         return productImageRepository.findAll()
                 .stream()
-                .map(productImageEntityMapper::toResponse)
+                .map(productImageMapper::toResponse)
                 .toList();
     }
 
@@ -36,8 +35,8 @@ public class ProductImageService {
         ProductImageEntity productImageEntity = productImageRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Image not found!"));
 
-        productImageEntityMapper.update(productImageEntity, productImageRequest);
-        return productImageEntityMapper.toResponse(productImageRepository.save(productImageEntity));
+        productImageMapper.update(productImageEntity, productImageRequest);
+        return productImageMapper.toResponse(productImageRepository.save(productImageEntity));
     }
 
     public void deleteProductImage(Long id){

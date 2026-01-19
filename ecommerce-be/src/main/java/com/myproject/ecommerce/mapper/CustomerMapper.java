@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
-public interface CustomerEntityMapper {
+public interface CustomerMapper {
     CustomerEntity toEntity(CustomerRequest customerRequest);
     CustomerResponse toResponse(CustomerEntity customerEntity);
     void updateCustomer(@MappingTarget CustomerEntity customerEntity, CustomerRequest customerRequest);

@@ -24,7 +24,7 @@ public class AccountController {
         ApiResponse<AccountResponse> apiResponse = new ApiResponse<>(
                 true,
                 null,
-                accountService.creataUserAccount(accountRequest)
+                accountService.createAccount(accountRequest)
         );
 
         return ResponseEntity
@@ -50,7 +50,7 @@ public class AccountController {
         ApiResponse<AccountResponse> apiResponse = new ApiResponse<>(
                 true,
                 null,
-                accountService.getUserAccount(id)
+                accountService.getAccount(id)
         );
 
         return ResponseEntity.ok(apiResponse);
@@ -71,7 +71,7 @@ public class AccountController {
 
     @DeleteMapping("/api/accounts/{id}")
     public ResponseEntity<Void> deleteUserAccount(@PathVariable Long id){
-        accountService.deleteUserAccount(id);
+        accountService.deleteAccount(id);
         return ResponseEntity.noContent().build();
     }
 }

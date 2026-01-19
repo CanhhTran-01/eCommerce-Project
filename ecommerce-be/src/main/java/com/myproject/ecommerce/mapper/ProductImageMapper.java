@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
-public interface ProductImageEntityMapper {
+public interface ProductImageMapper {
     ProductImageEntity toEntity(ProductImageRequest productImageRequest);
     ProductImageResponse toResponse(ProductImageEntity productImageEntity);
     void update (@MappingTarget ProductImageEntity productImageEntity, ProductImageRequest productImageRequest);

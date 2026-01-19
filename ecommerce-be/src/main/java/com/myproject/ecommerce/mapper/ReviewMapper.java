@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
-public interface ReviewEntityMapper {
+public interface ReviewMapper {
     ReviewEntity toEntity(ReviewRequest reviewRequest);
     ReviewResponse toResponse(ReviewEntity reviewEntity);
     void update(@MappingTarget ReviewEntity reviewEntity, ReviewRequest reviewRequest);

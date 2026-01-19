@@ -6,7 +6,7 @@ import com.myproject.ecommerce.entity.CustomerEntity;
 import com.myproject.ecommerce.entity.AccountEntity;
 import com.myproject.ecommerce.enums.ErrorCode;
 import com.myproject.ecommerce.exception.BaseException;
-import com.myproject.ecommerce.mapper.AccountEntityMapper;
+import com.myproject.ecommerce.mapper.AccountMapper;
 import com.myproject.ecommerce.repository.AccountRepository;
 import com.myproject.ecommerce.utils.CustomerNameRandomUtils;
 import lombok.RequiredArgsConstructor;
@@ -20,16 +20,16 @@ import java.util.List;
 @Transactional
 public class AccountService {
     private final AccountRepository accountRepository;
-    private final AccountEntityMapper accountEntityMapper;
+    private final AccountMapper accountMapper;
 
-    public AccountResponse creataUserAccount(AccountRequest accountRequest){
+    public AccountResponse createAccount(AccountRequest accountRequest){
 
         if (accountRepository.existsByUsername(accountRequest.getUsername())){
             throw new BaseException(ErrorCode.USERNAME_EXISTED);
         }
 
         // MapStruct convert DTO->Entity
-        AccountEntity accountEntity = accountEntityMapper.toEntity(accountRequest);
+        AccountEntity accountEntity = accountMapper.toEntity(accountRequest);
 
         // set tay Customer (tạo acc sẽ tạo Customer mặc định)
         CustomerEntity customerEntity = new CustomerEntity();
@@ -39,20 +39,20 @@ public class AccountService {
         customerEntity.setAccountEntity(accountEntity);
 
         accountRepository.save(accountEntity); // nếu cascade chưa set -> Hibernate tự động throw Exception
-        return accountEntityMapper.toResponse(accountEntity);
+        return accountMapper.toResponse(accountEntity);
     }
 
     @Transactional(readOnly = true)
     public List<AccountResponse> getListAccount(){
         return accountRepository.findAll()
                 .stream()
-                .map(accountEntityMapper::toResponse)
+                .map(accountMapper::toResponse)
                 .toList();
     }
 
-    public AccountResponse getUserAccount(Long id){
-        return accountEntityMapper.toResponse(accountRepository.findById(id)
-                .orElseThrow( () -> new BaseException (ErrorCode.ACCOUNT_NOT_FOUND)) );
+    public AccountResponse getAccount(Long id){
+        return accountMapper.toResponse(accountRepository.findById(id)
+                .orElseThrow(() -> new BaseException (ErrorCode.ACCOUNT_NOT_FOUND)));
     }
 
     public AccountResponse updateAccount(Long id, AccountRequest accountRequest){
@@ -60,12 +60,12 @@ public class AccountService {
                 .orElseThrow(() ->  new BaseException (ErrorCode.ACCOUNT_NOT_FOUND));
 
         // dùng map struct thay vì phải map bằng tay
-        accountEntityMapper.updateAccount(accountEntity, accountRequest);
-        return accountEntityMapper.toResponse(accountRepository.save(accountEntity));
+        accountMapper.updateAccount(accountEntity, accountRequest);
+        return accountMapper.toResponse(accountRepository.save(accountEntity));
     }
 
     // delete acc
-    public void deleteUserAccount(Long id){
+    public void deleteAccount(Long id){
         accountRepository.deleteById(id);
     }
 }

@@ -3,7 +3,7 @@ package com.myproject.ecommerce.service;
 import com.myproject.ecommerce.dto.request.ReviewRequest;
 import com.myproject.ecommerce.dto.response.ReviewResponse;
 import com.myproject.ecommerce.entity.ReviewEntity;
-import com.myproject.ecommerce.mapper.ReviewEntityMapper;
+import com.myproject.ecommerce.mapper.ReviewMapper;
 import com.myproject.ecommerce.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,18 +16,18 @@ import java.util.List;
 @Transactional
 public class ReviewService {
     private final ReviewRepository reviewRepository;
-    private final ReviewEntityMapper reviewEntityMapper;
+    private final ReviewMapper reviewMapper;
 
     public ReviewResponse createReview(ReviewRequest reviewRequest){
-        ReviewEntity reviewEntity = reviewEntityMapper.toEntity(reviewRequest);
-        return reviewEntityMapper.toResponse(reviewRepository.save(reviewEntity));
+        ReviewEntity reviewEntity = reviewMapper.toEntity(reviewRequest);
+        return reviewMapper.toResponse(reviewRepository.save(reviewEntity));
     }
 
     @Transactional(readOnly = true)
     public List<ReviewResponse> getReviewList(){
         return reviewRepository.findAll()
                 .stream()
-                .map(reviewEntityMapper::toResponse)
+                .map(reviewMapper::toResponse)
                 .toList();
     }
 
@@ -35,8 +35,8 @@ public class ReviewService {
         ReviewEntity reviewEntity = reviewRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not Found !"));
 
-        reviewEntityMapper.update(reviewEntity, reviewRequest);
-        return reviewEntityMapper.toResponse(reviewEntity);
+        reviewMapper.update(reviewEntity, reviewRequest);
+        return reviewMapper.toResponse(reviewEntity);
     }
 
     public void deleteReview(Long id){

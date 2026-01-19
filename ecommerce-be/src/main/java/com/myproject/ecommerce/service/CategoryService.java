@@ -5,7 +5,7 @@ import com.myproject.ecommerce.dto.request.CategoryReorderRequest;
 import com.myproject.ecommerce.dto.request.CategoryRequest;
 import com.myproject.ecommerce.dto.response.CategoryResponse;
 import com.myproject.ecommerce.entity.CategoryEntity;
-import com.myproject.ecommerce.mapper.CategoryEntityMapper;
+import com.myproject.ecommerce.mapper.CategoryMapper;
 import com.myproject.ecommerce.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,17 +18,17 @@ import java.util.List;
 @Transactional
 public class CategoryService {
     private final CategoryRepository categoryRepository;
-    private final CategoryEntityMapper categoryEntityMapper;
+    private final CategoryMapper categoryMapper;
 
     // tạo mới 1 category
     public CategoryResponse createCategory(CategoryRequest categoryRequest){
-        CategoryEntity categoryEntity = categoryEntityMapper.toEntity(categoryRequest);
+        CategoryEntity categoryEntity = categoryMapper.toEntity(categoryRequest);
 
         // set tay
         Integer maxOrder = categoryRepository.findMaxDisplayOrder();
         categoryEntity.setDisplayOrder(maxOrder == null ? 1 : maxOrder+1);
 
-        return categoryEntityMapper.toResponse(categoryRepository.save(categoryEntity));
+        return categoryMapper.toResponse(categoryRepository.save(categoryEntity));
     }
 
     // lấy ra category list
@@ -36,7 +36,7 @@ public class CategoryService {
     public List<CategoryResponse> getCategoryList(){
         return categoryRepository.findAllByOrderByDisplayOrderAsc()
                 .stream()
-                .map(categoryEntityMapper::toResponse)
+                .map(categoryMapper::toResponse)
                 .toList();
     }
 
@@ -53,7 +53,7 @@ public class CategoryService {
         }
         return categoryRepository.findAllByOrderByDisplayOrderAsc()
                 .stream()
-                .map(categoryEntityMapper::toResponse)
+                .map(categoryMapper::toResponse)
                 .toList();
     }
 
