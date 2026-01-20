@@ -8,23 +8,19 @@ import com.myproject.ecommerce.entity.AccountEntity;
 import com.myproject.ecommerce.enums.ErrorCode;
 import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.repository.AccountRepository;
-import com.myproject.ecommerce.utils.GenerateToken;
 import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.JWSVerifier;
-import com.nimbusds.jose.crypto.MACVerifier;
-import com.nimbusds.jwt.SignedJWT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final AccountRepository accountRepository;
+    private final JwtService jwtService;
 
     // login
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest){
@@ -40,7 +36,7 @@ public class AuthenticationService {
             throw new BaseException(ErrorCode.UNAUTHENTICATED);
 
         // take token
-        String token = GenerateToken.getToken(authenticationRequest.getUsername());
+        String token = jwtService.generateToken(authenticationRequest.getUsername());
 
         return AuthenticationResponse.builder()
                 .token(token)
@@ -49,18 +45,12 @@ public class AuthenticationService {
     }
 
     // check token
-    public IntrospectResponse introspect(IntrospectRequest introspectRequest) throws JOSEException, ParseException {
+    public IntrospectResponse introspect(IntrospectRequest introspectRequest) throws ParseException, JOSEException {
 
-        String token = introspectRequest.getToken();
-
-        JWSVerifier verifier = new MACVerifier(GenerateToken.SIGNER_KEY.getBytes());
-        SignedJWT signedJWT = SignedJWT.parse(token);
-
-        var verified = signedJWT.verify(verifier);
-        Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
-
+        var check = jwtService.validateToken(introspectRequest.getToken());
         return IntrospectResponse.builder()
-                .valid(verified && expiryTime.after(new Date()))
+                .valid(check)
                 .build();
+
     }
 }
