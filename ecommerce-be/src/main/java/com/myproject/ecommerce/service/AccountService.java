@@ -10,6 +10,8 @@ import com.myproject.ecommerce.mapper.AccountMapper;
 import com.myproject.ecommerce.repository.AccountRepository;
 import com.myproject.ecommerce.utils.CustomerNameRandomUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +32,10 @@ public class AccountService {
 
         // MapStruct convert DTO->Entity
         AccountEntity accountEntity = accountMapper.toEntity(accountRequest);
+
+        // set mat khau
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        accountEntity.setPassword(passwordEncoder.encode(accountRequest.getPassword()));
 
         // set tay Customer (tạo acc sẽ tạo Customer mặc định)
         CustomerEntity customerEntity = new CustomerEntity();
