@@ -26,7 +26,7 @@ public class UserEntity {
     @Column(name = "fullname")
     private String fullName;
 
-    @Column(name = "customer_code", unique = true)
+    @Column(name = "user_code", unique = true)
     private String customerCode;
 
     @Column(name = "phone_number")
@@ -65,22 +65,22 @@ public class UserEntity {
         this.updatedAt = LocalDateTime.now();
     }
 
-    @OneToOne(mappedBy = "customerEntity")
+    @OneToOne(mappedBy = "userEntity")
     private AccountEntity accountEntity;
 
-    @OneToMany(mappedBy = "customerEntity")
+    @OneToMany(mappedBy = "userEntity")
     private List<CartEntity> cartEntityList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customerEntity")
+    @OneToMany(mappedBy = "userEntity")
     private List<OrderEntity> orderEntityList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customerEntity")
+    @OneToMany(mappedBy = "userEntity")
     private List<ReviewEntity> reviewEntityList = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
             name = "wish_list",
-            joinColumns = @JoinColumn(name = "customer_id"),
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private Set<ProductEntity> wishList = new HashSet<>();

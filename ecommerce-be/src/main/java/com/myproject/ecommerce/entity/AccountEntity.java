@@ -47,7 +47,7 @@ public class AccountEntity {
     }
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "customer_id", unique = true)
+    @JoinColumn(name = "user_id", unique = true)
     private UserEntity userEntity;
 
 }

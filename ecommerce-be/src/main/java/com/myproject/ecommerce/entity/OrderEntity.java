@@ -72,7 +72,7 @@ public class OrderEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
     @OneToMany(mappedBy = "orderEntity")
