@@ -52,7 +52,7 @@ public class ReviewEntity {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private CustomerEntity customerEntity;
+    private UserEntity userEntity;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

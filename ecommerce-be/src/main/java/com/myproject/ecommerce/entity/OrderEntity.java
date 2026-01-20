@@ -73,7 +73,7 @@ public class OrderEntity {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private CustomerEntity customerEntity;
+    private UserEntity userEntity;
 
     @OneToMany(mappedBy = "orderEntity")
     private List<OrderItemEntity> orderItemEntityList = new ArrayList<>();

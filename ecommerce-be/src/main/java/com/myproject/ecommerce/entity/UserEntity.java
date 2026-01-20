@@ -13,12 +13,12 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "customer")
+@Table(name = "user_customer")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerEntity {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

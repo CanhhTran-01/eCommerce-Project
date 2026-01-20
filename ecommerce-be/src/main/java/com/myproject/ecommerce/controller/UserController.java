@@ -1,8 +1,8 @@
 package com.myproject.ecommerce.controller;
 
-import com.myproject.ecommerce.dto.request.CustomerRequest;
+import com.myproject.ecommerce.dto.request.UserRequest;
 import com.myproject.ecommerce.dto.response.CustomerResponse;
-import com.myproject.ecommerce.service.CustomerService;
+import com.myproject.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,28 +11,28 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class CustomerController {
-    private final CustomerService customerService;
+public class UserController {
+    private final UserService userService;
 
     @PostMapping("/api/customers")
-    public ResponseEntity<CustomerResponse> createCustomer(@RequestBody CustomerRequest customerRequest){
-        return ResponseEntity.ok(customerService.createCustomer(customerRequest));
+    public ResponseEntity<CustomerResponse> createCustomer(@RequestBody UserRequest userRequest){
+        return ResponseEntity.ok(userService.createCustomer(userRequest));
     }
 
     @GetMapping("/api/customers")
     public ResponseEntity<List<CustomerResponse>> getCustomerList(){
-        return ResponseEntity.ok(customerService.getCustomerList());
+        return ResponseEntity.ok(userService.getCustomerList());
     }
 
     @PutMapping("/api/customers/{id}")
     public ResponseEntity<CustomerResponse> updateCustomer(@PathVariable Long id,
-                                                           @RequestBody CustomerRequest customerRequest){
-        return ResponseEntity.ok(customerService.updateCustomer(id, customerRequest));
+                                                           @RequestBody UserRequest userRequest){
+        return ResponseEntity.ok(userService.updateCustomer(id, userRequest));
     }
 
     @DeleteMapping("/api/customers/{id}")
     public String deleteCustomer(@PathVariable Long id){
-        customerService.deleteCustomer(id);
+        userService.deleteCustomer(id);
         return ("Deleted Customer with id " + id + " ! ");
     }
 }

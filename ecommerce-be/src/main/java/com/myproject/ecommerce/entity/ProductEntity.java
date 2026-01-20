@@ -79,5 +79,5 @@ public class ProductEntity {
     private List<ReviewEntity> reviewEntityList = new ArrayList<>();
 
     @ManyToMany(mappedBy = "wishList")
-    private Set<CustomerEntity> wishedBy = new HashSet<>();
+    private Set<UserEntity> wishedBy = new HashSet<>();
 }

@@ -2,13 +2,13 @@ package com.myproject.ecommerce.service;
 
 import com.myproject.ecommerce.dto.request.AccountRequest;
 import com.myproject.ecommerce.dto.response.AccountResponse;
-import com.myproject.ecommerce.entity.CustomerEntity;
+import com.myproject.ecommerce.entity.UserEntity;
 import com.myproject.ecommerce.entity.AccountEntity;
 import com.myproject.ecommerce.enums.ErrorCode;
 import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.mapper.AccountMapper;
 import com.myproject.ecommerce.repository.AccountRepository;
-import com.myproject.ecommerce.utils.CustomerNameRandomUtils;
+import com.myproject.ecommerce.utils.UserNameRandomUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,11 +38,11 @@ public class AccountService {
         accountEntity.setPassword(passwordEncoder.encode(accountRequest.getPassword()));
 
         // set tay Customer (tạo acc sẽ tạo Customer mặc định)
-        CustomerEntity customerEntity = new CustomerEntity();
-        customerEntity.setFullName(CustomerNameRandomUtils.generateDefaultName());
+        UserEntity userEntity = new UserEntity();
+        userEntity.setFullName(UserNameRandomUtils.generateDefaultName());
 
-        accountEntity.setCustomerEntity(customerEntity);
-        customerEntity.setAccountEntity(accountEntity);
+        accountEntity.setUserEntity(userEntity);
+        userEntity.setAccountEntity(accountEntity);
 
         accountRepository.save(accountEntity); // nếu cascade chưa set -> Hibernate tự động throw Exception
         return accountMapper.toResponse(accountEntity);

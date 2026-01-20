@@ -48,6 +48,6 @@ public class AccountEntity {
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "customer_id", unique = true)
-    private CustomerEntity customerEntity;
+    private UserEntity userEntity;
 
 }

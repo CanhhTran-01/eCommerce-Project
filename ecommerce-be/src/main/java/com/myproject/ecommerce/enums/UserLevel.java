@@ -1,6 +1,6 @@
 package com.myproject.ecommerce.enums;
 
-public enum CustomerLevel {
+public enum UserLevel {
     BRONZE,
     SILVER,
     GOLD,

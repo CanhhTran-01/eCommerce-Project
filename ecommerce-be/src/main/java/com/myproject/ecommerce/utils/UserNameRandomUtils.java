@@ -2,7 +2,7 @@ package com.myproject.ecommerce.utils;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class CustomerNameRandomUtils {
+public class UserNameRandomUtils {
 
     // Sinh số nguyên ngẫu nhiên trong khoảng [min, max)
     public static int randomInt(int min, int max) {

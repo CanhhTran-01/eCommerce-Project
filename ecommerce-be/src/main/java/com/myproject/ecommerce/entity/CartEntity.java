@@ -47,7 +47,7 @@ public class CartEntity {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private CustomerEntity customerEntity;
+    private UserEntity userEntity;
 
     @OneToMany(mappedBy = "cartEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItemEntity> cartItemEntityList = new ArrayList<>();
