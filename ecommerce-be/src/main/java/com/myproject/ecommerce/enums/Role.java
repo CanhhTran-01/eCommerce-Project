@@ -1,6 +1,6 @@
 package com.myproject.ecommerce.enums;
 
-public enum UserRole {
+public enum Role {
     USER,
     ADMIN,
     STAFF

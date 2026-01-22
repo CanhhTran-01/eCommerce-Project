@@ -1,9 +1,9 @@
 package com.myproject.ecommerce.dto.response;
 
-
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Getter
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class AccountResponse {
     private Long id;
     private String username;
+    private List<String> accountRoles;
     private String email;
-    private String password;
     private LocalDateTime lastLogin;
 }
