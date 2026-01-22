@@ -19,7 +19,7 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping("/api/accounts")
-    public ResponseEntity<ApiResponse<AccountResponse>> createUserAccount(@RequestBody @Valid AccountRequest accountRequest){
+    public ResponseEntity<ApiResponse<AccountResponse>> createAccount(@RequestBody @Valid AccountRequest accountRequest){
 
         ApiResponse<AccountResponse> apiResponse = new ApiResponse<>(
                 true,
@@ -45,7 +45,7 @@ public class AccountController {
     }
 
     @GetMapping("/api/accounts/{id}")
-    public ResponseEntity<ApiResponse<AccountResponse>> getUserAccount(@PathVariable Long id){
+    public ResponseEntity<ApiResponse<AccountResponse>> getAccount(@PathVariable Long id){
 
         ApiResponse<AccountResponse> apiResponse = new ApiResponse<>(
                 true,
@@ -57,7 +57,7 @@ public class AccountController {
     }
 
     @PutMapping("/api/accounts/{id}")
-    public ResponseEntity<ApiResponse<AccountResponse>>  updateUserAccount(@PathVariable Long id,
+    public ResponseEntity<ApiResponse<AccountResponse>>  updateAccount(@PathVariable Long id,
                                                              @RequestBody AccountRequest accountRequest){
 
         ApiResponse<AccountResponse> apiResponse = new ApiResponse<>(
@@ -70,7 +70,7 @@ public class AccountController {
     }
 
     @DeleteMapping("/api/accounts/{id}")
-    public ResponseEntity<Void> deleteUserAccount(@PathVariable Long id){
+    public ResponseEntity<Void> deleteAccount(@PathVariable Long id){
         accountService.deleteAccount(id);
         return ResponseEntity.noContent().build();
     }
