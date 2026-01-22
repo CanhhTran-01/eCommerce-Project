@@ -36,7 +36,7 @@ public class AuthenticationService {
             throw new BaseException(ErrorCode.UNAUTHENTICATED);
 
         // take token
-        String token = jwtService.generateToken(authenticationRequest.getUsername());
+        String token = jwtService.generateToken(accountEntity);
 
         return AuthenticationResponse.builder()
                 .token(token)

@@ -1,5 +1,6 @@
 package com.myproject.ecommerce.service;
 
+import com.myproject.ecommerce.entity.AccountEntity;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
@@ -13,6 +14,7 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -21,19 +23,19 @@ public class JwtService {
     @Value("${jwt.signerKey}")
     private String signerKey;
 
-    public String generateToken(String username){
+    public String generateToken(AccountEntity accountEntity){
         // header
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS256);
 
         // payload
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .subject(username)
+                .subject(accountEntity.getUsername())
                 .issuer("auth-service")
                 .issueTime(new Date())
                 .expirationTime(new Date(
                         Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
                 ))
-                .claim("customClaim", "Custom")
+                .claim("scope", buildScope(accountEntity))
                 .build();
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
 
@@ -61,5 +63,13 @@ public class JwtService {
 
         return (verified && expiryTime.after(new Date()));
 
+    }
+
+
+    private String buildScope(AccountEntity accountEntity) {
+        return accountEntity.getAccountRoles()
+                .stream()
+                .map(Enum::name)
+                .collect(Collectors.joining(" "));
     }
 }
