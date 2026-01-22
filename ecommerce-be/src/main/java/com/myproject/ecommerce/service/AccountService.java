@@ -5,17 +5,19 @@ import com.myproject.ecommerce.dto.response.AccountResponse;
 import com.myproject.ecommerce.entity.UserEntity;
 import com.myproject.ecommerce.entity.AccountEntity;
 import com.myproject.ecommerce.enums.ErrorCode;
+import com.myproject.ecommerce.enums.Role;
 import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.mapper.AccountMapper;
 import com.myproject.ecommerce.repository.AccountRepository;
 import com.myproject.ecommerce.utils.UserNameRandomUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +25,7 @@ import java.util.List;
 public class AccountService {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public AccountResponse createAccount(AccountRequest accountRequest){
 
@@ -34,8 +37,12 @@ public class AccountService {
         AccountEntity accountEntity = accountMapper.toEntity(accountRequest);
 
         // set mat khau
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         accountEntity.setPassword(passwordEncoder.encode(accountRequest.getPassword()));
+
+        // set roles
+        Set<Role> accountRoles = new HashSet<>();
+        accountRoles.add(Role.USER); // setting default role when account is created
+        accountEntity.setAccountRoles(accountRoles);
 
         // set tay Customer (tạo acc sẽ tạo Customer mặc định)
         UserEntity userEntity = new UserEntity();
