@@ -1,7 +1,7 @@
 package com.myproject.ecommerce.controller;
 
 import com.myproject.ecommerce.dto.request.UserRequest;
-import com.myproject.ecommerce.dto.response.CustomerResponse;
+import com.myproject.ecommerce.dto.response.UserResponse;
 import com.myproject.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,24 +15,24 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/api/customers")
-    public ResponseEntity<CustomerResponse> createCustomer(@RequestBody UserRequest userRequest){
-        return ResponseEntity.ok(userService.createCustomer(userRequest));
+    public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest){
+        return ResponseEntity.ok(userService.createUser(userRequest));
     }
 
     @GetMapping("/api/customers")
-    public ResponseEntity<List<CustomerResponse>> getCustomerList(){
-        return ResponseEntity.ok(userService.getCustomerList());
+    public ResponseEntity<List<UserResponse>> getUserList(){
+        return ResponseEntity.ok(userService.getUserList());
     }
 
     @PutMapping("/api/customers/{id}")
-    public ResponseEntity<CustomerResponse> updateCustomer(@PathVariable Long id,
-                                                           @RequestBody UserRequest userRequest){
-        return ResponseEntity.ok(userService.updateCustomer(id, userRequest));
+    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id,
+                                                       @RequestBody UserRequest userRequest){
+        return ResponseEntity.ok(userService.updateUser(id, userRequest));
     }
 
     @DeleteMapping("/api/customers/{id}")
-    public String deleteCustomer(@PathVariable Long id){
-        userService.deleteCustomer(id);
+    public String deleteUser(@PathVariable Long id){
+        userService.deleteUser(id);
         return ("Deleted Customer with id " + id + " ! ");
     }
 }

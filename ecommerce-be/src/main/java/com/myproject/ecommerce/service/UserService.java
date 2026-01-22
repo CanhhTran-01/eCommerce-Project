@@ -1,7 +1,7 @@
 package com.myproject.ecommerce.service;
 
 import com.myproject.ecommerce.dto.request.UserRequest;
-import com.myproject.ecommerce.dto.response.CustomerResponse;
+import com.myproject.ecommerce.dto.response.UserResponse;
 import com.myproject.ecommerce.entity.UserEntity;
 import com.myproject.ecommerce.mapper.UserMapper;
 import com.myproject.ecommerce.repository.UserRepository;
@@ -19,7 +19,7 @@ public class UserService {
     private final UserMapper userMapper;
 
     // thêm mới customer
-    public CustomerResponse createCustomer(UserRequest userRequest){
+    public UserResponse createUser(UserRequest userRequest){
         UserEntity userEntity = userMapper.toEntity(userRequest);
         return userMapper.toResponse(userRepository.save(userEntity));
 
@@ -27,7 +27,7 @@ public class UserService {
 
     // lấy ra danh sách customers
     @Transactional(readOnly = true)
-    public List<CustomerResponse> getCustomerList(){
+    public List<UserResponse> getUserList(){
         return userRepository.findAll()
                 .stream()
                 .map(userMapper::toResponse)
@@ -35,7 +35,7 @@ public class UserService {
     }
 
     // update customer
-    public CustomerResponse updateCustomer(Long id, UserRequest userRequest){
+    public UserResponse updateUser(Long id, UserRequest userRequest){
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
 
@@ -44,7 +44,7 @@ public class UserService {
     }
 
     // delete customer
-    public void deleteCustomer(Long id){
+    public void deleteUser(Long id){
         userRepository.deleteById(id);
     }
 }
