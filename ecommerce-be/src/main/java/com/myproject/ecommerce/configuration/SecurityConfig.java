@@ -31,7 +31,8 @@ public class SecurityConfig {
 
         httpSecurity.authorizeHttpRequests( request ->
                 request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
-                        .anyRequest().authenticated());
+                       .requestMatchers(HttpMethod.GET, "/api/accounts").hasAuthority("SCOPE_ADMIN")
+                .anyRequest().authenticated());
 
         httpSecurity.oauth2ResourceServer(oauth2 ->
                 oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder()))

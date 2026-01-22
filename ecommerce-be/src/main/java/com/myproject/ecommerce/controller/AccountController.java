@@ -4,16 +4,21 @@ import com.myproject.ecommerce.dto.request.AccountRequest;
 import com.myproject.ecommerce.dto.response.AccountResponse;
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.service.AccountService;
+import com.nimbusds.jose.proc.SecurityContext;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.hibernate5.SpringSessionContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
 @RestController
+@Slf4j
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
@@ -46,6 +51,11 @@ public class AccountController {
 
     @GetMapping("/api/accounts/{id}")
     public ResponseEntity<ApiResponse<AccountResponse>> getAccount(@PathVariable Long id){
+
+        // take auth from current account
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info("username: {}", authentication.getName());
+        authentication.getAuthorities().forEach(auth -> log.info(auth.getAuthority()));
 
         ApiResponse<AccountResponse> apiResponse = new ApiResponse<>(
                 true,
