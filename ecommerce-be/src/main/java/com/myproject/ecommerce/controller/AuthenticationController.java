@@ -2,6 +2,7 @@ package com.myproject.ecommerce.controller;
 
 import com.myproject.ecommerce.dto.request.AuthenticationRequest;
 import com.myproject.ecommerce.dto.request.IntrospectRequest;
+import com.myproject.ecommerce.dto.request.LogoutRequest;
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.dto.response.AuthenticationResponse;
 import com.myproject.ecommerce.dto.response.IntrospectResponse;
@@ -24,8 +25,8 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<AuthenticationResponse>> authenticate(@RequestBody AuthenticationRequest req){
-        var authenticationData = authenticationService.authenticate(req);
 
+        var authenticationData = authenticationService.authenticate(req);
         return ResponseEntity.ok(new ApiResponse<>(
                 true,
                 null,
@@ -43,5 +44,13 @@ public class AuthenticationController {
                 null,
                 introspectData
         ));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<ApiResponse<Void>> logout(@RequestBody LogoutRequest logoutRequest)
+            throws ParseException, JOSEException {
+
+        authenticationService.logout(logoutRequest);
+        return ResponseEntity.noContent().build();
     }
 }

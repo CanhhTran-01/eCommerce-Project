@@ -29,7 +29,8 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final AccessDeniedHandler accessDeniedHandler;
 
-    private final String[] PUBLIC_ENDPOINTS = {"/api/accounts", "/api/auth/login", "/api/auth/introspect"};
+    private final String[] PUBLIC_ENDPOINTS = {"/api/accounts", "/api/auth/login",
+            "/api/auth/introspect", "/api/auth/logout"};
 
     @Value("${jwt.signerKey}")
     private String signerKey;

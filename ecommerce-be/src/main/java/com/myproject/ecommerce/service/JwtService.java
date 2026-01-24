@@ -1,6 +1,9 @@
 package com.myproject.ecommerce.service;
 
+import com.myproject.ecommerce.dto.request.LogoutRequest;
 import com.myproject.ecommerce.entity.AccountEntity;
+import com.myproject.ecommerce.enums.ErrorCode;
+import com.myproject.ecommerce.exception.BaseException;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
@@ -14,6 +17,7 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -35,6 +39,7 @@ public class JwtService {
                 .expirationTime(new Date(
                         Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
                 ))
+                .jwtID(UUID.randomUUID().toString())
                 .claim("scope", buildScope(accountEntity))
                 .build();
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
@@ -52,8 +57,8 @@ public class JwtService {
         }
     }
 
-
-    public boolean validateToken(String token) throws ParseException, JOSEException {
+    // check token
+    public JWTClaimsSet verifyToken(String token) throws ParseException, JOSEException {
 
         JWSVerifier verifier = new MACVerifier(signerKey.getBytes());
         SignedJWT signedJWT = SignedJWT.parse(token);
@@ -61,7 +66,10 @@ public class JwtService {
         var verified = signedJWT.verify(verifier);
         Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
 
-        return (verified && expiryTime.after(new Date()));
+        if ( !(verified && expiryTime.after(new Date())) )
+            throw new BaseException(ErrorCode.UNAUTHORIZED);
+
+        return signedJWT.getJWTClaimsSet();
 
     }
 
