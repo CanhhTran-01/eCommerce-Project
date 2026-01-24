@@ -1,6 +1,9 @@
-package com.myproject.ecommerce.configuration;
+package com.myproject.ecommerce.security;
 
 import com.myproject.ecommerce.enums.Role;
+import com.myproject.ecommerce.security.handler.JwtAccessDeniedHandler;
+import com.myproject.ecommerce.security.handler.JwtAuthenticationEntryPoint;
+import com.myproject.ecommerce.security.jwt.JwtDecoderCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

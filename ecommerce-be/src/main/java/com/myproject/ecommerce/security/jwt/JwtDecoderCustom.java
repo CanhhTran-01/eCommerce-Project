@@ -1,4 +1,4 @@
-package com.myproject.ecommerce.configuration;
+package com.myproject.ecommerce.security.jwt;
 
 import com.myproject.ecommerce.dto.request.IntrospectRequest;
 import com.myproject.ecommerce.service.AuthenticationService;
