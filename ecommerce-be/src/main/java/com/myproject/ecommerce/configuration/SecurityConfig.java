@@ -2,7 +2,6 @@ package com.myproject.ecommerce.configuration;
 
 import com.myproject.ecommerce.enums.Role;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,29 +10,22 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
-
-import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final AccessDeniedHandler accessDeniedHandler;
-
     private final String[] PUBLIC_ENDPOINTS = {"/api/accounts", "/api/auth/login",
             "/api/auth/introspect", "/api/auth/logout"};
 
-    @Value("${jwt.signerKey}")
-    private String signerKey;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final AccessDeniedHandler accessDeniedHandler;
+    private final JwtDecoderCustom jwtDecoderCustom;
 
     
     @Bean
@@ -48,19 +40,19 @@ public class SecurityConfig {
 
         httpSecurity.oauth2ResourceServer(oauth2 -> oauth2
                 .jwt(jwt -> jwt
-                        .decoder(jwtDecoder())
+                        .decoder(jwtDecoderCustom)
                                 .jwtAuthenticationConverter(jwtAuthenticationConverter()))
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint) // 401 Unauthorized Handling
                 .accessDeniedHandler(accessDeniedHandler) // 403 Forbidden Handling
         );
 
         return httpSecurity.build();
-
     }
 
 
     @Bean
     JwtAuthenticationConverter jwtAuthenticationConverter(){
+
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
         jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
 
@@ -68,16 +60,6 @@ public class SecurityConfig {
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
 
         return jwtAuthenticationConverter;
-    }
-
-
-    @Bean
-    public JwtDecoder jwtDecoder(){
-        SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), "HS256");
-        return NimbusJwtDecoder
-                .withSecretKey(secretKeySpec)
-                .macAlgorithm(MacAlgorithm.HS256)
-                .build();
     }
 
 
