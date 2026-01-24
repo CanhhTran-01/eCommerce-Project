@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
+
 
 @Configuration
 @EnableWebSecurity
@@ -24,7 +24,7 @@ public class SecurityConfig {
             "/api/auth/introspect", "/api/auth/logout"};
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final AccessDeniedHandler accessDeniedHandler;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtDecoderCustom jwtDecoderCustom;
 
     
@@ -43,7 +43,7 @@ public class SecurityConfig {
                         .decoder(jwtDecoderCustom)
                                 .jwtAuthenticationConverter(jwtAuthenticationConverter()))
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint) // 401 Unauthorized Handling
-                .accessDeniedHandler(accessDeniedHandler) // 403 Forbidden Handling
+                .accessDeniedHandler(jwtAccessDeniedHandler) // 403 Forbidden Handling
         );
 
         return httpSecurity.build();
