@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Trang chủ</title>
+
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/components.css">
+</head>
+
+<body>
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-top">
+        <div class="container-fluid navbar-container">
+            <!-- Logo -->
+            <a class="navbar-logo" href="home.html">
+                <i class="fas fa-shopping-bag"></i>
+                <span>eCommerce</span>
+            </a>
+
+            <!-- Search Bar -->
+            <div class="search-box-wrapper d-none d-lg-block">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search products, brands and more..."
+                        id="searchInput">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="navbar-actions">
+                <div class="action-item">
+                    <button class="btn-action" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge-count" id="cartCount">0</span>
+                    </button>
+                </div>
+
+                <div class="action-item">
+                    <button class="btn-action">
+                        <i class="fas fa-heart"></i>
+                        <span class="badge-count">0</span>
+                    </button>
+                </div>
+
+                <div class="action-item dropdown">
+                    <button class="btn-action dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fas fa-user"></i>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> My Account</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-box"></i> My Orders</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Wishlist</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        
+                        <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-sign-in-alt"></i>
+                                Login</a></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-sign-out-alt"></i>
+                                Logout</a></li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <!-- Mobile Search Toggle -->
+            <button class="btn-mobile-search d-lg-none">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Search -->
+    <div class="mobile-search d-lg-none" id="mobileSearch" style="display: none;">
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="Search products..." id="mobileSearchInput">
+            <button class="search-btn">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Category Menu -->
+    <div class="category-menu">
+        <div class="container-fluid category-container">
+            <h3 class="category-menu-title"> DANH MỤC </h3>
+            <div class="category-scroll">
+                <div class="category-item-wrapper">
+                    <div class="category-item-circle">
+                        <img src="./assets/images/category-fashion.jpg" alt="Thời Trang Nam">
+                    </div>
+                    <span class="category-item-text">Thời Trang Nam</span>
+                </div>
+
+                <div class="category-item-wrapper">
+                    <div class="category-item-circle">
+                        <img src="./assets/images/category-phone.jpg" alt="Điện Thoại & Phụ Kiện">
+                    </div>
+                    <span class="category-item-text">Điện Thoại & Phụ Kiện</span>
+                </div>
+
+                <div class="category-item-wrapper">
+                    <div class="category-item-circle">
+                        <img src="./assets/images/category-electronics.jpg" alt="Thiết Bị Điện Tử">
+                    </div>
+                    <span class="category-item-text">Thiết Bị Điện Tử</span>
+                </div>
+
+                <div class="category-item-wrapper">
+                    <div class="category-item-circle">
+                        <img src="./assets/images/category-laptop.jpg" alt="Máy Tính & Laptop">
+                    </div>
+                    <span class="category-item-text">Máy Tính & Laptop</span>
+                </div>
+
+                <div class="category-item-wrapper">
+                    <div class="category-item-circle">
+                        <img src="./assets/images/category-camera.jpg" alt="Máy Ảnh & Máy Quay Phim">
+                    </div>
+                    <span class="category-item-text">Máy Ảnh & Máy Quay Phim</span>
+                </div>
+
+                <div class="category-item-wrapper">
+                    <div class="category-item-circle">
+                        <img src="./assets/images/category-home.jpg" alt="Nhà Cửa & Đời Sống">
+                    </div>
+                    <span class="category-item-text">Nhà Cửa & Đời Sống</span>
+                </div>
+
+                <div class="category-item-wrapper">
+                    <div class="category-item-circle">
+                        <img src="./assets/images/category-beauty.jpg" alt="Sắc Đẹp & Sức Khỏe">
+                    </div>
+                    <span class="category-item-text">Sắc Đẹp & Sức Khỏe</span>
+                </div>
+
+                <div class="category-item-wrapper">
+                    <div class="category-item-circle">
+                        <img src="./assets/images/category-sports.jpg" alt="Thể Thao & Du Lịch">
+                    </div>
+                    <span class="category-item-text">Thể Thao & Du Lịch</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Banner Carousel -->
+    <div class="banner-carousel">
+        <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="./assets/images/banner1.jpg" class="d-block w-100" alt="Banner-1">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/images/banner2.jpg" class="d-block w-100" alt="Banner-2">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/images/banner3.jpg" class="d-block w-100" alt="Banner-3">
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Flash Sale Section -->
+    <section class="flash-sale-section">
+        <div class="container-fluid section-container">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Flash Sale</h3>
+                </div>
+                <a href="#" class="view-all-link">View All <i class="fas fa-chevron-right"></i></a>
+            </div>
+
+            <div class="products-grid">
+                <!-- Product Card 1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product1.jpg" alt="Product 1">
+                        <span class="discount-badge">-30%</span>
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">Premium Wireless Headphones</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="review-count">(256)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$29.99</span>
+                            <span class="original-price">$42.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product2.jpg" alt="Product 2">
+                        <span class="discount-badge">-15%</span>
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">Smart Watch Pro</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="review-count">(128)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$59.99</span>
+                            <span class="original-price">$70.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product3.jpg" alt="Product 3">
+                        <span class="discount-badge">-25%</span>
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">Portable Power Bank</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="review-count">(340)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$39.99</span>
+                            <span class="original-price">$53.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product Card 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product4.jpg" alt="Product 4">
+                        <span class="discount-badge">-40%</span>
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">USB-C Cable 3M</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="review-count">(189)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$19.99</span>
+                            <span class="original-price">$33.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product Card 5 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product5.jpg" alt="Product 5">
+                        <span class="discount-badge">-20%</span>
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">Bluetooth Speaker</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="review-count">(425)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$49.99</span>
+                            <span class="original-price">$62.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product Card 6 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product6.jpg" alt="Product 6">
+                        <span class="discount-badge">-35%</span>
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">Wireless Mouse</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="review-count">(312)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$24.99</span>
+                            <span class="original-price">$38.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product Card 7 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product7.jpg" alt="Product 7">
+                        <span class="discount-badge">-10%</span>
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">Screen Protector Pack</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="review-count">(198)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$14.99</span>
+                            <span class="original-price">$16.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product Card 8 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product8.jpg" alt="Product 8">
+                        <span class="discount-badge">-50%</span>
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">Phone Stand Mount</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="review-count">(567)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$9.99</span>
+                            <span class="original-price">$19.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="container-fluid section-container">
+            <h3 class="section-title-simple">Shop by Category</h3>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <img src="../assets/images/category-electronics.jpg" alt="Electronics">
+                    <span class="category-name">Electronics</span>
+                </div>
+                <div class="category-card">
+                    <img src="../assets/images/category-fashion.jpg" alt="Fashion">
+                    <span class="category-name">Fashion</span>
+                </div>
+                <div class="category-card">
+                    <img src="../assets/images/category-home.jpg" alt="Home">
+                    <span class="category-name">Home & Living</span>
+                </div>
+                <div class="category-card">
+                    <img src="../assets/images/category-sports.jpg" alt="Sports">
+                    <span class="category-name">Sports</span>
+                </div>
+                <div class="category-card">
+                    <img src="../assets/images/category-books.jpg" alt="Books">
+                    <span class="category-name">Books</span>
+                </div>
+                <div class="category-card">
+                    <img src="../assets/images/category-beauty.jpg" alt="Beauty">
+                    <span class="category-name">Beauty</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recommended For You Section -->
+    <section class="recommended-section">
+        <div class="container-fluid section-container">
+
+            <div class="section-header">
+                <h3>Recommended For You</h3>
+                <a href="#" class="view-all-link">View All <i class="fas fa-chevron-right"></i></a>
+            </div>
+
+            <div class="products-grid">
+                <!-- 10 products cards -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product9.jpg" alt="Product">
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">Premium Phone Case</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="review-count">(450)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$19.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product10.jpg" alt="Product">
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">Laptop Stand</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="review-count">(234)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$34.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product11.jpg" alt="Product">
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">Mechanical Keyboard</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="review-count">(589)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$79.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product12.jpg" alt="Product">
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">USB Hub 7 Port</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="review-count">(321)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$29.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product13.jpg" alt="Product">
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">Webcam HD 1080p</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="review-count">(412)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$49.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product14.jpg" alt="Product">
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">RGB Gaming Mouse</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="review-count">(678)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$44.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product15.jpg" alt="Product">
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">Phone Charger 65W</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="review-count">(834)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$24.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product16.jpg" alt="Product">
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">Storage SSD 1TB</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="review-count">(523)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$99.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product16.jpg" alt="Product">
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">Storage SSD 1TB</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="review-count">(523)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$99.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/images/product16.jpg" alt="Product">
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h6 class="product-name">Storage SSD 1TB</h6>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="review-count">(523)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">$99.99</span>
+                        </div>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container-fluid footer-container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h6>About Us</h6>
+                    <ul>
+                        <li><a href="#">About eCommerce</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h6>Customer Service</h6>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h6>Policies</h6>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Security</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h6>Follow Us</h6>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 eCommerce Shop. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Shopping Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="cartContent" class="cart-content">
+                <p class="text-muted text-center">Your cart is empty</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/pages/home.js"></script>
+</body>
+
+</html>
