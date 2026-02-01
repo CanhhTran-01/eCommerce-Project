@@ -7,9 +7,14 @@
 @import url('./components/navbar.css');
 @import url('./components/footer.css');
 @import url('./components/cart.css');
+@import url('./components/side-bar.css');
 
 /* Pages */
 @import url('./pages/index.css');
 @import url('./pages/login.css');
+@import url('./pages/wish-list.css');
+@import url('./pages/order-list.css');
+@import url('./pages/account-info.css');
+
 
 

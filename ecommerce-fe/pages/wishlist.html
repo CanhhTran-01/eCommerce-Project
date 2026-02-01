@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <title> Yêu thích </title>
+
+    <link rel="stylesheet" href="../css/main.css" />
+
+</head>
+
+<body>
+    <div class="container page-account">
+        <div class="account-layout">
+            <aside class="account-sidebar">
+                <div class="sidebar-profile">
+                    <div class="avatar">
+                        <img src="../assets/icons/avatar-test.jpg" alt="avatar">
+                    </div>
+                    <div class="profile-actions">
+                        <button id="editProfileBtn" class="btn-edit-profile">Chỉnh sửa hồ sơ</button>
+                    </div>
+                </div>
+                <nav class="sidebar-nav">
+                    <h4> user_012412 </h4>
+                    <a href="account-info.html">Tổng quan</a>
+                    <a href="my-orders.html">Đơn hàng của tôi</a>
+                    <a href="wishlist.html" class="active">Yêu thích</a>
+                    <a href="../index.html">Trang chủ</a>
+                    <a id="logoutBtn" href="#">Đăng xuất</a>
+                </nav>
+            </aside>
+
+            <main class="account-main">
+                <section class="section card wishlist-section">
+                    <h3>Danh sách yêu thích</h3>
+                    <div id="wishlistGrid" class="wishlist-grid">Đang tải danh sách...</div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../js/main.js"></script>
+</body>
+
+</html>

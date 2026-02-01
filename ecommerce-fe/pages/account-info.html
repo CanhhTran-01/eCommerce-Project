@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <title> Tài khoản của tôi </title>
+
+    <link rel="stylesheet" href="../css/main.css" />
+</head>
+
+<body>
+    <div class="container page-account">
+        <div class="account-layout">
+            <aside class="account-sidebar">
+                <div class="sidebar-profile">
+                    <div class="avatar">
+                        <img src="../assets/icons/avatar-test.jpg" alt="avatar">
+                    </div>
+                    <div class="profile-actions">
+                        <button id="editProfileBtn" class="btn-edit-profile"> Chỉnh sửa hồ sơ </button>
+                    </div>
+                </div>
+                <nav class="sidebar-nav">
+                    <h4> user_012412 </h4>
+                    <a href="account-info.html" class="active">Tổng quan</a>
+                    <a href="my-orders.html">Đơn hàng của tôi</a>
+                    <a href="wishlist.html">Yêu thích</a>
+                    <a href="../index.html">Trang chủ</a>
+                    <a id="logoutBtn" href="/ecommerce-fe/index.html">Đăng xuất</a>
+                </nav>
+            </aside>
+
+            <main class="account-main">
+                <div id="accountAccordion">
+                    <!-- Profile Info Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="btn" data-bs-toggle="collapse" href="#collapseProfile">
+                                <i class="fas fa-user"></i> Thông tin tài khoản
+                            </a>
+                        </div>
+                        <div id="collapseProfile" class="collapse show" data-bs-parent="#accountAccordion">
+                            <div class="card-body">
+                                <div id="profileBox" class="profile-box">Đang tải...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Orders Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseOrders">
+                                <i class="fas fa-shopping-bag"></i> Đơn hàng gần đây
+                            </a>
+                        </div>
+                        <div id="collapseOrders" class="collapse" data-bs-parent="#accountAccordion">
+                            <div class="card-body">
+                                <div id="recentOrders">Đang tải...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+    </div>
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../js/main.js"></script>
+</body>
+
+</html>
