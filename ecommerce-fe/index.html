@@ -56,17 +56,20 @@
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> My Account</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-box"></i> My Orders</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Wishlist</a></li>
+                        <li><a class="dropdown-item" href=""><i class="fas fa-user"></i> My Account</a></li>
+                        <li><a class="dropdown-item" href=""><i class="fas fa-box"></i> My Orders</a></li>
+                        <li><a class="dropdown-item" href=""><i class="fas fa-heart"></i> Wishlist</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
                         
-                        <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-sign-in-alt"></i>
-                                Login</a></li>
-                        <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-sign-out-alt"></i>
-                                Logout</a></li>
+                        <li><a class="dropdown-item text-danger" id = "loginLink" href="/ecommerce-fe/pages/login.html">
+                            <i class="fas fa-sign-in-alt"></i> Login</a>
+                        </li>
+
+                        <li><a class="dropdown-item text-danger d-none" id="logoutLink" href="#">
+                            <i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </li>
                     </ul>
 
                 </div>
@@ -689,9 +692,11 @@
         </div>
     </div>
 
+
+    <!-- JS Scripts -->
     <script src="./js/bootstrap.bundle.min.js"></script>
-    <script src="./js/main.js"></script>
-    <script src="./js/pages/home.js"></script>
+    <script type="module" src="./js/main.js"></script>
+    <script type="module" src="./js/pages/index.js"></script>
 </body>
 
 </html>
