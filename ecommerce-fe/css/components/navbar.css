@@ -1,0 +1,133 @@
+/* Navbar */
+.navbar-top {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border-color);
+    padding: 12px 0;
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    white-space: nowrap;
+}
+
+.navbar-logo i {
+    font-size: 1.5rem;
+}
+
+.search-box-wrapper {
+    flex: 1;
+    max-width: 500px;
+}
+
+.search-box {
+    display: flex;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: border-color 0.3s ease;
+}
+
+.search-box:focus-within {
+    border-color: var(--primary-color);
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    background: none;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.search-btn {
+    padding: 0 16px;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.search-btn:hover {
+    color: var(--primary-color);
+}
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.action-item {
+    position: relative;
+}
+
+.btn-action {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.btn-action:hover {
+    color: var(--primary-color);
+}
+
+.badge-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 600;
+    min-width: 20px;
+    text-align: center;
+}
+
+.dropdown-menu {
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+    padding: 10px 16px;
+    border-bottom: none;
+}
+
+.dropdown-item:hover {
+    background-color: var(--secondary-color);
+}
+
+.btn-mobile-search {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.mobile-search {
+    padding: 12px 20px;
+    background-color: var(--secondary-color);
+}
