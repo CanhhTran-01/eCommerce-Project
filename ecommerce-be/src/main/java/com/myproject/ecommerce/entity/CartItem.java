@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartItemEntity {
+public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,5 +37,5 @@ public class CartItemEntity {
 
     @ManyToOne
     @JoinColumn(name = "cart_id")
-    private CartEntity cartEntity;
+    private Cart cart;
 }

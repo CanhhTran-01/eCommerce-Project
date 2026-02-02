@@ -2,7 +2,6 @@ package com.myproject.ecommerce.controller;
 
 import com.myproject.ecommerce.dto.request.ProductImageRequest;
 import com.myproject.ecommerce.dto.response.ProductImageResponse;
-import com.myproject.ecommerce.entity.ProductImageEntity;
 import com.myproject.ecommerce.service.ProductImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

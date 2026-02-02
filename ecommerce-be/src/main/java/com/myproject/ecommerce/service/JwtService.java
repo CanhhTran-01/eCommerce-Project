@@ -1,7 +1,6 @@
 package com.myproject.ecommerce.service;
 
-import com.myproject.ecommerce.dto.request.LogoutRequest;
-import com.myproject.ecommerce.entity.AccountEntity;
+import com.myproject.ecommerce.entity.Account;
 import com.myproject.ecommerce.enums.ErrorCode;
 import com.myproject.ecommerce.exception.BaseException;
 import com.nimbusds.jose.*;
@@ -27,20 +26,20 @@ public class JwtService {
     @Value("${jwt.signerKey}")
     private String signerKey;
 
-    public String generateToken(AccountEntity accountEntity){
+    public String generateToken(Account account){
         // header
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS256);
 
         // payload
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .subject(accountEntity.getUsername())
+                .subject(account.getUsername())
                 .issuer("auth-service")
                 .issueTime(new Date())
                 .expirationTime(new Date(
                         Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
                 ))
                 .jwtID(UUID.randomUUID().toString())
-                .claim("scope", buildScope(accountEntity))
+                .claim("scope", buildScope(account))
                 .build();
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
 
@@ -74,8 +73,8 @@ public class JwtService {
     }
 
 
-    private String buildScope(AccountEntity accountEntity) {
-        return accountEntity.getAccountRoles()
+    private String buildScope(Account account) {
+        return account.getAccountRoles()
                 .stream()
                 .map(Enum::name)
                 .collect(Collectors.joining(" "));

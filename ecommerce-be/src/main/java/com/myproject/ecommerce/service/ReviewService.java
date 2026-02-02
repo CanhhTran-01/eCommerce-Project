@@ -2,7 +2,7 @@ package com.myproject.ecommerce.service;
 
 import com.myproject.ecommerce.dto.request.ReviewRequest;
 import com.myproject.ecommerce.dto.response.ReviewResponse;
-import com.myproject.ecommerce.entity.ReviewEntity;
+import com.myproject.ecommerce.entity.Review;
 import com.myproject.ecommerce.mapper.ReviewMapper;
 import com.myproject.ecommerce.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +19,8 @@ public class ReviewService {
     private final ReviewMapper reviewMapper;
 
     public ReviewResponse createReview(ReviewRequest reviewRequest){
-        ReviewEntity reviewEntity = reviewMapper.toEntity(reviewRequest);
-        return reviewMapper.toResponse(reviewRepository.save(reviewEntity));
+        Review review = reviewMapper.toEntity(reviewRequest);
+        return reviewMapper.toResponse(reviewRepository.save(review));
     }
 
     @Transactional(readOnly = true)
@@ -32,11 +32,11 @@ public class ReviewService {
     }
 
     public ReviewResponse updateReview(Long id, ReviewRequest reviewRequest){
-        ReviewEntity reviewEntity = reviewRepository.findById(id)
+        Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not Found !"));
 
-        reviewMapper.update(reviewEntity, reviewRequest);
-        return reviewMapper.toResponse(reviewEntity);
+        reviewMapper.update(review, reviewRequest);
+        return reviewMapper.toResponse(review);
     }
 
     public void deleteReview(Long id){

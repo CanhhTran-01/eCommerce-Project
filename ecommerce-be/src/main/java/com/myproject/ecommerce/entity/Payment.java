@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentEntity {
+public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,5 +38,5 @@ public class PaymentEntity {
 
     @OneToOne
     @JoinColumn(name = "order_id", unique = true)
-    private OrderEntity orderEntity;
+    private Order order;
 }

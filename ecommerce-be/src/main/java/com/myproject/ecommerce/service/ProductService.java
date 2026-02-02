@@ -2,7 +2,7 @@ package com.myproject.ecommerce.service;
 
 import com.myproject.ecommerce.dto.request.ProductRequest;
 import com.myproject.ecommerce.dto.response.ProductResponse;
-import com.myproject.ecommerce.entity.ProductEntity;
+import com.myproject.ecommerce.entity.Product;
 import com.myproject.ecommerce.mapper.ProductMapper;
 import com.myproject.ecommerce.repository.ProductRepository;
 import com.myproject.ecommerce.utils.ProductCodeMakingUtils;
@@ -18,19 +18,19 @@ public class ProductService {
     private final ProductMapper productMapper;
 
     public ProductResponse createProduct(ProductRequest productRequest){
-        ProductEntity productEntity = productMapper.toEntity(productRequest);
+        Product product = productMapper.toEntity(productRequest);
 
-        productEntity.setProductCode(ProductCodeMakingUtils.generateProductCode());
+        product.setProductCode(ProductCodeMakingUtils.generateProductCode());
 
-        return productMapper.toResponse(productRepository.save(productEntity));
+        return productMapper.toResponse(productRepository.save(product));
     }
 
     public ProductResponse updateProject(Long id, ProductRequest productRequest){
-        ProductEntity productEntity = productRepository.findById(id)
+        Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found!"));
 
-        productMapper.update(productEntity, productRequest);
-        return productMapper.toResponse(productRepository.save(productEntity));
+        productMapper.update(product, productRequest);
+        return productMapper.toResponse(productRepository.save(product));
     }
 
     public void deleteProduct(Long id){

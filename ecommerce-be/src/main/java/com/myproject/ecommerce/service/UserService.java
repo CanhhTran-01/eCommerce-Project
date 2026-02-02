@@ -2,7 +2,7 @@ package com.myproject.ecommerce.service;
 
 import com.myproject.ecommerce.dto.request.UserRequest;
 import com.myproject.ecommerce.dto.response.UserResponse;
-import com.myproject.ecommerce.entity.UserEntity;
+import com.myproject.ecommerce.entity.User;
 import com.myproject.ecommerce.mapper.UserMapper;
 import com.myproject.ecommerce.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +20,8 @@ public class UserService {
 
     // thêm mới customer
     public UserResponse createUser(UserRequest userRequest){
-        UserEntity userEntity = userMapper.toEntity(userRequest);
-        return userMapper.toResponse(userRepository.save(userEntity));
+        User user = userMapper.toEntity(userRequest);
+        return userMapper.toResponse(userRepository.save(user));
 
     }
 
@@ -36,11 +36,11 @@ public class UserService {
 
     // update customer
     public UserResponse updateUser(Long id, UserRequest userRequest){
-        UserEntity userEntity = userRepository.findById(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
 
-        userMapper.updateCustomer(userEntity, userRequest);
-        return userMapper.toResponse(userRepository.save(userEntity));
+        userMapper.updateCustomer(user, userRequest);
+        return userMapper.toResponse(userRepository.save(user));
     }
 
     // delete customer

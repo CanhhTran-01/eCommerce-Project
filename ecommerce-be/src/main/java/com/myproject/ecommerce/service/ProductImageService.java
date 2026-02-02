@@ -2,7 +2,7 @@ package com.myproject.ecommerce.service;
 
 import com.myproject.ecommerce.dto.request.ProductImageRequest;
 import com.myproject.ecommerce.dto.response.ProductImageResponse;
-import com.myproject.ecommerce.entity.ProductImageEntity;
+import com.myproject.ecommerce.entity.ProductImage;
 import com.myproject.ecommerce.mapper.ProductImageMapper;
 import com.myproject.ecommerce.repository.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +19,8 @@ public class ProductImageService {
     private final ProductImageMapper productImageMapper;
 
     public ProductImageResponse createProductImage(ProductImageRequest productImageRequest){
-        ProductImageEntity productImageEntity = productImageMapper.toEntity(productImageRequest);
-        return productImageMapper.toResponse(productImageRepository.save(productImageEntity));
+        ProductImage productImage = productImageMapper.toEntity(productImageRequest);
+        return productImageMapper.toResponse(productImageRepository.save(productImage));
     }
 
     @Transactional(readOnly = true)
@@ -32,11 +32,11 @@ public class ProductImageService {
     }
 
     public ProductImageResponse updateProductImage(Long id, ProductImageRequest productImageRequest){
-        ProductImageEntity productImageEntity = productImageRepository.findById(id)
+        ProductImage productImage = productImageRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Image not found!"));
 
-        productImageMapper.update(productImageEntity, productImageRequest);
-        return productImageMapper.toResponse(productImageRepository.save(productImageEntity));
+        productImageMapper.update(productImage, productImageRequest);
+        return productImageMapper.toResponse(productImageRepository.save(productImage));
     }
 
     public void deleteProductImage(Long id){

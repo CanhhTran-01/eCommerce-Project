@@ -13,12 +13,12 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "user_customer")
+@Table(name = "user")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,7 +27,7 @@ public class UserEntity {
     private String fullName;
 
     @Column(name = "user_code", unique = true)
-    private String customerCode;
+    private String userCode;
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -65,17 +65,17 @@ public class UserEntity {
         this.updatedAt = LocalDateTime.now();
     }
 
-    @OneToOne(mappedBy = "userEntity")
-    private AccountEntity accountEntity;
+    @OneToOne(mappedBy = "user")
+    private Account account;
 
-    @OneToMany(mappedBy = "userEntity")
-    private List<CartEntity> cartEntityList = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<Cart> cartList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "userEntity")
-    private List<OrderEntity> orderEntityList = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<Order> orderList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "userEntity")
-    private List<ReviewEntity> reviewEntityList = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<Review> reviewList = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -83,6 +83,6 @@ public class UserEntity {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private Set<ProductEntity> wishList = new HashSet<>();
+    private Set<Product> wishList = new HashSet<>();
 
 }

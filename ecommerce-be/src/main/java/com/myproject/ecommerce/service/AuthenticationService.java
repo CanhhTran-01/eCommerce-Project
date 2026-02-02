@@ -5,8 +5,8 @@ import com.myproject.ecommerce.dto.request.IntrospectRequest;
 import com.myproject.ecommerce.dto.request.LogoutRequest;
 import com.myproject.ecommerce.dto.response.AuthenticationResponse;
 import com.myproject.ecommerce.dto.response.IntrospectResponse;
-import com.myproject.ecommerce.entity.AccountEntity;
-import com.myproject.ecommerce.entity.InvalidTokenEntity;
+import com.myproject.ecommerce.entity.Account;
+import com.myproject.ecommerce.entity.InvalidToken;
 import com.myproject.ecommerce.enums.ErrorCode;
 import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.repository.AccountRepository;
@@ -30,18 +30,18 @@ public class AuthenticationService {
     // login
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest){
 
-        AccountEntity accountEntity = accountRepository.findByUsername(authenticationRequest.getUsername())
+        Account account = accountRepository.findByUsername(authenticationRequest.getUsername())
                 .orElseThrow(()-> new BaseException(ErrorCode.USERNAME_EXISTED));
 
         // check password
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         boolean authenticated =  passwordEncoder.matches(authenticationRequest.getPassword(),
-                                                                accountEntity.getPassword());
+                                                                account.getPassword());
         if (!authenticated)
             throw new BaseException(ErrorCode.UNAUTHENTICATED);
 
         // take token
-        String token = jwtService.generateToken(accountEntity);
+        String token = jwtService.generateToken(account);
 
         return AuthenticationResponse.builder()
                 .token(token)
@@ -66,11 +66,11 @@ public class AuthenticationService {
 
         JWTClaimsSet jwtClaimsSet = jwtService.verifyToken(logoutRequest.getToken());
 
-        InvalidTokenEntity invalidTokenEntity = InvalidTokenEntity.builder()
+        InvalidToken invalidToken = InvalidToken.builder()
                 .id(jwtClaimsSet.getJWTID())
                 .expiryTime(jwtClaimsSet.getExpirationTime())
                 .build();
 
-        invalidatedTokenRepository.save(invalidTokenEntity);
+        invalidatedTokenRepository.save(invalidToken);
     }
 }

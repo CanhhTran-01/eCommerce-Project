@@ -2,7 +2,7 @@ package com.myproject.ecommerce.service;
 
 import com.myproject.ecommerce.dto.request.OrderRequest;
 import com.myproject.ecommerce.dto.response.OrderResponse;
-import com.myproject.ecommerce.entity.OrderEntity;
+import com.myproject.ecommerce.entity.Order;
 import com.myproject.ecommerce.mapper.OrderMapper;
 import com.myproject.ecommerce.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +19,9 @@ public class OrderService {
     private final OrderMapper orderMapper;
 
     public OrderResponse createOrder(OrderRequest orderRequest){
-        OrderEntity orderEntity = orderMapper.toEntity(orderRequest);
+        Order order = orderMapper.toEntity(orderRequest);
 
-        return orderMapper.toResponse(orderRepository.save(orderEntity));
+        return orderMapper.toResponse(orderRepository.save(order));
     }
 
     @Transactional(readOnly = true)
@@ -33,12 +33,12 @@ public class OrderService {
     }
 
     public OrderResponse updateOrder(Long id, OrderRequest orderRequest){
-        OrderEntity orderEntity = orderRepository.findById(id)
+        Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order doesn't existed !"));
 
-        orderMapper.update(orderEntity, orderRequest);
+        orderMapper.update(order, orderRequest);
 
-        return orderMapper.toResponse(orderRepository.save(orderEntity));
+        return orderMapper.toResponse(orderRepository.save(order));
     }
 
 }

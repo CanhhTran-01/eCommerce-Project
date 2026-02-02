@@ -17,7 +17,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductEntity {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -67,17 +67,17 @@ public class ProductEntity {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private CategoryEntity categoryEntity;
+    private Category category;
 
-    @OneToMany(mappedBy = "productEntity", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductImageEntity> productImageEntityList = new ArrayList<>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductImage> productImageList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "productEntity")
-    private List<OrderItemEntity> orderItemEntityList = new ArrayList<>();
+    @OneToMany(mappedBy = "product")
+    private List<OrderItem> orderItemList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "productEntity")
-    private List<ReviewEntity> reviewEntityList = new ArrayList<>();
+    @OneToMany(mappedBy = "product")
+    private List<Review> reviewList = new ArrayList<>();
 
     @ManyToMany(mappedBy = "wishList")
-    private Set<UserEntity> wishedBy = new HashSet<>();
+    private Set<User> wishedBy = new HashSet<>();
 }

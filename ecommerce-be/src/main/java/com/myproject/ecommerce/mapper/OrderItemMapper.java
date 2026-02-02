@@ -2,13 +2,13 @@ package com.myproject.ecommerce.mapper;
 
 import com.myproject.ecommerce.dto.request.OrderItemRequest;
 import com.myproject.ecommerce.dto.response.OrderItemResponse;
-import com.myproject.ecommerce.entity.OrderItemEntity;
+import com.myproject.ecommerce.entity.OrderItem;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface OrderItemMapper {
-    OrderItemEntity toEntity(OrderItemRequest orderItemRequest);
-    OrderItemResponse toResponse(OrderItemEntity orderItemEntity);
-    void update(@MappingTarget OrderItemEntity orderItemEntity, OrderItemRequest orderItemRequest);
+    OrderItem toEntity(OrderItemRequest orderItemRequest);
+    OrderItemResponse toResponse(OrderItem orderItem);
+    void update(@MappingTarget OrderItem orderItem, OrderItemRequest orderItemRequest);
 }

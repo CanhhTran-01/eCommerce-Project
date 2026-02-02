@@ -4,35 +4,40 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "category")
+@Table(name = "review")
 @Data
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryEntity {
+public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "category_name")
-    private String categoryName;
+    @Column(name = "rating")
+    private Integer rating;
+
+    @Column(name = "title")
+    private String title;
 
     @Lob
-    @Column(name = "category_description")
-    private String categoryDescription;
+    @Column(name = "comment")
+    private String comment;
 
-    @Column(name = "display_order")
-    private Integer displayOrder;
+    @Lob
+    @Column(name = "image_url")
+    private String imageUrl;
 
-    @Column(name = "created_at")
+    @Column(name = "likes")
+    private Long likes;
+
+    @Column(name="created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
     @PrePersist
@@ -40,12 +45,16 @@ public class CategoryEntity {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
-
     @PreUpdate
     protected void onUpdate(){
         this.updatedAt = LocalDateTime.now();
     }
 
-    @OneToMany (mappedBy = "categoryEntity")
-    private List<ProductEntity> productEntityList = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 }

@@ -4,7 +4,7 @@ import com.myproject.ecommerce.dto.request.CategoryReorderItem;
 import com.myproject.ecommerce.dto.request.CategoryReorderRequest;
 import com.myproject.ecommerce.dto.request.CategoryRequest;
 import com.myproject.ecommerce.dto.response.CategoryResponse;
-import com.myproject.ecommerce.entity.CategoryEntity;
+import com.myproject.ecommerce.entity.Category;
 import com.myproject.ecommerce.mapper.CategoryMapper;
 import com.myproject.ecommerce.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +22,13 @@ public class CategoryService {
 
     // tạo mới 1 category
     public CategoryResponse createCategory(CategoryRequest categoryRequest){
-        CategoryEntity categoryEntity = categoryMapper.toEntity(categoryRequest);
+        Category category = categoryMapper.toEntity(categoryRequest);
 
         // set tay
         Integer maxOrder = categoryRepository.findMaxDisplayOrder();
-        categoryEntity.setDisplayOrder(maxOrder == null ? 1 : maxOrder+1);
+        category.setDisplayOrder(maxOrder == null ? 1 : maxOrder+1);
 
-        return categoryMapper.toResponse(categoryRepository.save(categoryEntity));
+        return categoryMapper.toResponse(categoryRepository.save(category));
     }
 
     // lấy ra category list
@@ -45,10 +45,10 @@ public class CategoryService {
 
         for (CategoryReorderItem item : categoryReorderRequest.getCategoryReorderRequestList()){
 
-            CategoryEntity categoryEntity = categoryRepository.findById(item.getId())
+            Category category = categoryRepository.findById(item.getId())
                     .orElseThrow(() -> new RuntimeException("Category not found"));
 
-            categoryEntity.setDisplayOrder(item.getDisplayOrder());
+            category.setDisplayOrder(item.getDisplayOrder());
 
         }
         return categoryRepository.findAllByOrderByDisplayOrderAsc()

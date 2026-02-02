@@ -16,7 +16,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class InvalidTokenEntity {
+public class InvalidToken {
     @Id
     @Column(name = "id")
     private String id;

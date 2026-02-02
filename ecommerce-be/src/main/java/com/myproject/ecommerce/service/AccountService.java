@@ -2,8 +2,8 @@ package com.myproject.ecommerce.service;
 
 import com.myproject.ecommerce.dto.request.AccountRequest;
 import com.myproject.ecommerce.dto.response.AccountResponse;
-import com.myproject.ecommerce.entity.UserEntity;
-import com.myproject.ecommerce.entity.AccountEntity;
+import com.myproject.ecommerce.entity.User;
+import com.myproject.ecommerce.entity.Account;
 import com.myproject.ecommerce.enums.ErrorCode;
 import com.myproject.ecommerce.enums.Role;
 import com.myproject.ecommerce.exception.BaseException;
@@ -34,25 +34,25 @@ public class AccountService {
         }
 
         // MapStruct convert DTO->Entity
-        AccountEntity accountEntity = accountMapper.toEntity(accountRequest);
+        Account account = accountMapper.toEntity(accountRequest);
 
         // set mat khau
-        accountEntity.setPassword(passwordEncoder.encode(accountRequest.getPassword()));
+        account.setPassword(passwordEncoder.encode(accountRequest.getPassword()));
 
         // set roles
         Set<Role> accountRoles = new HashSet<>();
         accountRoles.add(Role.USER); // setting default role when account is created
-        accountEntity.setAccountRoles(accountRoles);
+        account.setAccountRoles(accountRoles);
 
         // set tay Customer (tạo acc sẽ tạo Customer mặc định)
-        UserEntity userEntity = new UserEntity();
-        userEntity.setFullName(UserNameRandomUtils.generateDefaultName());
+        User user = new User();
+        user.setFullName(UserNameRandomUtils.generateDefaultName());
 
-        accountEntity.setUserEntity(userEntity);
-        userEntity.setAccountEntity(accountEntity);
+        account.setUser(user);
+        user.setAccount(account);
 
-        accountRepository.save(accountEntity); // nếu cascade chưa set -> Hibernate tự động throw Exception
-        return accountMapper.toResponse(accountEntity);
+        accountRepository.save(account); // nếu cascade chưa set -> Hibernate tự động throw Exception
+        return accountMapper.toResponse(account);
     }
 
     @Transactional(readOnly = true)
@@ -69,12 +69,12 @@ public class AccountService {
     }
 
     public AccountResponse updateAccount(Long id, AccountRequest accountRequest){
-        AccountEntity accountEntity = accountRepository.findById(id)
+        Account account = accountRepository.findById(id)
                 .orElseThrow(() ->  new BaseException (ErrorCode.ACCOUNT_NOT_FOUND));
 
         // dùng map struct thay vì phải map bằng tay
-        accountMapper.updateAccount(accountEntity, accountRequest);
-        return accountMapper.toResponse(accountRepository.save(accountEntity));
+        accountMapper.updateAccount(account, accountRequest);
+        return accountMapper.toResponse(accountRepository.save(account));
     }
 
     // delete acc

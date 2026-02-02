@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderEntity {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -73,12 +73,12 @@ public class OrderEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
+    private User user;
 
-    @OneToMany(mappedBy = "orderEntity")
-    private List<OrderItemEntity> orderItemEntityList = new ArrayList<>();
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItemList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "orderEntity")
-    private PaymentEntity paymentEntity;
+    @OneToOne(mappedBy = "order")
+    private Payment payment;
 
 }

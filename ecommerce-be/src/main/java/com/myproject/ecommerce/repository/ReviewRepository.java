@@ -1,7 +1,7 @@
 package com.myproject.ecommerce.repository;
 
-import com.myproject.ecommerce.entity.ReviewEntity;
+import com.myproject.ecommerce.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
+public interface ReviewRepository extends JpaRepository<Review, Long> {
 }
