@@ -10,9 +10,10 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserResponse {
+public class UserInfoResponse {
     private Long id;
     private String fullName;
+    private String userCode;
     private String phoneNumber;
     private String gender;
     private LocalDate dateOfBirth;

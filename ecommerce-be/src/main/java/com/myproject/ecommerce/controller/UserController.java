@@ -1,7 +1,7 @@
 package com.myproject.ecommerce.controller;
 
 import com.myproject.ecommerce.dto.request.UserRequest;
-import com.myproject.ecommerce.dto.response.UserResponse;
+import com.myproject.ecommerce.dto.response.UserInfoResponse;
 import com.myproject.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +15,17 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/api/customers")
-    public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest){
+    public ResponseEntity<UserInfoResponse> createUser(@RequestBody UserRequest userRequest){
         return ResponseEntity.ok(userService.createUser(userRequest));
     }
 
     @GetMapping("/api/customers")
-    public ResponseEntity<List<UserResponse>> getUserList(){
+    public ResponseEntity<List<UserInfoResponse>> getUserList(){
         return ResponseEntity.ok(userService.getUserList());
     }
 
     @PutMapping("/api/customers/{id}")
-    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id,
+    public ResponseEntity<UserInfoResponse> updateUser(@PathVariable Long id,
                                                        @RequestBody UserRequest userRequest){
         return ResponseEntity.ok(userService.updateUser(id, userRequest));
     }
