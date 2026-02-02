@@ -7,6 +7,7 @@
 
     <title> Tài khoản của tôi </title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/main.css" />
 </head>
 
@@ -18,12 +19,14 @@
                     <div class="avatar">
                         <img src="../assets/icons/avatar-test.jpg" alt="avatar">
                     </div>
+                    <div>
+                        <h5 id="nickName"></h5>
+                    </div>
                     <div class="profile-actions">
-                        <button id="editProfileBtn" class="btn-edit-profile"> Chỉnh sửa hồ sơ </button>
+                        <button id="editProfileBtn" class="btn-edit-profile"> Chỉnh sửa </button>
                     </div>
                 </div>
                 <nav class="sidebar-nav">
-                    <h4> user_012412 </h4>
                     <a href="account-info.html" class="active">Tổng quan</a>
                     <a href="my-orders.html">Đơn hàng của tôi</a>
                     <a href="wishlist.html">Yêu thích</a>
@@ -41,9 +44,10 @@
                                 <i class="fas fa-user"></i> Thông tin tài khoản
                             </a>
                         </div>
+
                         <div id="collapseProfile" class="collapse show" data-bs-parent="#accountAccordion">
                             <div class="card-body">
-                                <div id="profileBox" class="profile-box">Đang tải...</div>
+                                <div id="profileBox" class="profile-box"></div>
                             </div>
                         </div>
                     </div>
@@ -69,6 +73,7 @@
 
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script type="module" src="../js/main.js"></script>
+    <script type="module" src="../js/pages/account-info.js"></script>
 </body>
 
 </html>
