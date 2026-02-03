@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-top">
+        <div class="container-fluid navbar-container">
+            <!-- Logo -->
+            <a class="navbar-logo" href="#">
+                <i class="fas fa-shopping-bag"></i>
+                <span>eCommerce</span>
+            </a>
+
+            <!-- Search Bar -->
+            <div class="search-box-wrapper d-none d-lg-block">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search products, brands and more..."
+                        id="searchInput">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="navbar-actions">
+                <div class="action-item">
+                    <button class="btn-action" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge-count" id="cartCount">0</span>
+                    </button>
+                </div>
+
+                <div class="action-item">
+                    <button class="btn-action">
+                        <i class="fas fa-heart"></i>
+                        <span class="badge-count">0</span>
+                    </button>
+                </div>
+
+                <div class="action-item dropdown">
+                    <button class="btn-action dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fas fa-user"></i>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" id="infoLink" href="/ecommerce-fe/pages/account-info.html"><i
+                                    class="fas fa-user"></i> Profile</a></li>
+                        <li><a class="dropdown-item" href=""><i class="fas fa-box"></i> My Orders</a></li>
+                        <li><a class="dropdown-item" href=""><i class="fas fa-heart"></i> Wishlist</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li><a class="dropdown-item text-danger" id="loginLink" href="/ecommerce-fe/pages/login.html">
+                                <i class="fas fa-sign-in-alt"></i> Login</a>
+                        </li>
+
+                        <li><a class="dropdown-item text-danger d-none" id="logoutLink" href="#">
+                                <i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <!-- Mobile Search Toggle -->
+            <button class="btn-mobile-search d-lg-none">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Cart Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Shopping Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="cartContent" class="cart-content">
+                <p class="text-muted text-center">Your cart is empty</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container-fluid products-page-container">
+        <div class="row">
+            <!-- Sidebar Category Filter (Always Open) -->
+            <aside class="col-lg-2 products-sidebar">
+                <div class="category-filter">
+                    <h5 class="filter-title">DANH MỤC</h5>
+                    <div class="category-list">
+                        <div class="category-item">
+                            <input type="checkbox" id="cat1" class="category-checkbox">
+                            <label for="cat1">Đời sống</label>
+                        </div>
+                        <div class="category-item">
+                            <input type="checkbox" id="cat2" class="category-checkbox">
+                            <label for="cat2">Thời trang</label>
+                        </div>
+                        <div class="category-item">
+                            <input type="checkbox" id="cat3" class="category-checkbox">
+                            <label for="cat3">Điện thoại</label>
+                        </div>
+                        <div class="category-item">
+                            <input type="checkbox" id="cat4" class="category-checkbox">
+                            <label for="cat4">Laptop & PC</label>
+                        </div>
+                        <div class="category-item">
+                            <input type="checkbox" id="cat5" class="category-checkbox">
+                            <label for="cat5">Phụ kiện</label>
+                        </div>
+                        <div class="category-item">
+                            <input type="checkbox" id="cat6" class="category-checkbox">
+                            <label for="cat6">Thiết bị điện tử</label>
+                        </div>
+                        <div class="category-item">
+                            <input type="checkbox" id="cat7" class="category-checkbox">
+                            <label for="cat7">Thể thao</label>
+                        </div>
+                        <div class="category-item">
+                            <input type="checkbox" id="cat8" class="category-checkbox">
+                            <label for="cat8">Du lịch</label>
+                        </div>
+                    </div>
+
+                    <h5 class="filter-title" style="margin-top: 20px;">GIÁ</h5>
+                    <div class="price-filter">
+                        <input type="number" class="price-input" placeholder="Min" id="priceMin">
+                        <input type="number" class="price-input" placeholder="Max" id="priceMax">
+                        <button class="btn btn-primary btn-sm" style="width: 100%; margin-top: 10px;">Apply</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Products Grid -->
+            <main class="col-lg-10 products-main">
+                <div class="products-header">
+                    <h3>Tất cả sản phẩm</h3>
+                    <div class="sort-options">
+                        <select class="form-select form-select-sm">
+                            <option>Mới nhất</option>
+                            <option>Bán chạy nhất</option>
+                            <option>Giá: Thấp đến Cao</option>
+                            <option>Giá: Cao đến Thấp</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="products-grid">
+                    <div class="product-card"></div>
+                    <div class="product-card"></div>
+                    <div class="product-card"></div>
+                    <div class="product-card"></div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="../assets/images/product1.jpg" alt="Product 1">
+                            <span class="discount-badge">-30%</span>
+                            <button class="wishlist-btn">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                        <div class="product-info">
+                            <h6 class="product-name">Premium Wireless Headphones</h6>
+                            <div class="product-rating">
+                                <span class="stars">★★★★★</span>
+                                <span class="review-count">(256)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">$29.99</span>
+                                <span class="original-price">$42.99</span>
+                            </div>
+                            <button class="add-to-cart-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card"></div>
+                    <div class="product-card"></div>
+                    <div class="product-card"></div>
+                    <div class="product-card"></div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="../assets/images/product1.jpg" alt="Product 1">
+                            <span class="discount-badge">-30%</span>
+                            <button class="wishlist-btn">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                        <div class="product-info">
+                            <h6 class="product-name">Premium Wireless Headphones</h6>
+                            <div class="product-rating">
+                                <span class="stars">★★★★★</span>
+                                <span class="review-count">(256)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">$29.99</span>
+                                <span class="original-price">$42.99</span>
+                            </div>
+                            <button class="add-to-cart-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card"></div>
+                    <div class="product-card"></div>
+                </div>
+
+                <!-- Pagination -->
+                <nav class="products-pagination">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container-fluid footer-container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h6>About Us</h6>
+                    <ul>
+                        <li><a href="#">About eCommerce</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h6>Customer Service</h6>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h6>Policies</h6>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Security</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h6>Follow Us</h6>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 eCommerce Shop. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../js/pages/products.js"></script>
+</body>
+
+</html>

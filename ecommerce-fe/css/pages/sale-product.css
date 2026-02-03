@@ -1,0 +1,51 @@
+
+/* ===== FLASH HEADER ===== */
+.flash-header {
+    background: linear-gradient(90deg, #d0011b, #ff5f00);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+.flash-time {
+    background-color: #3f3f3f;
+    color: #fff;
+    text-align: center;
+    padding: 12px 0;
+    cursor: pointer;
+}
+
+
+.flash-time.active {
+    background-color: #ee4d2d;
+}
+
+
+.flash-time span {
+    display: block;
+    font-size: 14px;
+}
+
+
+/* ===== TAB MENU ===== */
+.flash-tabs {
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+
+.flash-tabs a {
+    padding: 14px 20px;
+    display: inline-block;
+    color: #333;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+
+.flash-tabs a.active {
+    color: #ee4d2d;
+    border-bottom: 3px solid #ee4d2d;
+}
+
+
