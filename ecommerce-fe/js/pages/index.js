@@ -1,8 +1,9 @@
 
 import { toggleAuthLinks, logout } from "../utils/auth.js";
-import { fetchSaleProducts } from "../api/productOnSaleAPI.js";
+import { fetchSaleProducts } from "../api/productAPI.js";
 import { formatVND } from "../utils/formatCurrency.js";
 import { fetchCategories } from "../api/categoryApi.js";
+import { fetchProductByCategoryId } from "../api/productAPI.js";
 
 // auth link toggling and logout handling
 export function handleIndexPage() {
@@ -17,6 +18,71 @@ export function handleIndexPage() {
     });
 }
 
+
+// generate category links for index page
+export async function generateCategoryLinks() {
+    const categoryHomeView = document.getElementById('categoryHomeView');
+
+    try {
+        const categories = await fetchCategories();
+
+        // store categories in session storage for later use
+        sessionStorage.setItem('categoriesList', JSON.stringify(categories));
+
+        // render category links HTML
+        renderCategoryLinks(categories.data, categoryHomeView);
+
+        // setup category click handlers
+        handleCategoryClick();
+
+    } catch (error) {
+        console.error('Error generating category links:', error);
+        categoryHomeView.innerHTML = `<div class="text-danger"><strong>Không thể tải danh mục.</strong></div>`;
+    }
+}
+// generate category links HTML
+function renderCategoryLinks(categories, categoryHomeView) {
+    categoryHomeView.innerHTML = categories.map(category => `
+                <div class="category-item-wrapper" data-category-id="${category.id}">
+                    <div class="category-item-circle">
+                        <img src="${category.imageUrl}" alt="${category.categoryName}">
+                    </div>
+                    <span class="category-item-text">${category.categoryName}</span>
+                </div>
+    `).join('');
+}
+// handle category click at home page
+function handleCategoryClick() {
+    const categoryItems = document.querySelectorAll('.category-item-wrapper');
+
+    categoryItems.forEach(item => {
+        item.addEventListener('click', async () => {
+            const clickedCategoryId = Number(item.dataset.categoryId);
+            console.log('Clicked category ID:', clickedCategoryId);
+
+            const cachedProducts = sessionStorage.getItem(`productsByCategory_${clickedCategoryId}`);
+            if (cachedProducts) {
+                // navigate to product listing page if products are already cached
+                window.location.href = window.location.origin + '/ecommerce-fe/pages/product-list.html';
+                return;
+            }
+
+            try {
+                const productsByCategory = await fetchProductByCategoryId(clickedCategoryId);
+
+                // store products by category in session storage
+                sessionStorage.setItem(`productsByCategory_${clickedCategoryId}`, JSON.stringify(productsByCategory.data));
+
+                // navigate to product listing page
+                window.location.href = window.location.origin + '/ecommerce-fe/pages/product-list.html';
+                
+            } catch (error) {
+                console.error('Error fetching products by category ID:', error);
+                alert('Không thể tải sản phẩm cho danh mục này.');
+            }
+        });
+    });
+}
 
 // load and display sale products on index page
 export async function handleSaleProductsView() {
@@ -71,37 +137,6 @@ function generSaleProductsHTML(products, saleProductsSection) {
                 <button class="add-to-cart-btn">Add to Cart</button>
             </div>
         </div>
-    `).join('');
-}
-
-
-// generate category links for index page
-export async function generateCategoryLinks() {
-    const categoryHomeView = document.getElementById('categoryHomeView');
-
-    try {
-        const categories = await fetchCategories();
-
-        // store categories in session storage for later use
-        sessionStorage.setItem('categoriesList', JSON.stringify(categories));
-
-        // render category links HTML
-        renderCategoryLinks(categories.data, categoryHomeView);
-
-    } catch (error) {
-        console.error('Error generating category links:', error);
-        categoryHomeView.innerHTML = `<div class="text-danger"><strong>Không thể tải danh mục.</strong></div>`;
-    }
-}
-// generate category links HTML
-function renderCategoryLinks(categories, categoryHomeView) {
-    categoryHomeView.innerHTML = categories.map(category => `
-                <div class="category-item-wrapper">
-                    <div class="category-item-circle">
-                        <img src="${category.imageUrl}" alt="${category.categoryName}">
-                    </div>
-                    <span class="category-item-text">${category.categoryName}</span>
-                </div>
     `).join('');
 }
 
