@@ -9,14 +9,9 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductResponse {
+public class ProductOnSaleResponse {
     private Long id;
     private String productName;
-    private String brand;
-    private String productCode;
-    private String shortDescription;
-    private String description;
     private BigDecimal price;
     private BigDecimal discountPrice;
-    private Integer stockQuantity;
 }

@@ -29,8 +29,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final String[] PUBLIC_ENDPOINTS = {"/api/accounts", "/api/auth/login",
+    private final String[] PUBLIC_ENDPOINTS_POST = {"/api/accounts", "/api/auth/login",
             "/api/auth/introspect", "/api/auth/logout"};
+
+    private final String[] PUBLIC_ENDPOINTS_GET = {"/api/products/sale-list"};
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
@@ -43,7 +45,8 @@ public class SecurityConfig {
         httpSecurity.cors(Customizer.withDefaults());
 
         httpSecurity.authorizeHttpRequests( request -> request
-                        .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
+                        .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS_POST).permitAll()
+                        .requestMatchers(HttpMethod.GET, PUBLIC_ENDPOINTS_GET).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/accounts").hasRole(Role.ADMIN.name())
                 .anyRequest().authenticated());
 
