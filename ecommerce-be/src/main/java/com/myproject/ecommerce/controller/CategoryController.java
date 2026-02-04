@@ -2,6 +2,7 @@ package com.myproject.ecommerce.controller;
 
 import com.myproject.ecommerce.dto.request.CategoryReorderRequest;
 import com.myproject.ecommerce.dto.request.CategoryRequest;
+import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.dto.response.CategoryResponse;
 import com.myproject.ecommerce.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -11,31 +12,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/categories")
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PostMapping("/api/categories")
+
+    @PostMapping("")
     public ResponseEntity<CategoryResponse> createCategory(@RequestBody CategoryRequest categoryRequest){
         return ResponseEntity.ok(categoryService.createCategory(categoryRequest));
     }
 
-    @GetMapping("/api/categories")
-    public ResponseEntity<List<CategoryResponse>> getCategoryList() {
-        return ResponseEntity.ok(categoryService.getCategoryList());
-    }
 
-    @PutMapping("/api/categories")
-    public ResponseEntity<List<CategoryResponse>> reorderCategories(@RequestBody CategoryReorderRequest
-                                                                            categoryReorderRequest){
+    @GetMapping("/list")
+    public ResponseEntity<ApiResponse<List<CategoryResponse>>> getCategoryList() {
 
-        return ResponseEntity.ok(categoryService.reorderCategoryList(categoryReorderRequest));
-    }
-
-    @DeleteMapping("/api/categories/{id}")
-    public String deleteCategory(@PathVariable Long id){
-        categoryService.deleteCategory(id);
-        return ("Deleted category with id: " + id);
+        var apiResponse = new ApiResponse<>(
+                true,
+                null,
+                categoryService.getCategoryList()
+        );
+        return ResponseEntity.ok(apiResponse);
     }
 
 }

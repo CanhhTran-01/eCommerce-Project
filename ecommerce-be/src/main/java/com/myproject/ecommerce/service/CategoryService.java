@@ -1,7 +1,5 @@
 package com.myproject.ecommerce.service;
 
-import com.myproject.ecommerce.dto.request.CategoryReorderItem;
-import com.myproject.ecommerce.dto.request.CategoryReorderRequest;
 import com.myproject.ecommerce.dto.request.CategoryRequest;
 import com.myproject.ecommerce.dto.response.CategoryResponse;
 import com.myproject.ecommerce.entity.Category;
@@ -31,34 +29,13 @@ public class CategoryService {
         return categoryMapper.toResponse(categoryRepository.save(category));
     }
 
-    // lấy ra category list
+    // get list category
     @Transactional(readOnly = true)
     public List<CategoryResponse> getCategoryList(){
-        return categoryRepository.findAllByOrderByDisplayOrderAsc()
+        return categoryRepository.findAll()
                 .stream()
                 .map(categoryMapper::toResponse)
                 .toList();
     }
 
-    // Reorder category list
-    public List<CategoryResponse> reorderCategoryList(CategoryReorderRequest categoryReorderRequest){
-
-        for (CategoryReorderItem item : categoryReorderRequest.getCategoryReorderRequestList()){
-
-            Category category = categoryRepository.findById(item.getId())
-                    .orElseThrow(() -> new RuntimeException("Category not found"));
-
-            category.setDisplayOrder(item.getDisplayOrder());
-
-        }
-        return categoryRepository.findAllByOrderByDisplayOrderAsc()
-                .stream()
-                .map(categoryMapper::toResponse)
-                .toList();
-    }
-
-    // delete category
-    public void deleteCategory(Long id){
-        categoryRepository.deleteById(id);
-    }
 }

@@ -32,7 +32,10 @@ public class SecurityConfig {
     private final String[] PUBLIC_ENDPOINTS_POST = {"/api/accounts", "/api/auth/login",
             "/api/auth/introspect", "/api/auth/logout"};
 
-    private final String[] PUBLIC_ENDPOINTS_GET = {"/api/products/sale-list"};
+    private final String[] PUBLIC_ENDPOINTS_GET = {
+            "/api/products/sale-list",
+            "api/categories/list"
+    };
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
