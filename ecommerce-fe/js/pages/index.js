@@ -2,6 +2,7 @@
 import { toggleAuthLinks, logout } from "../utils/auth.js";
 import { fetchSaleProducts } from "../api/productOnSaleAPI.js";
 import { formatVND } from "../utils/formatCurrency.js";
+import { fetchCategories } from "../api/categoryApi.js";
 
 // auth link toggling and logout handling
 export function handleIndexPage() {
@@ -15,6 +16,7 @@ export function handleIndexPage() {
         logout();
     });
 }
+
 
 // load and display sale products on index page
 export async function handleSaleProductsView() {
@@ -38,7 +40,6 @@ export async function handleSaleProductsView() {
         saleProductsSection.innerHTML = `<div class="text-danger"><strong>Không thể tải lên sản phẩm.</strong></div>`;
     }
 }
-
 // generate HTML for sale products
 function generSaleProductsHTML(products, saleProductsSection) {
     // handle case when no products are available
@@ -72,4 +73,36 @@ function generSaleProductsHTML(products, saleProductsSection) {
         </div>
     `).join('');
 }
+
+
+// generate category links for index page
+export async function generateCategoryLinks() {
+    const categoryHomeView = document.getElementById('categoryHomeView');
+
+    try {
+        const categories = await fetchCategories();
+
+        // store categories in session storage for later use
+        sessionStorage.setItem('categoriesList', JSON.stringify(categories));
+
+        // render category links HTML
+        renderCategoryLinks(categories.data, categoryHomeView);
+
+    } catch (error) {
+        console.error('Error generating category links:', error);
+        categoryHomeView.innerHTML = `<div class="text-danger"><strong>Không thể tải danh mục.</strong></div>`;
+    }
+}
+// generate category links HTML
+function renderCategoryLinks(categories, categoryHomeView) {
+    categoryHomeView.innerHTML = categories.map(category => `
+                <div class="category-item-wrapper">
+                    <div class="category-item-circle">
+                        <img src="${category.imageUrl}" alt="${category.categoryName}">
+                    </div>
+                    <span class="category-item-text">${category.categoryName}</span>
+                </div>
+    `).join('');
+}
+
 

@@ -1,6 +1,6 @@
 
 import { handleLogin } from "./pages/login.js";
-import { handleIndexPage, handleSaleProductsView } from "./pages/index.js";
+import { handleIndexPage, handleSaleProductsView, generateCategoryLinks } from "./pages/index.js";
 import { isAuthenticated } from "./utils/auth.js";
 
 // navigate to login page
@@ -11,7 +11,8 @@ if (window.location.pathname.endsWith('login.html')){
 // navigate to index page
 if (window.location.pathname.endsWith('index.html')){
     handleIndexPage();
-    handleSaleProductsView();
+    generateCategoryLinks();  // gen category links
+    handleSaleProductsView(); // load sale products
 }
 
 // navigate to account info page
