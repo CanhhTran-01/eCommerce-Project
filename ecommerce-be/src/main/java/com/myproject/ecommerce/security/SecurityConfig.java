@@ -33,8 +33,8 @@ public class SecurityConfig {
             "/api/auth/introspect", "/api/auth/logout"};
 
     private final String[] PUBLIC_ENDPOINTS_GET = {
-            "/api/products/sale-list",
-            "api/categories/list"
+            "/api/products/**",
+            "/api/categories/**"
     };
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;

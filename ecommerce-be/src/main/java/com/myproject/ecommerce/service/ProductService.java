@@ -1,7 +1,7 @@
 package com.myproject.ecommerce.service;
 
 import com.myproject.ecommerce.dto.request.ProductRequest;
-import com.myproject.ecommerce.dto.response.ProductOnSaleResponse;
+import com.myproject.ecommerce.dto.response.ProductSummaryResponse;
 import com.myproject.ecommerce.entity.Product;
 import com.myproject.ecommerce.mapper.ProductMapper;
 import com.myproject.ecommerce.repository.ProductRepository;
@@ -19,33 +19,30 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
-    public ProductOnSaleResponse createProduct(ProductRequest productRequest){
+    public ProductSummaryResponse createProduct(ProductRequest productRequest){
         Product product = productMapper.toEntity(productRequest);
 
         // set product code
         product.setProductCode(ProductCodeMakingUtils.generateProductCode());
 
-        return productMapper.toProductOnSaleResponse(productRepository.save(product));
+        return productMapper.toProductSummaryResponse(productRepository.save(product));
     }
 
     // get product on sale list
     @Transactional(readOnly = true)
-    public List<ProductOnSaleResponse> getProductOnSaleList(){
+    public List<ProductSummaryResponse> getProductOnSaleList(){
         return productRepository.getProductOnSaleList()
                 .stream()
-                .map(productMapper::toProductOnSaleResponse)
+                .map(productMapper::toProductSummaryResponse)
                 .toList();
     }
 
-    public ProductOnSaleResponse updateProject(Long id, ProductRequest productRequest){
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found!"));
-
-        productMapper.update(product, productRequest);
-        return productMapper.toProductOnSaleResponse(productRepository.save(product));
-    }
-
-    public void deleteProduct(Long id){
-        productRepository.deleteById(id);
+    // get product by category
+    @Transactional(readOnly = true)
+    public List<ProductSummaryResponse> getProductsByCategory(Long categoryId){
+        return productRepository.getProductByCategoryId(categoryId)
+                .stream()
+                .map(productMapper::toProductSummaryResponse)
+                .toList();
     }
 }

@@ -16,4 +16,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             WHERE p.discountPrice IS NOT NULL AND p.discountPrice < p.price
     """)
     List<Product> getProductOnSaleList();
+
+    List<Product> getProductByCategoryId(Long categoryId);
 }
