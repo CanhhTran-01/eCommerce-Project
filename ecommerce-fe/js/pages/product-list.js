@@ -1,5 +1,5 @@
 
-import { formatVND } from "../utils/formatCurrency.js";
+import { formatVND } from "../utils/format.js";
 import { fetchProductByCategoryId } from "../api/productApi.js";
 
 
