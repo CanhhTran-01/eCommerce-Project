@@ -1,7 +1,7 @@
 
 import { toggleAuthLinks, logout } from "../utils/auth.js";
 import { fetchSaleProducts } from "../api/productApi.js";
-import { formatVND } from "../utils/formatCurrency.js";
+import { formatVND } from "../utils/format.js";
 import { fetchCategories } from "../api/categoryApi.js";
 
 
@@ -122,5 +122,13 @@ function generSaleProductsHTML(products, saleProductsSection) {
         </div>
     `).join('');
 }
+
+
+// handle "View All Sale Products" link click
+const viewAllSaleProductsLink = document.getElementById('viewAllSaleListLink');
+viewAllSaleProductsLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    window.location.href = `${window.location.origin}/ecommerce-fe/pages/sale-products.html`;
+});
 
 

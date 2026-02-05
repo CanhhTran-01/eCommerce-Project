@@ -93,7 +93,8 @@ public class SecurityConfig {
 
         corsConfiguration.setAllowedOrigins(List.of(
                 "http://192.168.0.100:5500",
-                "http://localhost:5500"
+                "http://localhost:5500",
+                "http://192.168.0.102:5500"
         ));
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.addAllowedHeader("*");
