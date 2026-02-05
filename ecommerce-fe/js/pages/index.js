@@ -1,9 +1,9 @@
 
 import { toggleAuthLinks, logout } from "../utils/auth.js";
-import { fetchSaleProducts } from "../api/productAPI.js";
+import { fetchSaleProducts } from "../api/productApi.js";
 import { formatVND } from "../utils/formatCurrency.js";
 import { fetchCategories } from "../api/categoryApi.js";
-import { fetchProductByCategoryId } from "../api/productAPI.js";
+
 
 // auth link toggling and logout handling
 export function handleIndexPage() {
@@ -32,7 +32,7 @@ export async function generateCategoryLinks() {
         // render category links HTML
         renderCategoryLinks(categories.data, categoryHomeView);
 
-        // setup category click handlers
+        // handle category click events
         handleCategoryClick();
 
     } catch (error) {
@@ -54,35 +54,18 @@ function renderCategoryLinks(categories, categoryHomeView) {
 // handle category click at home page
 function handleCategoryClick() {
     const categoryItems = document.querySelectorAll('.category-item-wrapper');
-
+ 
     categoryItems.forEach(item => {
-        item.addEventListener('click', async () => {
-            const clickedCategoryId = Number(item.dataset.categoryId);
-            console.log('Clicked category ID:', clickedCategoryId);
-
-            const cachedProducts = sessionStorage.getItem(`productsByCategory_${clickedCategoryId}`);
-            if (cachedProducts) {
-                // navigate to product listing page if products are already cached
-                window.location.href = window.location.origin + '/ecommerce-fe/pages/product-list.html';
-                return;
-            }
-
-            try {
-                const productsByCategory = await fetchProductByCategoryId(clickedCategoryId);
-
-                // store products by category in session storage
-                sessionStorage.setItem(`productsByCategory_${clickedCategoryId}`, JSON.stringify(productsByCategory.data));
-
-                // navigate to product listing page
-                window.location.href = window.location.origin + '/ecommerce-fe/pages/product-list.html';
-                
-            } catch (error) {
-                console.error('Error fetching products by category ID:', error);
-                alert('Không thể tải sản phẩm cho danh mục này.');
-            }
+        item.addEventListener('click', () => {
+            const categoryId = item.dataset.categoryId;
+            
+            // navigate to product list page with categoryId as query parameter
+            window.location.href =
+                `${window.location.origin}/ecommerce-fe/pages/product-list.html?categoryId=${categoryId}`;
         });
     });
 }
+
 
 // load and display sale products on index page
 export async function handleSaleProductsView() {
