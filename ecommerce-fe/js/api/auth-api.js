@@ -1,9 +1,6 @@
 
-const BASE_URL = 'http://localhost:8080/eCommerce/api';
-
-
 export async function login(credentials) {
-    const response = await fetch(`${BASE_URL}/auth/login`, {
+    const response = await fetch(`http://localhost:8080/eCommerce/api/auth/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

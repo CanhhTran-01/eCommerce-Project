@@ -1,14 +1,15 @@
+import{ login } from "../api/auth-api.js";
 
-import { login } from '../api/authApi.js';
+// call functions
+handleLogin();
 
 
-export async function handleLogin(event) {
+async function handleLogin() {
     const loginForm = document.getElementById('loginForm');
     const passwordError = document.getElementById('passwordError');
 
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
@@ -16,7 +17,7 @@ export async function handleLogin(event) {
             const response = await login({ username, password });
 
             localStorage.setItem('access_token', response.data.token);
-            window.location.href = window.location.origin + '/ecommerce-fe/index.html';
+            window.location.href = window.location.origin + '/ecommerce-fe/pages/index.html';
 
         } catch (loginError) {
             console.error(loginError);

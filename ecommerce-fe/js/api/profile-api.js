@@ -1,6 +1,6 @@
 
 
-export async function getInfo() {
+export async function fetchProfile() {
     const token = localStorage.getItem('access_token');
 
     const response = await fetch('http://localhost:8080/eCommerce/api/me/info', {

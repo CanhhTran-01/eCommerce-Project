@@ -5,13 +5,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 
+    <link rel="icon" href="../assets/icons/favicon.jpg">
     <title> Tài khoản của tôi </title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/common/main.css"/>
 </head>
 
 <body>
+    
     <div class="container page-account">
         <div class="account-layout">
             <aside class="account-sidebar">
@@ -30,8 +32,8 @@
                     <a href="account-info.html" class="active">Tổng quan</a>
                     <a href="my-orders.html">Đơn hàng của tôi</a>
                     <a href="wishlist.html">Yêu thích</a>
-                    <a href="../index.html">Trang chủ</a>
-                    <a id="logoutBtn" href="/ecommerce-fe/index.html">Đăng xuất</a>
+                    <a href="./index.html">Trang chủ</a>
+                    <a id="logoutBtn">Đăng xuất</a>
                 </nav>
             </aside>
 
@@ -71,9 +73,10 @@
         </div>
     </div>
 
-    <script src="../js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="../js/main.js"></script>
-    <script type="module" src="../js/pages/account-info.js"></script>
+    
+    <!-- Scripts -->
+    <script src="../js/common/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../js/pages/profile.js"></script>
 </body>
 
 </html>
