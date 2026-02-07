@@ -26,6 +26,9 @@ public class User {
     @Column(name = "fullname")
     private String fullName;
 
+    @Column(name = "nick_name")
+    private String nickName;
+
     @Column(name = "user_code", unique = true)
     private String userCode;
 

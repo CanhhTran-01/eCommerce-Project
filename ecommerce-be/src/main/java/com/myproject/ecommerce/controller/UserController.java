@@ -1,6 +1,7 @@
 package com.myproject.ecommerce.controller;
 
-import com.myproject.ecommerce.dto.request.UserRequest;
+import com.myproject.ecommerce.dto.request.InfoUpdateRequest;
+import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.dto.response.UserInfoResponse;
 import com.myproject.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -10,29 +11,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/api/customers")
-    public ResponseEntity<UserInfoResponse> createUser(@RequestBody UserRequest userRequest){
-        return ResponseEntity.ok(userService.createUser(userRequest));
+    @PostMapping("")
+    public ResponseEntity<UserInfoResponse> createUser(@RequestBody InfoUpdateRequest infoUpdateRequest){
+        return ResponseEntity.ok(userService.createUser(infoUpdateRequest));
     }
 
-    @GetMapping("/api/customers")
-    public ResponseEntity<List<UserInfoResponse>> getUserList(){
-        return ResponseEntity.ok(userService.getUserList());
+    @PutMapping("/{userId}")
+    public ResponseEntity<ApiResponse<UserInfoResponse>> updateInfo(@PathVariable("userId") Long id,
+                                                                    @RequestBody InfoUpdateRequest infoUpdateRequest){
+
+        var apiResponse = new ApiResponse<>(
+                true,
+                null,
+                userService.updateUserInfo(id, infoUpdateRequest)
+        );
+        return ResponseEntity.ok(apiResponse);
     }
 
-    @PutMapping("/api/customers/{id}")
-    public ResponseEntity<UserInfoResponse> updateUser(@PathVariable Long id,
-                                                       @RequestBody UserRequest userRequest){
-        return ResponseEntity.ok(userService.updateUser(id, userRequest));
-    }
-
-    @DeleteMapping("/api/customers/{id}")
-    public String deleteUser(@PathVariable Long id){
-        userService.deleteUser(id);
-        return ("Deleted Customer with id " + id + " ! ");
-    }
 }

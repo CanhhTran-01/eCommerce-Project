@@ -1,6 +1,6 @@
 package com.myproject.ecommerce.service;
 
-import com.myproject.ecommerce.dto.request.UserRequest;
+import com.myproject.ecommerce.dto.request.InfoUpdateRequest;
 import com.myproject.ecommerce.dto.response.UserInfoResponse;
 import com.myproject.ecommerce.entity.User;
 import com.myproject.ecommerce.enums.ErrorCode;
@@ -20,9 +20,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    // thêm mới customer
-    public UserInfoResponse createUser(UserRequest userRequest){
-        User user = userMapper.toEntity(userRequest);
+    // thêm mới user
+    public UserInfoResponse createUser(InfoUpdateRequest infoUpdateRequest){
+        User user = userMapper.toEntity(infoUpdateRequest);
         return userMapper.toInfoResponse(userRepository.save(user));
 
     }
@@ -35,7 +35,7 @@ public class UserService {
         return userMapper.toInfoResponse(user);
     }
 
-    // lấy ra danh sách customers
+    // lấy ra danh sách user
     @Transactional(readOnly = true)
     public List<UserInfoResponse> getUserList(){
         return userRepository.findAll()
@@ -44,17 +44,13 @@ public class UserService {
                 .toList();
     }
 
-    // update customer
-    public UserInfoResponse updateUser(Long id, UserRequest userRequest){
+    // update user
+    public UserInfoResponse updateUserInfo(Long id, InfoUpdateRequest infoUpdateRequest){
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+                .orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
 
-        userMapper.updateCustomer(user, userRequest);
+        userMapper.updateUser(user, infoUpdateRequest);
         return userMapper.toInfoResponse(userRepository.save(user));
     }
 
-    // delete customer
-    public void deleteUser(Long id){
-        userRepository.deleteById(id);
-    }
 }
