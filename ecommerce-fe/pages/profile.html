@@ -9,31 +9,31 @@
     <title> Tài khoản của tôi </title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/common/main.css"/>
+    <link rel="stylesheet" href="../css/common/main.css" />
 </head>
 
 <body>
-    
+
     <div class="container page-account">
         <div class="account-layout">
             <aside class="account-sidebar">
                 <div class="sidebar-profile">
-                    <div class="avatar">
-                        <img src="../assets/icons/avatar-test.jpg" alt="avatar">
+                    <div class="avatar" id="avatar">
+                        <!--avt will be insterted here-->
                     </div>
-                    <div>
-                        <h5 id="nickName"></h5>
+                    <div id="nickName">
+                        <!-- nick name will be inserted here -->
                     </div>
                     <div class="profile-actions">
                         <button id="editProfileBtn" class="btn-edit-profile"> Chỉnh sửa </button>
                     </div>
                 </div>
                 <nav class="sidebar-nav">
-                    <a href="account-info.html" class="active">Tổng quan</a>
-                    <a href="my-orders.html">Đơn hàng của tôi</a>
-                    <a href="wishlist.html">Yêu thích</a>
-                    <a href="./index.html">Trang chủ</a>
-                    <a id="logoutBtn">Đăng xuất</a>
+                    <a href="../pages/profile.html" class="active">Tổng quan</a>
+                    <a href="../pages/my-orders.html">Đơn hàng của tôi</a>
+                    <a href="../pages/wishlist.html">Danh sách yêu thích</a>
+                    <a href="../pages/index.html">Trang chủ</a>
+                    <a id="logoutBtn"> Đăng xuất </a>
                 </nav>
             </aside>
 
@@ -54,26 +54,27 @@
                         </div>
                     </div>
 
-                    <!-- Recent Orders Card -->
+                    <!-- Purchase History Card -->
                     <div class="card">
                         <div class="card-header">
                             <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseOrders">
-                                <i class="fas fa-shopping-bag"></i> Đơn hàng gần đây
+                                <i class="fas fa-shopping-bag"></i> Lịch sử mua hàng
                             </a>
                         </div>
                         <div id="collapseOrders" class="collapse" data-bs-parent="#accountAccordion">
                             <div class="card-body">
-                                <div id="recentOrders">Đang tải...</div>
+                                <div id="recentOrders">
+                                    <!-- Purchase history will be inserted here -->
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </main>
-
         </div>
     </div>
 
-    
+
     <!-- Scripts -->
     <script src="../js/common/bootstrap.bundle.min.js"></script>
     <script type="module" src="../js/pages/profile.js"></script>

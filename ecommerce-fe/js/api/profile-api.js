@@ -1,8 +1,6 @@
-
+const token = localStorage.getItem('access_token');
 
 export async function fetchProfile() {
-    const token = localStorage.getItem('access_token');
-
     const response = await fetch('http://localhost:8080/eCommerce/api/me/info', {
         method: 'GET',
         headers: {
@@ -20,4 +18,22 @@ export async function fetchProfile() {
 
     return response.json();
 }
+
+
+export async function updateProfileRequest(userId, dataRequest) {
+    const response = await fetch(`http://localhost:8080/eCommerce/api/users/${userId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(dataRequest)
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to update user info');
+    }
+
+    return response.json();
+};
 
