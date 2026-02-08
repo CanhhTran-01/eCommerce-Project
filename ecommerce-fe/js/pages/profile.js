@@ -15,9 +15,7 @@ async function handleProfile() {
         const response = await fetchProfile();
         sessionStorage.setItem('user_info', JSON.stringify(response));
 
-        const avtUrl = response.data.avatarUrl ?? '/ecommerce-fe/assets/icons/default-avt.jpg';
-        const nickName = response.data.nickName
-        handleSidebarProfile(avtUrl, nickName);
+        handleSidebarProfile();
 
         profileBox.innerHTML = `
                 <div class="user-info-section">
@@ -82,6 +80,16 @@ async function handleProfile() {
                             <span class="badge bg-warning text-dark ms-1">${response.data.personalPoints?.toLocaleString() || 0}</span>
                         </div>
                     </div>
+
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-auto">
+                            <i class="fas fa-user-tag text-primary" style="width: 20px;"></i>
+                        </div>
+                        <div class="col"> 
+                            <strong>Vai trò:</strong>
+                            <span class="badge bg-primary ms-1">${response.data.role || 'USER'} </span>
+                        </div>
+                    </div>
                 </div>
             `;
 
@@ -101,7 +109,7 @@ document.getElementById('editProfileBtn').addEventListener('click', (event) => {
     profileBox.innerHTML = `
         <div class="card shadow-sm border-0">
             <div class="card-body p-4">
-                <h5 class="card-title mb-4 text-primary">--- Chỉnh sửa hồ sơ --- </h5>
+                <h5 class="card-title mb-4 text-primary">--- Cập nhật hồ sơ --- </h5>
         
                 <form id="editProfileForm" data-user-id="${userInfoObj.data.id}">
                     <div class="mb-3">
