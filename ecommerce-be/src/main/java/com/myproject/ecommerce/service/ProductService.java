@@ -19,6 +19,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
+
     public ProductSummaryResponse createProduct(ProductRequest productRequest){
         Product product = productMapper.toEntity(productRequest);
 
@@ -27,6 +28,7 @@ public class ProductService {
 
         return productMapper.toProductSummaryResponse(productRepository.save(product));
     }
+
 
     // get product on sale list
     @Transactional(readOnly = true)
@@ -37,6 +39,7 @@ public class ProductService {
                 .toList();
     }
 
+
     // get product by category
     @Transactional(readOnly = true)
     public List<ProductSummaryResponse> getProductsByCategory(Long categoryId){
@@ -45,4 +48,15 @@ public class ProductService {
                 .map(productMapper::toProductSummaryResponse)
                 .toList();
     }
+
+
+    // get wish list
+    @Transactional(readOnly = true)
+    public List<ProductSummaryResponse> getMyWishlist(Long accountId){
+        return productRepository.getWishlistByAccountId(accountId)
+                .stream()
+                .map(productMapper::toProductSummaryResponse)
+                .toList();
+    }
+
 }
