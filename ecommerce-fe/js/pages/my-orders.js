@@ -1,5 +1,5 @@
 import { handleSidebarProfile } from "../components/sidebar-profile.js";
-import { fetchActiveOrderItemsByUser } from "../api/order-item.js";
+import { fetchActiveOrderItemsByUser } from "../api/order-item-api.js";
 import { renderOrderItem } from "../components/order-item.js";
 
 // call functions
