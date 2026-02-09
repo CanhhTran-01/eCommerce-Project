@@ -1,5 +1,5 @@
 import { handleSidebarProfile } from "../components/sidebar-profile.js";
-import { fetchOrderItemsByUser } from "../api/order-item.js";
+import { fetchActiveOrderItemsByUser } from "../api/order-item.js";
 import { renderOrderItem } from "../components/order-item.js";
 
 // call functions
@@ -11,7 +11,7 @@ async function handleMyOrder(){
     const ordersList = document.getElementById('ordersList');
 
     try {
-        const response = await fetchOrderItemsByUser();
+        const response = await fetchActiveOrderItemsByUser();
         sessionStorage.setItem = ('order_items', JSON.stringify(response));
 
         renderOrderItem(response.data, ordersList);

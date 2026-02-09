@@ -4,6 +4,8 @@ import { fetchProfile } from "../api/profile-api.js";
 import { updateProfileRequest} from "../api/profile-api.js";
 import { handleSidebarProfile } from "../components/sidebar-profile.js";
 import { formatDateVN } from "../utils/format.js";
+import { fetchOrderItemsHistory } from "../api/order-item.js";
+import { renderOrderItem } from "../components/order-item.js";
 
 
 // call functions
@@ -193,4 +195,21 @@ document.getElementById('editProfileBtn').addEventListener('click', (event) => {
         }
     });
 
+});
+
+
+// handle purchase history click event
+document.getElementById('purchaseHistoryLink').addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    const purchaseHistory = document.getElementById('puschaseHistory');
+    try {
+        const response = await fetchOrderItemsHistory();
+
+        renderOrderItem(response.data, purchaseHistory);
+
+    } catch (error) {
+        console.log(error);
+        purchaseHistory.innerHTML = '<p class="text-danger"><strong>Không thể tải lên dữ liệu.</strong></p>';
+    }
 });

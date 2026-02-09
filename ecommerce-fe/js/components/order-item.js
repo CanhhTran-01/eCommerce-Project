@@ -3,7 +3,7 @@ import { renderStatusBadgeHTML } from "../utils/status-badge.js";
 
 export function renderOrderItem(data, container){
     if (!data || data.length === 0) {
-        container.innerHTML = '<p class="text-danger"><strong>Bạn chưa có đơn đặt.</strong></p>';
+        container.innerHTML = '<p class="text-danger"><strong>Không có dữ liệu.</strong></p>';
         return;
     }
     container.innerHTML = data.map(item => `
