@@ -23,6 +23,10 @@ public class OrderItem {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
+    @Lob
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name = "price")
     private BigDecimal price;
 

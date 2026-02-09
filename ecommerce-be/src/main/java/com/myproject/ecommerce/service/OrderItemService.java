@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -22,11 +24,8 @@ public class OrderItemService {
     }
 
     @Transactional(readOnly = true)
-    public OrderItemResponse getOrderItem(Long id){
-        OrderItem orderItem = orderItemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order Item doesn't exist"));
-
-        return orderItemMapper.toResponse(orderItem);
+    public List<OrderItemResponse> getOrderItemList(Long accountId){
+        return orderItemRepository.findItemsByAccountId(accountId);
     }
 
     public OrderItemResponse updateOrderItem(Long id, OrderItemRequest orderItemRequest){
