@@ -24,15 +24,12 @@ public class OrderItemService {
     }
 
     @Transactional(readOnly = true)
-    public List<OrderItemResponse> getOrderItemList(Long accountId){
-        return orderItemRepository.findItemsByAccountId(accountId);
+    public List<OrderItemResponse> getActiveOrderItems(Long accountId){
+        return orderItemRepository.findActiveOrderItemsByAccountId(accountId);
     }
 
-    public OrderItemResponse updateOrderItem(Long id, OrderItemRequest orderItemRequest){
-        OrderItem orderItem = orderItemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order Item doesn't exist"));
-
-        orderItemMapper.update(orderItem, orderItemRequest);
-        return orderItemMapper.toResponse(orderItem);
+    @Transactional(readOnly = true)
+    public List<OrderItemResponse> getOrderItemsHistory(Long accountId){
+        return orderItemRepository.getOrderItemsHistory(accountId);
     }
 }

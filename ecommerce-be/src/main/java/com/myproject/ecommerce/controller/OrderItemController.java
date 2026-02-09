@@ -28,14 +28,27 @@ public class OrderItemController {
     }
 
 
-    @GetMapping("/me")
-    public ResponseEntity<ApiResponse<List<OrderItemResponse>>> getOrderItemList(@AuthenticationPrincipal Jwt jwt){
+    @GetMapping("/me/active")
+    public ResponseEntity<ApiResponse<List<OrderItemResponse>>> getActiveOrderItems(@AuthenticationPrincipal Jwt jwt){
         Long accountId = jwt.getClaim("accountId");  // get account_id from JWT
 
         var apiResponse = new ApiResponse<>(
                 true,
                 null,
-                orderItemService.getOrderItemList(accountId)
+                orderItemService.getActiveOrderItems(accountId)
+        );
+        return ResponseEntity.ok(apiResponse);
+    }
+
+
+    @GetMapping("/me/history")
+    public ResponseEntity<ApiResponse<List<OrderItemResponse>>> getOrderItemsHistory(@AuthenticationPrincipal Jwt jwt){
+        Long accountId = jwt.getClaim("accountId");  // get account_id from JWT
+
+        var apiResponse = new ApiResponse<>(
+                true,
+                null,
+                orderItemService.getOrderItemsHistory(accountId)
         );
         return ResponseEntity.ok(apiResponse);
     }

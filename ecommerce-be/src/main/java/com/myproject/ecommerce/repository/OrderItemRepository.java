@@ -23,8 +23,23 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
             oi.totalPrice
        )
        FROM OrderItem oi
-       WHERE oi.order.user.account.id = :accountId
+       WHERE oi.order.user.account.id = :accountId AND oi.order.status IN ('PENDING', 'CONFIRMED', 'SHIPPING')
        """)
-    List<OrderItemResponse> findItemsByAccountId(@Param("accountId") Long accountId);
+    List<OrderItemResponse> findActiveOrderItemsByAccountId(@Param("accountId") Long accountId);
 
+
+    // get purchase history
+    @Query("""
+       SELECT new com.myproject.ecommerce.dto.response.OrderItemResponse(
+            oi.id,
+            oi.imageUrl,
+            oi.productName,
+            oi.quantity,
+            oi.order.status,
+            oi.totalPrice
+       )
+       FROM OrderItem oi
+       WHERE oi.order.user.account.id = :accountId AND oi.order.status IN ('COMPLETED', 'CANCELED')
+       """)
+    List<OrderItemResponse> getOrderItemsHistory(@Param("accountId") Long accountId);
 }
