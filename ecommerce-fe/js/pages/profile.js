@@ -6,6 +6,7 @@ import { handleSidebarProfile } from "../components/sidebar-profile.js";
 import { formatDateVN } from "../utils/format.js";
 import { fetchOrderItemsHistory } from "../api/order-item-api.js";
 import { renderOrderItem } from "../components/order-item.js";
+import { handleLogout } from "../common/logout.js";
 
 
 // call functions
@@ -212,4 +213,10 @@ document.getElementById('purchaseHistoryLink').addEventListener('click', async (
         console.log(error);
         purchaseHistory.innerHTML = '<p class="text-danger"><strong>Không thể tải lên dữ liệu.</strong></p>';
     }
+});
+
+
+document.getElementById('logoutLinkInProfile').addEventListener('click', (event) => {
+    event.preventDefault();
+    handleLogout();
 });

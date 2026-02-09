@@ -1,23 +1,27 @@
+import { checkToken } from "../common/check-token.js";
+import { handleLogout } from "../common/logout.js";
+
 const userInfoLink = document.getElementById('infoLink');
 const myOrdersLink = document.getElementById('myOrdersLink')
 const wishListLink = document.getElementById('wishListLink');
 const loginLink = document.getElementById('loginLink');
-const logoutLink = document.getElementById('logoutLink');
+const logoutLinkInNavbar = document.getElementById('logoutLinkInNavbar');
+
 
 // call function
 handleUserIcon();
 
 
-function handleUserIcon() {
-    const isLoggedIn = !!localStorage.getItem('access_token');
+async function handleUserIcon() {
+    const isLoggedIn = await checkToken();
 
     // toggle view
     if (isLoggedIn) {
         loginLink.classList.add('d-none');
-        logoutLink.classList.remove('d-none');
+        logoutLinkInNavbar.classList.remove('d-none');
     } else {
         loginLink.classList.remove('d-none');
-        logoutLink.classList.add('d-none');
+        logoutLinkInNavbar.classList.add('d-none');
     }
 
     // profile click event
@@ -57,10 +61,9 @@ function handleUserIcon() {
     });
 
     // logout click event
-    logoutLink.addEventListener('click', (event) => {
+    logoutLinkInNavbar.addEventListener('click', (event) => {
         event.preventDefault();
-        sessionStorage.removeItem('access_token');
-        window.location.href = window.location.origin + '/ecommerce-fe/pages/index.html';
+        handleLogout();
     });
 }
 
