@@ -36,16 +36,16 @@
             <!-- Right Actions -->
             <div class="navbar-actions">
                 <div class="action-item">
-                    <button class="btn-action" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="badge-count" id="cartCount">0</span>
+                    <button class="btn-action">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge-count">0</span>
                     </button>
                 </div>
 
                 <div class="action-item">
-                    <button class="btn-action">
-                        <i class="fas fa-heart"></i>
-                        <span class="badge-count">0</span>
+                    <button class="btn-action" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge-count" id="cartCount">0</span>
                     </button>
                 </div>
 
@@ -84,12 +84,24 @@
     <!-- Cart Offcanvas -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title">Shopping Cart</h5>
+            <h5 class="offcanvas-title">Giỏ hàng</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
             <div id="cartContent" class="cart-content">
-                <p class="text-muted text-center">Your cart is empty</p>
+
+                <p class="text-muted text-center">Không có dữ liệu.</p>
+
+                <!-- Cart Item 1 -->
+                <div class="d-flex mb-3 align-items-center border-bottom pb-2">
+                    <img src="" alt="iPhone 15 Pro" class="me-3" style="width:60px; height:60px; object-fit:cover;">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1">iPhone 15 Pro</h6>
+                        <p class="mb-0 text-muted small">Quantity: 1</p>
+                        <p class="mb-0 text-danger fw-bold">26.990.000 ₫</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-danger ms-2">&times;</button>
+                </div>
             </div>
         </div>
     </div>

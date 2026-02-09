@@ -1,12 +1,12 @@
-const profileBox = document.getElementById('profileBox');
-
 import { fetchProfile } from "../api/profile-api.js";
-import { updateProfileRequest} from "../api/profile-api.js";
+import { updateProfileRequest } from "../api/profile-api.js";
 import { handleSidebarProfile } from "../components/sidebar-profile.js";
 import { formatDateVN } from "../utils/format.js";
 import { fetchOrderItemsHistory } from "../api/order-item-api.js";
 import { renderOrderItem } from "../components/order-item.js";
 import { handleLogout } from "../common/logout.js";
+
+const profileBox = document.getElementById('profileBox');
 
 
 // call functions
@@ -93,23 +93,20 @@ async function handleProfile() {
                             <span class="badge bg-primary ms-1">${response.data.role || 'USER'} </span>
                         </div>
                     </div>
+
+                    <div class="profile-actions">
+                        <button id="editProfileBtn" class="btn-edit-profile"> Cập nhật </button>
+                    </div>
                 </div>
             `;
 
-    } catch (error) {
-        profileBox.innerHTML = `<p class="text-danger">Không thể tải thông tin người dùng...</p>`;
-        console.error('Error loading user info:', error);
-    }
+        // handle update click event
+        document.getElementById('editProfileBtn').addEventListener('click', (event) => {
+            event.preventDefault();
+            const userInfoObj = JSON.parse(sessionStorage.getItem('user_info'));
 
-}
-
-// handle update click event
-document.getElementById('editProfileBtn').addEventListener('click', (event) => {
-    event.preventDefault();
-    const userInfoObj = JSON.parse(sessionStorage.getItem('user_info'));
-
-    profileBox.innerHTML = '';
-    profileBox.innerHTML = `
+            profileBox.innerHTML = '';
+            profileBox.innerHTML = `
         <div class="card shadow-sm border-0">
             <div class="card-body p-4">
                 <h5 class="card-title mb-4 text-primary">--- Cập nhật hồ sơ --- </h5>
@@ -151,7 +148,7 @@ document.getElementById('editProfileBtn').addEventListener('click', (event) => {
                         <label class="form-label fw-bold d-block">Ảnh đại diện</label>
                         <div class="d-flex align-items-center gap-3">
                             <img id="avatarPreview" src="${userInfoObj.data.avatarUrl ||
-        '/ecommerce-fe/assets/icons/default-avt.jpg'}" alt="avatar-preview" class="rounded-circle border"
+                '/ecommerce-fe/assets/icons/default-avt.jpg'}" alt="avatar-preview" class="rounded-circle border"
                                 style="width: 80px; height: 80px; object-fit: cover;">
                             <button type="button" class="btn btn-outline-secondary btn-sm">Thay đổi ảnh</button>
                         </div>
@@ -164,39 +161,46 @@ document.getElementById('editProfileBtn').addEventListener('click', (event) => {
                 </form>
             </div>
         </div>
-    `;
+            `;
 
-    // save changes click event
-    document.getElementById('editProfileForm').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const userId = event.target.dataset.userId;  // get userId from form
-        const formData = new FormData(event.target); // get data from form
-        const dataRequest = Object.fromEntries(formData.entries()); // convert into Obj
+            // save changes click event
+            document.getElementById('editProfileForm').addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const userId = event.target.dataset.userId;  // get userId from form
+                const formData = new FormData(event.target); // get data from form
+                const dataRequest = Object.fromEntries(formData.entries()); // convert into Obj
 
-        try {
-            const response = await updateProfileRequest(userId, dataRequest);
+                try {
+                    const response = await updateProfileRequest(userId, dataRequest);
 
-            // in case of coming to here , it means no error
-            window.alert('Cập nhật thành công !');
-            sessionStorage.setItem('user_info', JSON.stringify(response));
-            window.location.href = window.location.origin + '/ecommerce-fe/pages/profile.html';
+                    // in case of coming to here , it means no error
+                    window.alert('Cập nhật thành công !');
+                    sessionStorage.setItem('user_info', JSON.stringify(response));
+                    window.location.href = window.location.origin + '/ecommerce-fe/pages/profile.html';
 
-        } catch (error){
-            console.log(error);
-            alert('Có lỗi xảy ra');
-            window.location.href = window.location.origin + '/ecommerce-fe/pages/profile.html';
-        }
+                } catch (error) {
+                    console.log(error);
+                    alert('Có lỗi xảy ra');
+                    window.location.href = window.location.origin + '/ecommerce-fe/pages/profile.html';
+                }
 
-    });
+            });
 
-    // cancel click event
-    document.getElementById('cancelEditBtn').addEventListener('click', () => {
-        if (confirm('Bạn có chắc muốn hủy các thay đổi ?')) {
-            window.location.href = window.location.origin + '/ecommerce-fe/pages/profile.html';
-        }
-    });
+            // cancel click event
+            document.getElementById('cancelEditBtn').addEventListener('click', () => {
+                if (confirm('Bạn có chắc muốn hủy các thay đổi ?')) {
+                    window.location.href = window.location.origin + '/ecommerce-fe/pages/profile.html';
+                }
+            });
 
-});
+        });
+
+    } catch (error) {
+        profileBox.innerHTML = `<p class="text-danger">Không thể tải thông tin người dùng...</p>`;
+        console.error('Error loading user info:', error);
+    }
+
+}
 
 
 // handle purchase history click event
@@ -216,6 +220,7 @@ document.getElementById('purchaseHistoryLink').addEventListener('click', async (
 });
 
 
+// handle log out click event
 document.getElementById('logoutLinkInProfile').addEventListener('click', (event) => {
     event.preventDefault();
     handleLogout();

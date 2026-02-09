@@ -1,6 +1,8 @@
 import { fetchWishlist } from "../api/wishlist-api.js";
 import { handleSidebarProfile } from "../components/sidebar-profile.js";
 import { renderProductCard } from "../components/simple-product.js";
+import { handleLogout } from "../common/logout.js";
+
 
 // call functions
 handleSidebarProfile();
@@ -26,3 +28,8 @@ async function handleWishListView(){
     }
 }
 
+// handle log out click event
+document.getElementById('logoutLinkInProfile').addEventListener('click', (event) => {
+    event.preventDefault();
+    handleLogout();
+});

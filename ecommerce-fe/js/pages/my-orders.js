@@ -1,6 +1,8 @@
 import { handleSidebarProfile } from "../components/sidebar-profile.js";
 import { fetchActiveOrderItemsByUser } from "../api/order-item-api.js";
 import { renderOrderItem } from "../components/order-item.js";
+import { handleLogout } from "../common/logout.js";
+
 
 // call functions
 handleSidebarProfile();
@@ -23,4 +25,8 @@ async function handleMyOrder(){
 }
 
 
-
+// handle log out click event
+document.getElementById('logoutLinkInProfile').addEventListener('click', (event) => {
+    event.preventDefault();
+    handleLogout();
+});
