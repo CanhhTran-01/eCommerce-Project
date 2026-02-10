@@ -21,3 +21,15 @@ export async function fetchProductByCategoryId(categoryId) {
 
     return response.json();
 }
+
+
+// get product detail 
+export async function fetchProductDetail(productId) {
+    const response = await fetch(`http://localhost:8080/eCommerce/api/products/${productId}/detail`);
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch products detail');
+    }
+
+    return response.json();
+}

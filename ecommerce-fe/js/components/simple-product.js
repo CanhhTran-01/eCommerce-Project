@@ -1,6 +1,7 @@
 import { formatVND } from '../utils/format.js';
 
 export function renderProductCard(data, container) {
+    
     container.innerHTML = data.map(product => {
         const hasDiscount = product.discountPrice != null && product.discountPrice < product.price;
         const discountBadgeHTML = hasDiscount
@@ -13,7 +14,7 @@ export function renderProductCard(data, container) {
             `<span class="current-price">${formatVND(product.price)}</span>`;
 
         return `
-                <div class="product-card">
+                <div class="product-card" data-product-id="${product.id}">
                     <div class="product-image">
                         <img src="${product.imageUrl}" alt="${product.productName}">
                         ${discountBadgeHTML}
@@ -34,4 +35,21 @@ export function renderProductCard(data, container) {
                     </div>
                 </div>
     `}).join('');
+
+
+    // handle click product event
+    container.addEventListener('click', (event) => {
+        const targetCard = event.target.closest('.product-card');
+        if (!targetCard) return;
+
+        // skip redirect with button (add to cart and wishlist)
+        if (event.target.closest('button')) return;
+
+        const productId = targetCard.dataset.productId;
+        if (productId) {
+            window.location.href =
+                `${window.location.origin}/ecommerce-fe/pages/product-detail.html?productId=${productId}`;
+        }
+    });
+
 }
