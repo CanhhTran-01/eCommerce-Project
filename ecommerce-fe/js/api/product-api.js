@@ -33,3 +33,15 @@ export async function fetchProductDetail(productId) {
 
     return response.json();
 }
+
+
+// get product review 
+export async function fetchProductReviews(productId) {
+    const response = await fetch(`http://localhost:8080/eCommerce/api/products/${productId}/reviews`);
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch products detail');
+    }
+
+    return response.json();
+}

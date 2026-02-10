@@ -1,0 +1,22 @@
+.stars {
+    position: relative;
+    display: inline-block;
+    font-size: 1.1rem;
+    color: #ddd;
+}
+
+.stars::before {
+    content: "★★★★★";
+}
+
+.stars-filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    color: #ffc107;
+}
+
+.stars-filled::before {
+    content: "★★★★★";
+}

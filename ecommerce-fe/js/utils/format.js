@@ -8,11 +8,11 @@ export function formatVND(value) {
     }).format(value);
 }
 
-export function formatDateVN (dateString) {
+export function formatDateVN(dateString) {
     if (!dateString) return "...";
-    
+
     const date = new Date(dateString);
-    
+
     if (isNaN(date.getTime())) return dateString;
 
     const day = String(date.getDate()).padStart(2, '0');
@@ -21,3 +21,12 @@ export function formatDateVN (dateString) {
 
     return `${day}/${month}/${year}`;
 };
+
+export function formatDateTime(isoDate) {
+    const date = new Date(isoDate);
+    return date.toLocaleDateString('vi-VN', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+}

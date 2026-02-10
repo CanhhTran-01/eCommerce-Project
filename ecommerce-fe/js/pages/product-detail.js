@@ -1,12 +1,12 @@
 import { fetchProductDetail } from "../api/product-api.js";
-import { formatVND } from "../utils/format.js";
+import { formatVND, formatDateTime } from "../utils/format.js";
+import { fetchProductReviews } from "../api/product-api.js";
 
 const productName = document.getElementById('productName');
 const productPrice = document.getElementById('productPrice');
 const productStatus = document.getElementById('productStatus');
 const productInfo = document.getElementById('productInfo');
 const productDesc = document.getElementById('description');
-
 
 // call functions
 handleProductDetailPage();
@@ -46,7 +46,7 @@ async function handleProductDetailPage() {
         productStatus.innerHTML = stockBadgeHTML;
 
         productInfo.innerHTML = `
-                    <li class="mb-2"><strong>Giới thiệu:</strong> ${response.data.shortDescription || '...'}</li>
+                    <li class="mb-2"> ${response.data.shortDescription || '...'} </li>
                     <li class="mb-2"><strong>Brand:</strong> ${response.data.brand || '...'}</li>
                     <li class="mb-2"><strong>Color:</strong> ${response.data.color || 'Ngẫu nhiên'}</li>
                     <li class="mb-2"><strong>Made in:</strong> ${response.data.madeIn || 'Không rõ'}</li>                   
@@ -54,15 +54,56 @@ async function handleProductDetailPage() {
 
 
         productDesc.innerHTML = `
-                    <p>${response.data.shortDescription}.</p>
-                    <p>${response.data.description}.</p>
+                    <p>${response.data.shortDescription}</p>
+                    <p>${response.data.description}</p>
                 `
 
     } catch (error) {
         console.log(error);
-        alert('Có lỗi xảy ra');
+        alert('Không lấy được dữ liệu sản phẩm');
     }
 }
+
+
+document.getElementById('reviews-tab').addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    const productId = Number(new URLSearchParams(window.location.search).get('productId'));
+    const productReviews = document.getElementById('reviews');
+    try {
+        const response = await fetchProductReviews(productId);
+
+        if (!response.data || response.data.length == 0) {
+            productReviews.innerHTML = '<p class="text-danger"><strong>Không có bình luận cho sản phẩm này.</strong></p>';
+            return;
+        }
+
+        productReviews.innerHTML = response.data.map(item => 
+             `
+                <div class="review mb-4">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="mb-1">${item.nickName} </h6>
+                            <span class="text-muted small">- ${item.title}</span>
+                            <div class="stars">
+                                <div class="stars-filled" style="width: ${(item.rating / 5) * 100}%"></div>
+                            </div>
+                        </div>
+                        <small class="text-muted"> ${formatDateTime(item.updatedAt)}</small>
+                        </div>
+                        <p class="mt-2">
+                            ${item.comment}
+                        </p>
+                </div>
+            `
+        ).join('');
+
+
+    } catch (error) {
+        console.log(error);
+        productReviews.innerHTML = '<p class="text-danger"><strong>Có lỗi xảy ra.</strong></p>';
+    }
+});
 
 
 function renderProductImage() { }

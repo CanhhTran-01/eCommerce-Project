@@ -23,10 +23,12 @@ export function renderProductCard(data, container) {
                         </button>
                     </div>
                     <div class="product-info">
-                        <h6 class="product-name">${product.productName}</h6>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                            <span class="review-count">(${product.reviewCount})</span>
+                        <h6 style="white-space: nowrap; 
+                                    overflow: hidden; 
+                                    text-overflow: ellipsis;" 
+                            class="product-name">${product.productName}</h6>
+                        <div class="stars">                           
+                            <small style="font-size: 10px;" class="text-muted">(254 lượt đánh giá)</small>
                         </div>
                         <div class="product-price">
                             ${priceHTML}

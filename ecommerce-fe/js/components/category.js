@@ -6,7 +6,10 @@ export function renderCategoryMenu(data, container) {
                     <div class="category-item-circle">
                         <img src="${category.imageUrl}" alt="${category.categoryName}">
                     </div>
-                    <span class="category-item-text">${category.categoryName}</span>
+                    <span style="white-space: nowrap; 
+                                    overflow: hidden; 
+                                    text-overflow: ellipsis;" 
+                        class="category-item-text">${category.categoryName}</span>
                 </div>
     `).join('');
 }
