@@ -118,254 +118,260 @@
     </div>
 
     <!-- Product Detail Section -->
-    <div class="container mb-5">
-        <div class="row">
-            <!-- Product Images -->
-            <div class="col-lg-5 col-md-6 mb-4">
-                <div class="product-gallery">
-                    <div class="main-image mb-3">
-                        <img id="mainImage" src="../assets/images/thumbnail2.jpg" alt="Product"
-                            class="img-fluid rounded border" data-bs-toggle="modal" data-bs-target="#imageModal">
-                    </div>
-                    <div class="thumbnail-gallery">
-                        <div class="row g-2">
-                            <div class="col-3">
-                                <img class="thumbnail-img rounded border cursor-pointer"
-                                    src="../assets/images/thumbnail1.jpg" data-image="../assets/images/thumbnail1.jpg"
-                                    alt="Thumbnail 1" style="width:100%; height:80px; object-fit:cover;">
-                            </div>
-                            <div class="col-3">
-                                <img class="thumbnail-img rounded border cursor-pointer"
-                                    src="../assets/images/product.jpg" data-image="../assets/images/product.jpg"
-                                    alt="Thumbnail 2" style="width:100%; height:80px; object-fit:cover;">
-                            </div>
-                            <div class="col-3">
-                                <img class="thumbnail-img rounded border cursor-pointer"
-                                    src="../assets/images/thumbnail3.jpg" data-image="../assets/images/thumbnail3.jpg"
-                                    alt="Thumbnail 3" style="width:100%; height:80px; object-fit:cover;">
-                            </div>
-                            <div class="col-3">
-                                <img class="thumbnail-img rounded border cursor-pointer"
-                                    src="../assets/images/thumbnail4.jpg" data-image="../assets/images/thumbnail4.jpg"
-                                    alt="Thumbnail 4" style="width:100%; height:80px; object-fit:cover;">
+    <div class="product-detail-page">
+        <div class="container mb-5">
+            <div class="row">
+                <!-- Product Images -->
+                <div class="col-lg-5 col-md-6 mb-4">
+                    <div class="product-gallery">
+                        <div class="main-image mb-3">
+                            <img id="mainImage" src="../assets/images/thumbnail2.jpg" alt="Product"
+                                class="img-fluid rounded border" data-bs-toggle="modal" data-bs-target="#imageModal">
+                        </div>
+                        <div class="thumbnail-gallery">
+                            <div class="row g-2">
+                                <div class="col-3">
+                                    <img class="thumbnail-img rounded border cursor-pointer"
+                                        src="../assets/images/thumbnail1.jpg"
+                                        data-image="../assets/images/thumbnail1.jpg" alt="Thumbnail 1"
+                                        style="width:100%; height:80px; object-fit:cover;">
+                                </div>
+                                <div class="col-3">
+                                    <img class="thumbnail-img rounded border cursor-pointer"
+                                        src="../assets/images/product.jpg" data-image="../assets/images/product.jpg"
+                                        alt="Thumbnail 2" style="width:100%; height:80px; object-fit:cover;">
+                                </div>
+                                <div class="col-3">
+                                    <img class="thumbnail-img rounded border cursor-pointer"
+                                        src="../assets/images/thumbnail3.jpg"
+                                        data-image="../assets/images/thumbnail3.jpg" alt="Thumbnail 3"
+                                        style="width:100%; height:80px; object-fit:cover;">
+                                </div>
+                                <div class="col-3">
+                                    <img class="thumbnail-img rounded border cursor-pointer"
+                                        src="../assets/images/thumbnail4.jpg"
+                                        data-image="../assets/images/thumbnail4.jpg" alt="Thumbnail 4"
+                                        style="width:100%; height:80px; object-fit:cover;">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Product Info -->
-            <div class="col-lg-7 col-md-6">
-                <h1 class="h2 mb-3 fw-bold" id="productName">
-                    <!-- dynamic insert -->
-                </h1>
-
-                <!-- Rating & Reviews -->
-                <div class="d-flex align-items-center mb-3">
-                    <div class="stars">
-                        <span class="text-warning">★★★★★</span>
-                        <span class="text-muted">(245 reviews)</span>
-                    </div>
-                </div>
-
-                <!-- Price Section -->
-                <div class="price-section mb-4 p-3 bg-light rounded">
-                    <div class="row align-items-center">
-                        <div class="col-md-6" id="productPrice">
-                            <!-- dynamic insert -->
-                        </div>
-                        <div class="col-md-6 text-end" id="productStatus">
-                            <!-- dynamic insert -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product Details -->
-                <div class="mb-4">
-                    <h5 class="mb-3">Product Details</h5>
-                    <ul class="list-unstyled" id="productInfo">
+                <!-- Product Info -->
+                <div class="col-lg-7 col-md-6">
+                    <h1 class="h2 mb-3 fw-bold" id="productName">
                         <!-- dynamic insert -->
-                    </ul>
-                </div>
+                    </h1>
 
-                <!-- Quantity & Add to Cart -->
-                <div class="mb-4">
-                    <label class="form-label fw-bold">Quantity</label>
-                    <div class="input-group mb-3" style="width: 120px;">
-                        <button class="btn btn-outline-secondary" type="button" id="decreaseBtn">-</button>
-                        <input type="number" class="form-control text-center" id="quantityInput" value="1" min="1"
-                            max="10">
-                        <button class="btn btn-outline-secondary" type="button" id="increaseBtn">+</button>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="d-grid gap-4 d-md-flex mb-4">
-                    <button class="btn btn-danger btn-lg flex-grow-1" id="addToCartBtn">
-                        <i class="bi bi-cart-plus"></i> Mua ngay
-                    </button>
-                    <button class="btn btn-outline-danger btn-lg flex-grow-1" id="addToCartBtn">
-                        <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng
-                    </button>
-                    <button class="btn btn-outline-danger btn-lg flex-grow-1" id="addToWishlistBtn">
-                        <i class="bi bi-heart"></i> Thêm vào yêu thích
-                    </button>
-                </div>
-
-                <!-- Shipping Info -->
-                <div class="border-top pt-4">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <h6 class="mb-2">🚚 Free Shipping</h6>
-                            <small class="text-muted">Orders over $50</small>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <h6 class="mb-2">✓ Authentic Product</h6>
-                            <small class="text-muted">100% Guaranteed</small>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <h6 class="mb-2">↩ Easy Returns</h6>
-                            <small class="text-muted">30-day return policy</small>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <h6 class="mb-2">🔒 Secure Payment</h6>
-                            <small class="text-muted">SSL encrypted checkout</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Description & Specs Tabs -->
-    <div class="container mb-5">
-        <ul class="nav nav-tabs mb-4" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description"
-                    type="button" role="tab">Description</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="specifications-tab" data-bs-toggle="tab" data-bs-target="#specifications"
-                    type="button" role="tab">Specifications</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button"
-                    role="tab">Reviews</button>
-            </li>
-        </ul>
-
-        <div class="tab-content">
-            <!-- Description Tab -->
-            <div class="tab-pane fade show active" id="description" role="tabpanel">
-                <h5 class="mb-3">Product Description</h5>
-                <!-- dynamic insert -->
-            </div>
-
-            <!-- Specifications Tab -->
-            <div class="tab-pane fade" id="specifications" role="tabpanel">
-                <table class="table table-striped">
-                    <tbody>
-                        <tr>
-                            <td class="fw-bold">Driver Size</td>
-                            <td>40mm</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Frequency Response</td>
-                            <td>20Hz - 20kHz</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Impedance</td>
-                            <td>32Ω</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Bluetooth Version</td>
-                            <td>5.0</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Battery Life</td>
-                            <td>30 hours</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Weight</td>
-                            <td>250g</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Reviews Tab -->
-            <div class="tab-pane fade" id="reviews" role="tabpanel">
-                <h5 class="mb-4">Customer Reviews</h5>
-                <div class="review mb-4">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <h6 class="mb-1">John Doe</h6>
+                    <!-- Rating & Reviews -->
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="stars">
                             <span class="text-warning">★★★★★</span>
+                            <span class="text-muted">(245 reviews)</span>
                         </div>
-                        <small class="text-muted">2 days ago</small>
                     </div>
-                    <p class="mt-2">Excellent quality! The sound is crystal clear and the battery lasts forever. Highly
-                        recommended!</p>
-                </div>
-                <div class="review mb-4">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <h6 class="mb-1">Jane Smith</h6>
-                            <span class="text-warning">★★★★☆</span>
+
+                    <!-- Price Section -->
+                    <div class="price-section mb-4 p-3 bg-light rounded">
+                        <div class="row align-items-center">
+                            <div class="col-md-6" id="productPrice">
+                                <!-- dynamic insert -->
+                            </div>
+                            <div class="col-md-6 text-end" id="productStatus">
+                                <!-- dynamic insert -->
+                            </div>
                         </div>
-                        <small class="text-muted">1 week ago</small>
                     </div>
-                    <p class="mt-2">Great product overall. Very comfortable to wear for long periods.</p>
+
+                    <!-- Product Details -->
+                    <div class="mb-4">
+                        <h5 class="mb-3">Product Details</h5>
+                        <ul class="list-unstyled" id="productInfo">
+                            <!-- dynamic insert -->
+                        </ul>
+                    </div>
+
+                    <!-- Quantity & Add to Cart -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Quantity</label>
+                        <div class="input-group mb-3" style="width: 120px;">
+                            <button class="btn btn-outline-secondary" type="button" id="decreaseBtn">-</button>
+                            <input type="number" class="form-control text-center" id="quantityInput" value="1" min="1"
+                                max="10">
+                            <button class="btn btn-outline-secondary" type="button" id="increaseBtn">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-grid gap-4 d-md-flex mb-4">
+                        <button class="btn btn-danger btn-lg flex-grow-1" id="addToCartBtn">
+                            <i class="bi bi-cart-plus"></i> Mua ngay
+                        </button>
+                        <button class="btn btn-outline-danger btn-lg flex-grow-1" id="addToCartBtn">
+                            <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng
+                        </button>
+                        <button class="btn btn-outline-danger btn-lg flex-grow-1" id="addToWishlistBtn">
+                            <i class="bi bi-heart"></i> Thêm vào yêu thích
+                        </button>
+                    </div>
+
+                    <!-- Shipping Info -->
+                    <div class="border-top pt-4">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <h6 class="mb-2">🚚 Free Shipping</h6>
+                                <small class="text-muted">Orders over $50</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h6 class="mb-2">✓ Authentic Product</h6>
+                                <small class="text-muted">100% Guaranteed</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h6 class="mb-2">↩ Easy Returns</h6>
+                                <small class="text-muted">30-day return policy</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h6 class="mb-2">🔒 Secure Payment</h6>
+                                <small class="text-muted">SSL encrypted checkout</small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Related Products -->
-    <div class="container mb-5">
-        <h4 class="mb-4">Sản phẩm liên quan</h4>
-        <div class="row g-4">
-            <div class="col-lg-3 col-md-6">
-                <div class="card h-100 border-0 shadow-sm">
-                    <img src="" class="card-img-top" alt="Product">
-                    <div class="card-body">
-                        <h6 class="card-title">Related Product 1</h6>
-                        <div class="text-warning mb-2">★★★★★</div>
-                        <div class="h5 text-danger">$79.99</div>
-                        <button class="btn btn-sm btn-danger w-100">Add to Cart</button>
+        <!-- Description & Specs Tabs -->
+        <div class="container mb-5">
+            <ul class="nav nav-tabs mb-4" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
+                        data-bs-target="#description" type="button" role="tab">Description</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="specifications-tab" data-bs-toggle="tab"
+                        data-bs-target="#specifications" type="button" role="tab">Specifications</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
+                        type="button" role="tab">Reviews</button>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <!-- Description Tab -->
+                <div class="tab-pane fade show active" id="description" role="tabpanel">
+                    <h5 class="mb-3">Product Description</h5>
+                    <!-- dynamic insert -->
+                </div>
+
+                <!-- Specifications Tab -->
+                <div class="tab-pane fade" id="specifications" role="tabpanel">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <td class="fw-bold">Driver Size</td>
+                                <td>40mm</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Frequency Response</td>
+                                <td>20Hz - 20kHz</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Impedance</td>
+                                <td>32Ω</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Bluetooth Version</td>
+                                <td>5.0</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Battery Life</td>
+                                <td>30 hours</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Weight</td>
+                                <td>250g</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Reviews Tab -->
+                <div class="tab-pane fade" id="reviews" role="tabpanel">
+                    <h5 class="mb-4">Customer Reviews</h5>
+                    <div class="review mb-4">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">John Doe</h6>
+                                <span class="text-warning">★★★★★</span>
+                            </div>
+                            <small class="text-muted">2 days ago</small>
+                        </div>
+                        <p class="mt-2">Excellent quality! The sound is crystal clear and the battery lasts forever.
+                            Highly
+                            recommended!</p>
+                    </div>
+                    <div class="review mb-4">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">Jane Smith</h6>
+                                <span class="text-warning">★★★★☆</span>
+                            </div>
+                            <small class="text-muted">1 week ago</small>
+                        </div>
+                        <p class="mt-2">Great product overall. Very comfortable to wear for long periods.</p>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="card h-100 border-0 shadow-sm">
-                    <img src="" class="card-img-top" alt="Product">
-                    <div class="card-body">
-                        <h6 class="card-title">Related Product 2</h6>
-                        <div class="text-warning mb-2">★★★★★</div>
-                        <div class="h5 text-danger">$89.99</div>
-                        <button class="btn btn-sm btn-danger w-100">Add to Cart</button>
+        </div>
+
+        <!-- Related Products -->
+        <div class="container mb-5">
+            <h4 class="mb-4">Sản phẩm liên quan</h4>
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <img src="" class="card-img-top" alt="Product">
+                        <div class="card-body">
+                            <h6 class="card-title">Related Product 1</h6>
+                            <div class="text-warning mb-2">★★★★★</div>
+                            <div class="h5 text-danger">$79.99</div>
+                            <button class="btn btn-sm btn-danger w-100">Add to Cart</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="card h-100 border-0 shadow-sm">
-                    <img src="" class="card-img-top" alt="Product">
-                    <div class="card-body">
-                        <h6 class="card-title">Related Product 3</h6>
-                        <div class="text-warning mb-2">★★★★★</div>
-                        <div class="h5 text-danger">$69.99</div>
-                        <button class="btn btn-sm btn-danger w-100">Add to Cart</button>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <img src="" class="card-img-top" alt="Product">
+                        <div class="card-body">
+                            <h6 class="card-title">Related Product 2</h6>
+                            <div class="text-warning mb-2">★★★★★</div>
+                            <div class="h5 text-danger">$89.99</div>
+                            <button class="btn btn-sm btn-danger w-100">Add to Cart</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="card h-100 border-0 shadow-sm">
-                    <img src="" class="card-img-top" alt="Product">
-                    <div class="card-body">
-                        <h6 class="card-title">Related Product 4</h6>
-                        <div class="text-warning mb-2">★★★★☆</div>
-                        <div class="h5 text-danger">$59.99</div>
-                        <button class="btn btn-sm btn-danger w-100">Add to Cart</button>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <img src="" class="card-img-top" alt="Product">
+                        <div class="card-body">
+                            <h6 class="card-title">Related Product 3</h6>
+                            <div class="text-warning mb-2">★★★★★</div>
+                            <div class="h5 text-danger">$69.99</div>
+                            <button class="btn btn-sm btn-danger w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <img src="" class="card-img-top" alt="Product">
+                        <div class="card-body">
+                            <h6 class="card-title">Related Product 4</h6>
+                            <div class="text-warning mb-2">★★★★☆</div>
+                            <div class="h5 text-danger">$59.99</div>
+                            <button class="btn btn-sm btn-danger w-100">Add to Cart</button>
+                        </div>
                     </div>
                 </div>
             </div>
