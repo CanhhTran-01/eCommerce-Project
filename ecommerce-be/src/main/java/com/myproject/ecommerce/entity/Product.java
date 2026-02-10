@@ -42,7 +42,7 @@ public class Product {
     private String shortDescription;
 
     @Lob
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "price")

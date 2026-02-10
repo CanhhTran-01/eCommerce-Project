@@ -15,6 +15,7 @@ import java.util.List;
 public class ReviewController {
     private final ReviewService reviewService;
 
+
     @PostMapping("/api/reviews")
     public ResponseEntity<ReviewResponse> createReview(@RequestBody ReviewRequest reviewRequest){
         return ResponseEntity
@@ -22,16 +23,13 @@ public class ReviewController {
                 .body(reviewService.createReview(reviewRequest));
     }
 
-    @GetMapping("/api/reviews")
-    public ResponseEntity<List<ReviewResponse>> getReviewList(){
-        return ResponseEntity.ok(reviewService.getReviewList());
-    }
 
     @PutMapping("/api/reviews/{id}")
     public ResponseEntity<ReviewResponse> updateReview(@PathVariable Long id,
                                                        @RequestBody ReviewRequest reviewRequest){
         return ResponseEntity.ok(reviewService.updateReview(id, reviewRequest));
     }
+
 
     @DeleteMapping("/api/reviews/{id}")
     public String deleteReview(@PathVariable Long id){

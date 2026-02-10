@@ -4,7 +4,9 @@ import com.myproject.ecommerce.dto.request.ProductRequest;
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.dto.response.ProductDetailResponse;
 import com.myproject.ecommerce.dto.response.ProductSummaryResponse;
+import com.myproject.ecommerce.dto.response.ReviewResponse;
 import com.myproject.ecommerce.service.ProductService;
+import com.myproject.ecommerce.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
+    private final ReviewService reviewService;
 
 
     @PostMapping("")
@@ -50,4 +53,15 @@ public class ProductController {
         return ResponseEntity.ok(apiResponse);
     }
 
+
+    @GetMapping("/{id}/reviews")
+    public ResponseEntity<ApiResponse<List<ReviewResponse>>> getProductReviews(@PathVariable Long id){
+
+        var apiResponse = new ApiResponse<>(
+                true,
+                null,
+                reviewService.getProductReviews(id)
+        );
+        return ResponseEntity.ok(apiResponse);
+    }
 }

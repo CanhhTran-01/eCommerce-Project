@@ -10,11 +10,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewResponse {
-    private Long id;
-    private Integer rating;
+    private String nickName;
     private String title;
+    private Integer rating;
     private String comment;
-    private String imageUrl;
-    private Long likes;
     private LocalDateTime updatedAt;
 }

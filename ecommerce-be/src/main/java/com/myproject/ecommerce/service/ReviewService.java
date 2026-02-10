@@ -23,12 +23,10 @@ public class ReviewService {
         return reviewMapper.toResponse(reviewRepository.save(review));
     }
 
+    // get reviews by product
     @Transactional(readOnly = true)
-    public List<ReviewResponse> getReviewList(){
-        return reviewRepository.findAll()
-                .stream()
-                .map(reviewMapper::toResponse)
-                .toList();
+    public List<ReviewResponse> getProductReviews(Long productId){
+        return reviewRepository.findReviewsByProductId(productId);
     }
 
     public ReviewResponse updateReview(Long id, ReviewRequest reviewRequest){
