@@ -15,9 +15,10 @@ public enum ErrorCode {
     PASSWORD_INVALID(1003, "password invalid!", HttpStatus.BAD_REQUEST),
     EMAIL_INVALID(1004, "email invalid!", HttpStatus.BAD_REQUEST),
     ACCOUNT_NOT_FOUND(1005, "account not found!", HttpStatus.NOT_FOUND),
-    USER_NOT_FOUND(1008, "user not found!", HttpStatus.NOT_FOUND),
     UNAUTHENTICATED(1006, "unauthenticated!", HttpStatus.UNAUTHORIZED),
-    UNAUTHORIZED(1007, "you have no permission with this page!", HttpStatus.FORBIDDEN)
+    UNAUTHORIZED(1007, "you have no permission with this page!", HttpStatus.FORBIDDEN),
+    USER_NOT_FOUND(1008, "user not found!", HttpStatus.NOT_FOUND),
+    PRODUCT_NOT_FOUND(1009, "product not found!", HttpStatus.NOT_FOUND)
     ;
 
 

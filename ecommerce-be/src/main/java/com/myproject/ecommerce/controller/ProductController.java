@@ -2,6 +2,7 @@ package com.myproject.ecommerce.controller;
 
 import com.myproject.ecommerce.dto.request.ProductRequest;
 import com.myproject.ecommerce.dto.response.ApiResponse;
+import com.myproject.ecommerce.dto.response.ProductDetailResponse;
 import com.myproject.ecommerce.dto.response.ProductSummaryResponse;
 import com.myproject.ecommerce.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,18 @@ public class ProductController {
                 true,
                 null,
                 productService.getProductOnSaleList()
+        );
+        return ResponseEntity.ok(apiResponse);
+    }
+
+
+    @GetMapping("/{id}/detail")
+    public ResponseEntity<ApiResponse<ProductDetailResponse>> getProductDetail(@PathVariable Long id){
+
+        var apiResponse = new ApiResponse<>(
+                true,
+                null,
+                productService.getDetail(id)
         );
         return ResponseEntity.ok(apiResponse);
     }

@@ -1,8 +1,11 @@
 package com.myproject.ecommerce.service;
 
 import com.myproject.ecommerce.dto.request.ProductRequest;
+import com.myproject.ecommerce.dto.response.ProductDetailResponse;
 import com.myproject.ecommerce.dto.response.ProductSummaryResponse;
 import com.myproject.ecommerce.entity.Product;
+import com.myproject.ecommerce.enums.ErrorCode;
+import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.mapper.ProductMapper;
 import com.myproject.ecommerce.repository.ProductRepository;
 import com.myproject.ecommerce.utils.ProductCodeMakingUtils;
@@ -57,6 +60,16 @@ public class ProductService {
                 .stream()
                 .map(productMapper::toProductSummaryResponse)
                 .toList();
+    }
+
+
+    // get product detail
+    @Transactional(readOnly = true)
+    public ProductDetailResponse getDetail(Long id){
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        return productMapper.toProductDetailResponse(product);
     }
 
 }

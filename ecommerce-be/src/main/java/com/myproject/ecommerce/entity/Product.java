@@ -31,6 +31,12 @@ public class Product {
     @Column(name = "brand")
     private String brand;
 
+    @Column(name = "color")
+    private String color;
+
+    @Column(name = "made_in")
+    private String madeIn;
+
     @Lob
     @Column(name = "short_description")
     private String shortDescription;
