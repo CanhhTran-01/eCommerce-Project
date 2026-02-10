@@ -1,13 +1,13 @@
 import { fetchProfile } from "../api/profile-api.js";
 import { updateProfileRequest } from "../api/profile-api.js";
-import { handleSidebarProfile } from "../components/sidebar-profile.js";
 import { formatDateVN } from "../utils/format.js";
 import { fetchOrderItemsHistory } from "../api/order-item-api.js";
 import { renderOrderItem } from "../components/order-item.js";
 import { handleLogout } from "../common/logout.js";
 
 const profileBox = document.getElementById('profileBox');
-
+const nickNameHTML = document.getElementById('nickName');
+const avtHTML = document.getElementById('avatar');
 
 // call functions
 handleProfile();
@@ -18,8 +18,12 @@ async function handleProfile() {
         const response = await fetchProfile();
         sessionStorage.setItem('user_info', JSON.stringify(response));
 
-        handleSidebarProfile();
+        // display nick name and avt
+        avtHTML.innerHTML = `<img src="${response.data.avatarUrl ??
+            '/ecommerce-fe/assets/icons/default-avt.jpg'}" alt="profile-avatar">`;
+        nickNameHTML.innerHTML = `<h5>${response.data.nickName}</h5>` || '...';
 
+        // display profile
         profileBox.innerHTML = `
                 <div class="user-info-section">
                     <div class="row mb-3 align-items-center">
