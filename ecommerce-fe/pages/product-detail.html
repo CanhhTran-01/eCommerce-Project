@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="../assets/icons/favicon.jpg">
+    <title> Chi tiết sản phẩm | eCommerce </title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common/main.css" />
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-top">
+        <div class="container-fluid navbar-container">
+            <!-- Logo -->
+            <a class="navbar-logo" href="./index.html">
+                <i class="fas fa-shopping-bag"></i>
+                <span>eCommerce</span>
+            </a>
+
+            <!-- Search Bar -->
+            <div class="search-box-wrapper d-none d-lg-block">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search products, brands and more..."
+                        id="searchInput">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="navbar-actions">
+                <div class="action-item">
+                    <button class="btn-action">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge-count">0</span>
+                    </button>
+                </div>
+
+                <div class="action-item">
+                    <button class="btn-action" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge-count" id="cartCount">0</span>
+                    </button>
+                </div>
+
+                <div class="action-item dropdown">
+                    <button class="btn-action dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fas fa-user"></i>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" id="infoLink"><i class="fas fa-user"></i> Profile</a></li>
+                        <li><a class="dropdown-item" id="myOrdersLink"><i class="fas fa-box"></i> My Orders</a></li>
+                        <li><a class="dropdown-item" id="wishListLink"><i class="fas fa-heart"></i> Wishlist</a></li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li><a class="dropdown-item text-danger" id="loginLink"><i class="fas fa-sign-in-alt"></i>
+                                Login</a>
+                        </li>
+                        <li><a class="dropdown-item text-danger d-none" id="logoutLinkInNavbar"><i
+                                    class="fas fa-sign-out-alt"></i>
+                                Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Mobile Search Toggle -->
+            <button class="btn-mobile-search d-lg-none">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Cart Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Giỏ hàng</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="cartContent" class="cart-content">
+
+                <p class="text-muted text-center">Không có dữ liệu.</p>
+
+                <!-- Cart Item 1 -->
+                <div class="d-flex mb-3 align-items-center border-bottom pb-2">
+                    <img src="" alt="iPhone 15 Pro" class="me-3" style="width:60px; height:60px; object-fit:cover;">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1">iPhone 15 Pro</h6>
+                        <p class="mb-0 text-muted small">Quantity: 1</p>
+                        <p class="mb-0 text-danger fw-bold">26.990.000 ₫</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-danger ms-2">&times;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="container mt-3 mb-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../pages/index.html">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="../pages/product-list.html">Sản phẩm</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tên sản phẩm</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Product Detail Section -->
+    <div class="container mb-5">
+        <div class="row">
+            <!-- Product Images -->
+            <div class="col-lg-5 col-md-6 mb-4">
+                <div class="product-gallery">
+                    <div class="main-image mb-3">
+                        <img id="mainImage" src="../assets/images/thumbnail2.jpg" alt="Product"
+                            class="img-fluid rounded border" data-bs-toggle="modal" data-bs-target="#imageModal">
+                    </div>
+                    <div class="thumbnail-gallery">
+                        <div class="row g-2">
+                            <div class="col-3">
+                                <img class="thumbnail-img rounded border cursor-pointer"
+                                    src="../assets/images/thumbnail1.jpg" data-image="../assets/images/thumbnail1.jpg"
+                                    alt="Thumbnail 1" style="width:100%; height:80px; object-fit:cover;">
+                            </div>
+                            <div class="col-3">
+                                <img class="thumbnail-img rounded border cursor-pointer"
+                                    src="../assets/images/product.jpg" data-image="../assets/images/product.jpg"
+                                    alt="Thumbnail 2" style="width:100%; height:80px; object-fit:cover;">
+                            </div>
+                            <div class="col-3">
+                                <img class="thumbnail-img rounded border cursor-pointer"
+                                    src="../assets/images/thumbnail3.jpg" data-image="../assets/images/thumbnail3.jpg"
+                                    alt="Thumbnail 3" style="width:100%; height:80px; object-fit:cover;">
+                            </div>
+                            <div class="col-3">
+                                <img class="thumbnail-img rounded border cursor-pointer"
+                                    src="../assets/images/thumbnail4.jpg" data-image="../assets/images/thumbnail4.jpg"
+                                    alt="Thumbnail 4" style="width:100%; height:80px; object-fit:cover;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="col-lg-7 col-md-6">
+                <h1 class="h2 mb-3 fw-bold">Premium Wireless Headphones</h1>
+
+                <!-- Rating & Reviews -->
+                <div class="d-flex align-items-center mb-3">
+                    <div class="stars">
+                        <span class="text-warning">★★★★★</span>
+                        <span class="text-muted">(245 reviews)</span>
+                    </div>
+                </div>
+
+                <!-- Price Section -->
+                <div class="price-section mb-4 p-3 bg-light rounded">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="mb-2">
+                                <span class="text-muted text-decoration-line-through">$199.99</span>
+                            </div>
+                            <div class="h3 text-danger fw-bold">$99.99</div>
+                            <span class="badge bg-danger">-50%</span>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <div class="text-success fw-bold">In Stock</div>
+                            <small class="text-muted">Only 5 items left</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Details -->
+                <div class="mb-4">
+                    <h5 class="mb-3">Product Details</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><strong>Brand:</strong> Premium Audio</li>
+                        <li class="mb-2"><strong>Color:</strong> Black</li>
+                        <li class="mb-2"><strong>Battery:</strong> 30 hours</li>
+                        <li class="mb-2"><strong>Connection:</strong> Bluetooth 5.0</li>
+                    </ul>
+                </div>
+
+                <!-- Quantity & Add to Cart -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Quantity</label>
+                    <div class="input-group mb-3" style="width: 120px;">
+                        <button class="btn btn-outline-secondary" type="button" id="decreaseBtn">-</button>
+                        <input type="number" class="form-control text-center" id="quantityInput" value="1" min="1"
+                            max="10">
+                        <button class="btn btn-outline-secondary" type="button" id="increaseBtn">+</button>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-grid gap-2 d-md-flex mb-4">
+                    <button class="btn btn-danger btn-lg flex-grow-1" id="addToCartBtn">
+                        <i class="bi bi-cart-plus"></i> Add to Cart
+                    </button>
+                    <button class="btn btn-outline-danger btn-lg flex-grow-1" id="addToWishlistBtn">
+                        <i class="bi bi-heart"></i> Wishlist
+                    </button>
+                </div>
+
+                <!-- Shipping Info -->
+                <div class="border-top pt-4">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <h6 class="mb-2">🚚 Free Shipping</h6>
+                            <small class="text-muted">Orders over $50</small>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <h6 class="mb-2">✓ Authentic Product</h6>
+                            <small class="text-muted">100% Guaranteed</small>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <h6 class="mb-2">↩ Easy Returns</h6>
+                            <small class="text-muted">30-day return policy</small>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <h6 class="mb-2">🔒 Secure Payment</h6>
+                            <small class="text-muted">SSL encrypted checkout</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Description & Specs Tabs -->
+    <div class="container mb-5">
+        <ul class="nav nav-tabs mb-4" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description"
+                    type="button" role="tab">Description</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="specifications-tab" data-bs-toggle="tab" data-bs-target="#specifications"
+                    type="button" role="tab">Specifications</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button"
+                    role="tab">Reviews</button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- Description Tab -->
+            <div class="tab-pane fade show active" id="description" role="tabpanel">
+                <h5 class="mb-3">Product Description</h5>
+                <p>Experience premium sound quality with our wireless headphones. Featuring active noise cancellation,
+                    30-hour battery life, and premium comfort design, these headphones are perfect for music lovers and
+                    professionals alike.</p>
+                <p>Built with premium materials and cutting-edge technology, our headphones deliver exceptional audio
+                    performance with deep bass, clear mids, and crisp highs.</p>
+            </div>
+
+            <!-- Specifications Tab -->
+            <div class="tab-pane fade" id="specifications" role="tabpanel">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td class="fw-bold">Driver Size</td>
+                            <td>40mm</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Frequency Response</td>
+                            <td>20Hz - 20kHz</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Impedance</td>
+                            <td>32Ω</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Bluetooth Version</td>
+                            <td>5.0</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Battery Life</td>
+                            <td>30 hours</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Weight</td>
+                            <td>250g</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Reviews Tab -->
+            <div class="tab-pane fade" id="reviews" role="tabpanel">
+                <h5 class="mb-4">Customer Reviews</h5>
+                <div class="review mb-4">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="mb-1">John Doe</h6>
+                            <span class="text-warning">★★★★★</span>
+                        </div>
+                        <small class="text-muted">2 days ago</small>
+                    </div>
+                    <p class="mt-2">Excellent quality! The sound is crystal clear and the battery lasts forever. Highly
+                        recommended!</p>
+                </div>
+                <div class="review mb-4">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="mb-1">Jane Smith</h6>
+                            <span class="text-warning">★★★★☆</span>
+                        </div>
+                        <small class="text-muted">1 week ago</small>
+                    </div>
+                    <p class="mt-2">Great product overall. Very comfortable to wear for long periods.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    <div class="container mb-5">
+        <h4 class="mb-4">Related Products</h4>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="" class="card-img-top" alt="Product">
+                    <div class="card-body">
+                        <h6 class="card-title">Related Product 1</h6>
+                        <div class="text-warning mb-2">★★★★★</div>
+                        <div class="h5 text-danger">$79.99</div>
+                        <button class="btn btn-sm btn-danger w-100">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="" class="card-img-top" alt="Product">
+                    <div class="card-body">
+                        <h6 class="card-title">Related Product 2</h6>
+                        <div class="text-warning mb-2">★★★★★</div>
+                        <div class="h5 text-danger">$89.99</div>
+                        <button class="btn btn-sm btn-danger w-100">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="" class="card-img-top" alt="Product">
+                    <div class="card-body">
+                        <h6 class="card-title">Related Product 3</h6>
+                        <div class="text-warning mb-2">★★★★★</div>
+                        <div class="h5 text-danger">$69.99</div>
+                        <button class="btn btn-sm btn-danger w-100">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="" class="card-img-top" alt="Product">
+                    <div class="card-body">
+                        <h6 class="card-title">Related Product 4</h6>
+                        <div class="text-warning mb-2">★★★★☆</div>
+                        <div class="h5 text-danger">$59.99</div>
+                        <button class="btn btn-sm btn-danger w-100">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Images Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-dark border-0">
+
+                <div id="imageCarousel" class="carousel slide">
+                    <div class="carousel-inner">
+
+                        <div class="carousel-item active">
+                            <img src="../assets/images/thumbnail1.jpg" class="d-block w-100">
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="../assets/images/thumbnail2.jpg" class="d-block w-100">
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="../assets/images/thumbnail3.jpg" class="d-block w-100">
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="../assets/images/thumbnail4.jpg" class="d-block w-100">
+                        </div>
+
+                    </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+
+                    <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container-fluid footer-container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h6>About Us</h6>
+                    <ul>
+                        <li><a href="#">About eCommerce</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h6>Customer Service</h6>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h6>Policies</h6>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Security</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h6>Follow Us</h6>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 eCommerce Shop. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Script -->
+    <script src="../js/common/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../js/components/navbar.js"></script>
+    <script>
+        // Thumbnail image click
+        document.querySelectorAll('.thumbnail-img').forEach(img => {
+            img.addEventListener('click', function () {
+                document.getElementById('mainImage').src = this.dataset.image;
+            });
+        });
+
+        // Quantity buttons
+        document.getElementById('decreaseBtn').addEventListener('click', function () {
+            let quantity = parseInt(document.getElementById('quantityInput').value);
+            if (quantity > 1) {
+                document.getElementById('quantityInput').value = quantity - 1;
+            }
+        });
+
+        document.getElementById('increaseBtn').addEventListener('click', function () {
+            let quantity = parseInt(document.getElementById('quantityInput').value);
+            if (quantity < 10) {
+                document.getElementById('quantityInput').value = quantity + 1;
+            }
+        });
+
+        // Add to cart
+        document.getElementById('addToCartBtn').addEventListener('click', function () {
+            alert('Product added to cart!');
+        });
+
+        // Add to wishlist
+        document.getElementById('addToWishlistBtn').addEventListener('click', function () {
+            this.classList.toggle('active');
+        });
+
+        // Hanle click product image event
+        document.querySelectorAll('.thumbnail-img').forEach((img, index) => {
+            img.addEventListener('click', () => {
+                const carousel = new bootstrap.Carousel('#imageCarousel');
+                carousel.to(index);
+            });
+        });
+    </script>
+</body>
+
+</html>

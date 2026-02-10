@@ -93,15 +93,17 @@
                 <p class="text-muted text-center">Không có dữ liệu.</p>
 
                 <!-- Cart Item 1 -->
-                <div class="d-flex mb-3 align-items-center border-bottom pb-2">
-                    <img src="" alt="iPhone 15 Pro" class="me-3" style="width:60px; height:60px; object-fit:cover;">
-                    <div class="flex-grow-1">
-                        <h6 class="mb-1">iPhone 15 Pro</h6>
-                        <p class="mb-0 text-muted small">Quantity: 1</p>
-                        <p class="mb-0 text-danger fw-bold">26.990.000 ₫</p>
-                    </div>
-                    <button class="btn btn-sm btn-outline-danger ms-2">&times;</button>
+                <div id="cart-items">
+                    <!-- Cart items sẽ render ở đây -->
                 </div>
+
+                <hr>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <strong>Total:</strong>
+                    <span id="cart-total">0 ₫</span>
+                </div>
+
+                <button class="btn btn-primary w-100">Proceed to Checkout</button>
             </div>
         </div>
     </div>
@@ -499,6 +501,69 @@
     <!-- Scripts -->
     <script src="../js/common/bootstrap.bundle.min.js"></script>
     <script type="module" src="../js/components/navbar.js"></script>
+    <script>
+        const cartData = [
+            { id: 1, name: 'iPhone 15 Pro', price: 26990000, quantity: 1, image: '/ecommerce-fe/assets/images/product1.jpg' },
+            { id: 2, name: 'Samsung Galaxy S24 Ultra', price: 28990000, quantity: 2, image: '/ecommerce-fe/assets/images/product1.jpg' },
+            { id: 3, name: 'OPPO Reno 11', price: 9990000, quantity: 1, image: '/ecommerce-fe/assets/images/product1.jpg' }
+        ];
+
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+
+        function renderCart() {
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+
+            cartData.forEach(item => {
+                total += item.price * item.quantity;
+                const div = document.createElement('div');
+                div.classList.add('d-flex', 'align-items-center', 'mb-3', 'border-bottom', 'pb-2');
+                div.dataset.id = item.id;
+
+                div.innerHTML = `
+            <input type="checkbox" class="form-check-input me-2" checked>
+            <img src="${item.image}" alt="${item.name}" class="me-3" style="width:60px; height:60px; object-fit:cover;">
+            <div class="flex-grow-1">
+                <h6 class="mb-1">${item.name}</h6>
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-sm btn-outline-secondary me-2 decrease">-</button>
+                    <span class="mx-1 quantity">${item.quantity}</span>
+                    <button class="btn btn-sm btn-outline-secondary ms-2 increase">+</button>
+                </div>
+                <p class="mb-0 text-danger fw-bold">${(item.price * item.quantity).toLocaleString()} ₫</p>
+            </div>
+            <button class="btn btn-sm btn-outline-danger ms-2 remove">&times;</button>
+        `;
+
+                cartItemsContainer.appendChild(div);
+            });
+
+            cartTotal.innerText = total.toLocaleString() + ' ₫';
+        }
+
+        cartItemsContainer.addEventListener('click', (e) => {
+            const itemDiv = e.target.closest('div[data-id]');
+            if (!itemDiv) return;
+            const id = parseInt(itemDiv.dataset.id);
+            const item = cartData.find(i => i.id === id);
+
+            if (e.target.classList.contains('increase')) {
+                item.quantity++;
+                renderCart();
+            } else if (e.target.classList.contains('decrease')) {
+                if (item.quantity > 1) item.quantity--;
+                renderCart();
+            } else if (e.target.classList.contains('remove')) {
+                const index = cartData.findIndex(i => i.id === id);
+                cartData.splice(index, 1);
+                renderCart();
+            }
+        });
+
+        // render lần đầu
+        renderCart();
+    </script>
     <script type="module" src="../js/pages/index.js"></script>
 </body>
 

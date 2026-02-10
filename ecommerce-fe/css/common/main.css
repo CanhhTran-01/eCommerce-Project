@@ -13,11 +13,12 @@
 
 
 /* Pages */
-@import url('../pages/account-info.css');
+@import url('../pages/profile.css');
 @import url('../pages/index.css');
 @import url('../pages/login.css');
 @import url('../pages/product-list.css');
 @import url('../pages/sale-product.css');
+@import url('../pages/product-detail.css');
 
 
 

@@ -1,0 +1,141 @@
+/* Product Gallery */
+.product-gallery {
+    position: sticky;
+    top: 20px;
+}
+
+.main-image{
+    padding:10px;
+}
+
+#mainImage{
+    width:100%;
+    height:420px;
+    object-fit:contain;
+}
+
+.main-image img {
+    transition: transform 0.3s ease;
+}
+
+.main-image img:hover {
+    transform: scale(1.05);
+}
+
+.thumbnail-img {
+    cursor: pointer;
+    transition: border-color 0.3s ease, opacity 0.3s ease;
+}
+
+.thumbnail-img:hover {
+    border-color: #dc3545 !important;
+    opacity: 0.8;
+}
+
+/* Price Section */
+.price-section {
+    border-left: 4px solid #dc3545;
+}
+
+/* Product Info */
+.stars {
+    font-size: 1.1rem;
+}
+
+/* Quantity Input */
+.input-group {
+    max-width: 120px;
+}
+
+.input-group input {
+    font-weight: bold;
+}
+
+/* Button Styling */
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Tabs */
+.nav-tabs {
+    border-bottom: 2px solid #e9ecef;
+}
+
+.nav-tabs .nav-link {
+    color: #6c757d;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #dc3545;
+    border-bottom-color: #dc3545;
+}
+
+.nav-tabs .nav-link.active {
+    color: #dc3545;
+    border-bottom-color: #dc3545;
+    background-color: transparent;
+}
+
+/* Reviews Section */
+.review {
+    padding: 1rem;
+    border: 1px solid #e9ecef;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.review:hover {
+    border-color: #dc3545;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Related Products */
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-img-top {
+    background-color: #f8f9fa;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .product-gallery {
+        position: static;
+    }
+
+    .btn-lg {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .d-md-flex {
+        flex-direction: column;
+    }
+}
