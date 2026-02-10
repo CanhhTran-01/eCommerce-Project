@@ -1,7 +1,7 @@
 package com.myproject.ecommerce.enums;
 
-public enum UserGender {
+public enum Gender {
     MALE,
     FEMALE,
-    HIDDEN
+    OTHER
 }

@@ -1,5 +1,7 @@
 package com.myproject.ecommerce.entity;
 
+import com.myproject.ecommerce.enums.OrderStatus;
+import com.myproject.ecommerce.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,11 +25,13 @@ public class Order {
     @Column(name = "order_code")
     private String orderCode;
 
-    @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private OrderStatus status;
 
-    @Column(name = "payment_status")
-    private String paymentStatus;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status", nullable = false)
+    private PaymentStatus paymentStatus;
 
     @Column(name = "shipping_method")
     private String shippingMethod;

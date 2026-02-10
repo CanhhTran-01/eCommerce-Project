@@ -1,5 +1,6 @@
 package com.myproject.ecommerce.dto.response;
 
+import com.myproject.ecommerce.enums.OrderStatus;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 public class OrderResponse {
     private Long id;
     private String orderCode;
-    private String status;
+    private OrderStatus status;
     private String paymentStatus;
     private String shippingMethod;
     private BigDecimal shippingFee;

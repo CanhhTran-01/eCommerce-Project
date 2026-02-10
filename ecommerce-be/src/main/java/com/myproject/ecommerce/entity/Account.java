@@ -1,5 +1,6 @@
 package com.myproject.ecommerce.entity;
 
+import com.myproject.ecommerce.enums.AccountStatus;
 import com.myproject.ecommerce.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -37,6 +38,10 @@ public class Account {
     )
     @Column(name = "role")
     private Set<Role> accountRoles;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "account_status", nullable = false)
+    private AccountStatus accountStatus;
 
     @Column(name="last_login")
     private LocalDateTime lastLogin;

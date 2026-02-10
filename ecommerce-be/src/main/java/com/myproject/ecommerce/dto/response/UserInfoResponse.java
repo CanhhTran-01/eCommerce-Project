@@ -1,5 +1,6 @@
 package com.myproject.ecommerce.dto.response;
 
+import com.myproject.ecommerce.enums.Gender;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -17,7 +18,7 @@ public class UserInfoResponse {
     private String userCode;
     private String avatarUrl;
     private String phoneNumber;
-    private String gender;
+    private Gender gender;
     private LocalDate dateOfBirth;
     private String address;
     private BigDecimal personalPoints;

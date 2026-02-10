@@ -1,6 +1,5 @@
 package com.myproject.ecommerce.controller;
 
-import com.myproject.ecommerce.dto.request.CategoryReorderRequest;
 import com.myproject.ecommerce.dto.request.CategoryRequest;
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.dto.response.CategoryResponse;
