@@ -1,5 +1,6 @@
 package com.myproject.ecommerce.repository;
 
+import com.myproject.ecommerce.dto.response.ProductSummaryResponse;
 import com.myproject.ecommerce.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,23 +13,54 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("""
-            SELECT p
+            SELECT new com.myproject.ecommerce.dto.response.ProductSummaryResponse(
+                p.id,
+                p.productName,
+                p.price,
+                p.discountPrice,
+                COUNT(r),
+                COALESCE(AVG(r.rating), 0.0)
+            )
             FROM Product p
+            LEFT JOIN p.reviewList r
             WHERE p.discountPrice IS NOT NULL AND p.discountPrice < p.price
+            GROUP BY p.id, p.productName, p.price, p.discountPrice
     """)
-    List<Product> getProductOnSaleList();
+    List<ProductSummaryResponse> getProductOnSaleList();
 
-    @Query(value = """
-            SELECT p.*
-            FROM product p
-            JOIN wish_list w ON p.id = w.product_id
-            JOIN account a ON a.user_id = w.user_id
+    @Query("""
+            SELECT new com.myproject.ecommerce.dto.response.ProductSummaryResponse(
+                p.id,
+                p.productName,
+                p.price,
+                p.discountPrice,
+                COUNT(r.id),
+                COALESCE(AVG(r.rating), 0.0)
+            )
+            FROM Account a
+            JOIN a.user u
+            JOIN u.wishList p
+            LEFT JOIN Review r ON r.product.id = p.id
             WHERE a.id = :accountId
-    """,
-            nativeQuery = true
-    )
-    List<Product> getWishlistByAccountId(@Param("accountId") Long accountId);
+            GROUP BY p.id, p.productName, p.price, p.discountPrice
+    """)
+    List<ProductSummaryResponse> getWishlistByAccountId(@Param("accountId") Long accountId);
 
-    List<Product> getProductByCategoryId(Long categoryId);
 
+
+    @Query("""
+            SELECT new com.myproject.ecommerce.dto.response.ProductSummaryResponse(
+                p.id,
+                p.productName,
+                p.price,
+                p.discountPrice,
+                COUNT(r),
+                COALESCE(AVG(r.rating), 0.0)
+            )
+            FROM Product p
+            LEFT JOIN p.reviewList r
+            WHERE p.category.id = :categoryId
+            GROUP BY (p.id, p.productName, p.price, p.discountPrice)
+    """)
+    List<ProductSummaryResponse> getProductByCategoryId(Long categoryId);
 }

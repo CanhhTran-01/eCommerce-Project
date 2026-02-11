@@ -40,8 +40,8 @@ public class UserController {
 
     @GetMapping("/me/wish-list")
     public ResponseEntity<ApiResponse<List<ProductSummaryResponse>>> getMyWishlist(@AuthenticationPrincipal Jwt jwt){
-        Long accountId = jwt.getClaim("accountId");  // get account_id from JWT
 
+        Long accountId = jwt.getClaim("accountId");  // get account_id from JWT
         var apiResponse = new ApiResponse<>(
                 true,
                 null,

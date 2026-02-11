@@ -36,30 +36,21 @@ public class ProductService {
     // get product on sale list
     @Transactional(readOnly = true)
     public List<ProductSummaryResponse> getProductOnSaleList(){
-        return productRepository.getProductOnSaleList()
-                .stream()
-                .map(productMapper::toProductSummaryResponse)
-                .toList();
+        return productRepository.getProductOnSaleList();
     }
 
 
     // get product by category
     @Transactional(readOnly = true)
     public List<ProductSummaryResponse> getProductsByCategory(Long categoryId){
-        return productRepository.getProductByCategoryId(categoryId)
-                .stream()
-                .map(productMapper::toProductSummaryResponse)
-                .toList();
+        return productRepository.getProductByCategoryId(categoryId);
     }
 
 
-    // get wish list
+    // get wish list by accountId
     @Transactional(readOnly = true)
     public List<ProductSummaryResponse> getMyWishlist(Long accountId){
-        return productRepository.getWishlistByAccountId(accountId)
-                .stream()
-                .map(productMapper::toProductSummaryResponse)
-                .toList();
+        return productRepository.getWishlistByAccountId(accountId);
     }
 
 

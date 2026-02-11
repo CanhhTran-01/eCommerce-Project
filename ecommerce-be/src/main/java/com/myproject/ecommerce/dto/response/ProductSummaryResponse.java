@@ -14,4 +14,6 @@ public class ProductSummaryResponse {
     private String productName;
     private BigDecimal price;
     private BigDecimal discountPrice;
+    private Long ratingCount;
+    private Double ratingAvg;
 }
