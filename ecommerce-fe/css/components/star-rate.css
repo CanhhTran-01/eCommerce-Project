@@ -2,21 +2,23 @@
     position: relative;
     display: inline-block;
     font-size: 1.1rem;
-    color: #ddd;
+    line-height: 1;
 }
 
 .stars::before {
     content: "★★★★★";
+    color: #ddd;   
 }
 
 .stars-filled {
     position: absolute;
     top: 0;
     left: 0;
+    white-space: nowrap;   
     overflow: hidden;
-    color: #ffc107;
 }
 
 .stars-filled::before {
     content: "★★★★★";
+    color: #ffc107;  
 }

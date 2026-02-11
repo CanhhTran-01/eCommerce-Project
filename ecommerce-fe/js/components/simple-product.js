@@ -1,7 +1,7 @@
 import { formatVND } from '../utils/format.js';
 
 export function renderProductCard(data, container) {
-    
+
     container.innerHTML = data.map(product => {
         const hasDiscount = product.discountPrice != null && product.discountPrice < product.price;
         const discountBadgeHTML = hasDiscount
@@ -27,8 +27,9 @@ export function renderProductCard(data, container) {
                                     overflow: hidden; 
                                     text-overflow: ellipsis;" 
                             class="product-name">${product.productName}</h6>
-                        <div class="stars">                           
-                            <small style="font-size: 10px;" class="text-muted">(254 lượt đánh giá)</small>
+                        <div class="stars">     
+                            <div class="stars-filled" style="width: ${(product.ratingAvg / 5) * 100}%"></div>                      
+                            <small style="font-size: 10px;" class="text-muted">(${product.ratingCount} lượt đánh giá)</small>
                         </div>
                         <div class="product-price">
                             ${priceHTML}
