@@ -20,9 +20,6 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "status")
-    private String status;
-
     @Column(name = "total_items")
     private Integer totalItems;
 
