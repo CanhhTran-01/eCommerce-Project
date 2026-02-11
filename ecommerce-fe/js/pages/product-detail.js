@@ -7,6 +7,7 @@ const productPrice = document.getElementById('productPrice');
 const productStatus = document.getElementById('productStatus');
 const productInfo = document.getElementById('productInfo');
 const productDesc = document.getElementById('description');
+const buttonProductDetail = document.getElementById('buttonProductDetail');
 
 // call functions
 handleProductDetailPage();
@@ -52,6 +53,19 @@ async function handleProductDetailPage() {
                     <li class="mb-2"><strong>Made in:</strong> ${response.data.madeIn || 'Không rõ'}</li>                   
                 `
 
+        const buttonHTML = (response.data.stockQuantity > 0)
+            ? `     <button class="btn btn-danger btn-lg flex-grow-1" id="addToCartBtn">
+                        <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng
+                    </button>
+                    <button class="btn btn-outline-danger btn-lg flex-grow-1" id="addToWishlistBtn">
+                        <i class="bi bi-heart"></i> Thêm vào yêu thích
+                    </button>`
+            : `     
+                    <button class="btn btn-outline-danger btn-lg flex-grow-1" id="addToWishlistBtn">
+                    <i class="bi bi-heart"></i> Thêm vào yêu thích
+                    </button>`
+        buttonProductDetail.innerHTML = buttonHTML;
+
 
         productDesc.innerHTML = `
                     <p>${response.data.shortDescription}</p>
@@ -78,8 +92,8 @@ document.getElementById('reviews-tab').addEventListener('click', async (event) =
             return;
         }
 
-        productReviews.innerHTML = response.data.map(item => 
-             `
+        productReviews.innerHTML = response.data.map(item =>
+            `
                 <div class="review mb-4">
                     <div class="d-flex justify-content-between align-items-start">
                         <div>
