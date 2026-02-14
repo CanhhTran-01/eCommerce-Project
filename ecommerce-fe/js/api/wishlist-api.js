@@ -14,3 +14,22 @@ export async function fetchWishlist() {
 
     return response.json();
 }
+
+
+export async function addProductToWishList(productId) {
+    const response = await fetch(`http://localhost:8080/eCommerce/api/users/me/wish-list`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ productId }),
+    });
+
+    if (!response.ok) {
+        throw new Error('failed to add product to wish list');
+    }
+
+    return response.json();
+
+}

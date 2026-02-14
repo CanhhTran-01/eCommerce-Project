@@ -1,22 +1,22 @@
 import { fetchProductDetail } from "../api/product-api.js";
 import { formatVND, formatDateTime } from "../utils/format.js";
 import { fetchProductReviews } from "../api/product-api.js";
+import { addProductToWishList } from "../api/wishlist-api.js";
 
+const productId = Number(new URLSearchParams(window.location.search).get('productId'));
 const productName = document.getElementById('productName');
 const productPrice = document.getElementById('productPrice');
 const productStatus = document.getElementById('productStatus');
 const productInfo = document.getElementById('productInfo');
 const productDesc = document.getElementById('description');
-const buttonProductDetail = document.getElementById('buttonProductDetail');
+const addToWishListBtn = document.getElementById('addToWishlistBtn');
+const addToCartBtn = document.getElementById('addToCartBtn');
 
 // call functions
 handleProductDetailPage();
 
 
 async function handleProductDetailPage() {
-    // get productId from url
-    const productId = Number(new URLSearchParams(window.location.search).get('productId'));
-
     try {
         const response = await fetchProductDetail(productId);
 
@@ -52,20 +52,6 @@ async function handleProductDetailPage() {
                     <li class="mb-2"><strong>Color:</strong> ${response.data.color || 'Ngẫu nhiên'}</li>
                     <li class="mb-2"><strong>Made in:</strong> ${response.data.madeIn || 'Không rõ'}</li>                   
                 `
-
-        const buttonHTML = (response.data.stockQuantity > 0)
-            ? `     <button class="btn btn-danger btn-lg flex-grow-1" id="addToCartBtn">
-                        <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng
-                    </button>
-                    <button class="btn btn-outline-danger btn-lg flex-grow-1" id="addToWishlistBtn">
-                        <i class="bi bi-heart"></i> Thêm vào yêu thích
-                    </button>`
-            : `     
-                    <button class="btn btn-outline-danger btn-lg flex-grow-1" id="addToWishlistBtn">
-                    <i class="bi bi-heart"></i> Thêm vào yêu thích
-                    </button>`
-        buttonProductDetail.innerHTML = buttonHTML;
-
 
         productDesc.innerHTML = `
                     <p>${response.data.shortDescription}</p>
@@ -117,6 +103,21 @@ document.getElementById('reviews-tab').addEventListener('click', async (event) =
         console.log(error);
         productReviews.innerHTML = '<p class="text-danger"><strong>Có lỗi xảy ra.</strong></p>';
     }
+});
+
+
+addToWishListBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    addProductToWishList(productId);
+    alert('Đã thêm sản phẩm vào yêu thích');
+    document.getElementById('addToWishlistBtn').classList.add('d-none');
+});
+
+
+addToCartBtn.addEventListener('click', (e) => { 
+    e.preventDefault();
+
+
 });
 
 
