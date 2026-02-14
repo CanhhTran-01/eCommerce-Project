@@ -1,12 +1,15 @@
 package com.myproject.ecommerce.controller;
 
 import com.myproject.ecommerce.dto.request.InfoUpdateRequest;
+import com.myproject.ecommerce.dto.request.WishListRequest;
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.dto.response.ProductSummaryResponse;
 import com.myproject.ecommerce.dto.response.UserInfoResponse;
 import com.myproject.ecommerce.service.ProductService;
 import com.myproject.ecommerce.service.UserService;
+import com.myproject.ecommerce.service.WishListService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -20,11 +23,14 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final ProductService productService;
+    private final WishListService wishListService;
+
 
     @PostMapping("")
     public ResponseEntity<UserInfoResponse> createUser(@RequestBody InfoUpdateRequest infoUpdateRequest){
         return ResponseEntity.ok(userService.createUser(infoUpdateRequest));
     }
+
 
     @PutMapping("/{userId}")
     public ResponseEntity<ApiResponse<UserInfoResponse>> updateInfo(@PathVariable("userId") Long id,
@@ -38,6 +44,7 @@ public class UserController {
         return ResponseEntity.ok(apiResponse);
     }
 
+
     @GetMapping("/me/wish-list")
     public ResponseEntity<ApiResponse<List<ProductSummaryResponse>>> getMyWishlist(@AuthenticationPrincipal Jwt jwt){
 
@@ -49,5 +56,24 @@ public class UserController {
         );
         return ResponseEntity.ok(apiResponse);
     }
+
+
+    @PostMapping("/me/wish-list")
+    public ResponseEntity<ApiResponse<Void>> addProductToMyWishList(@AuthenticationPrincipal Jwt jwt,
+                                                                    @RequestBody WishListRequest wishListRequest){
+
+        Long accountId = jwt.getClaim("accountId"); // get account_id from JWT
+        Long productId = wishListRequest.getProductId();
+        wishListService.insertToWishList(accountId, productId);
+
+        var apiResponse = new ApiResponse<Void>(
+                true,
+                null,
+                null
+        );
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(apiResponse);
+    }
+
 
 }

@@ -18,7 +18,8 @@ public enum ErrorCode {
     UNAUTHENTICATED(1006, "unauthenticated!", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1007, "you have no permission with this page!", HttpStatus.FORBIDDEN),
     USER_NOT_FOUND(1008, "user not found!", HttpStatus.NOT_FOUND),
-    PRODUCT_NOT_FOUND(1009, "product not found!", HttpStatus.NOT_FOUND)
+    PRODUCT_NOT_FOUND(1009, "product not found!", HttpStatus.NOT_FOUND),
+    FAV_PRODUCT_EXISTED(1010, "favourite product existed!", HttpStatus.BAD_REQUEST)
     ;
 
 
