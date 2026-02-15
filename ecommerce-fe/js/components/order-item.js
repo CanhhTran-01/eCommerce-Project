@@ -7,7 +7,7 @@ export function renderOrderItem(data, container){
         return;
     }
     container.innerHTML = data.map(item => `
-            <div class="list-group-item">
+            <div class="list-group-item" data-order-id="${item.orderId}">
                 <div class="row align-items-center">
 
                     <!-- product -->
@@ -33,10 +33,22 @@ export function renderOrderItem(data, container){
 
                     <!-- action -->
                     <div class="col-md-2 text-md-end mt-2 mt-md-0">
-                        <button id="orderDetailBtn" class="btn btn-outline-danger btn-sm">Chi tiết</button>
+                        <button id="orderDetailBtn" class="btn btn-outline-danger btn-sm">Chi tiết đơn</button>
                     </div>
 
                 </div>
             </div>
     `).join('');
+
+    document.getElementById('orderDetailBtn').addEventListener('click', (event) => {
+        event.preventDefault();
+        const target = event.target.closest('.list-group-item');
+            if (target) {
+                const orderId = target.dataset.orderId;
+                if (orderId) {
+                    window.location.href =
+                        `${window.location.origin}/ecommerce-fe/pages/order-detail.html?orderId=${orderId}`;
+                }
+            }
+    });
 }

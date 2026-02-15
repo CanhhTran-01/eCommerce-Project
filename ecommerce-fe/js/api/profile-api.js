@@ -1,7 +1,7 @@
 const token = localStorage.getItem('access_token');
 
 export async function fetchProfile() {
-    const response = await fetch('http://localhost:8080/eCommerce/api/me/info', {
+    const response = await fetch(`http://localhost:8080/eCommerce/api/me/info`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`,
