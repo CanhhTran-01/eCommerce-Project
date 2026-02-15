@@ -16,6 +16,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     @Query("""
        SELECT new com.myproject.ecommerce.dto.response.OrderItemResponse(
             oi.id,
+            oi.order.id,
             oi.imageUrl,
             oi.productName,
             oi.quantity,
@@ -32,6 +33,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     @Query("""
        SELECT new com.myproject.ecommerce.dto.response.OrderItemResponse(
             oi.id,
+            oi.order.id,
             oi.imageUrl,
             oi.productName,
             oi.quantity,

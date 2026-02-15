@@ -1,8 +1,11 @@
 package com.myproject.ecommerce.service;
 
 import com.myproject.ecommerce.dto.request.OrderRequest;
-import com.myproject.ecommerce.dto.response.OrderResponse;
+import com.myproject.ecommerce.dto.response.OrderDetailResponse;
+import com.myproject.ecommerce.dto.response.OrderItemResponse;
 import com.myproject.ecommerce.entity.Order;
+import com.myproject.ecommerce.enums.ErrorCode;
+import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.mapper.OrderMapper;
 import com.myproject.ecommerce.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,27 +21,48 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
 
-    public OrderResponse createOrder(OrderRequest orderRequest){
+
+    public OrderDetailResponse createOrder(OrderRequest orderRequest){
         Order order = orderMapper.toEntity(orderRequest);
 
-        return orderMapper.toResponse(orderRepository.save(order));
+        return orderMapper.toDetailResponse(orderRepository.save(order));
     }
 
+
+    // get my order detail
     @Transactional(readOnly = true)
-    public List<OrderResponse> getOrderList(){
+    public OrderDetailResponse getOrderDetail(Long accountId, Long orderId){
+
+        Order order = orderRepository.findOrderByIdAndAccountId(accountId, orderId)
+                .orElseThrow(() -> new BaseException(ErrorCode.ORDER_NOT_FOUND));
+
+        OrderDetailResponse response = orderMapper.toDetailResponse(order);
+        List<OrderItemResponse> orderItemResponses = order.getOrderItemList()
+                .stream()
+                .map(orderMapper::toItemResponse)
+                .toList();
+        response.setOrderItemResponseList(orderItemResponses);
+
+        return response;
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<OrderDetailResponse> getOrderList(){
         return orderRepository.findAll()
                 .stream()
-                .map(orderMapper::toResponse)
+                .map(orderMapper::toDetailResponse)
                 .toList();
     }
 
-    public OrderResponse updateOrder(Long id, OrderRequest orderRequest){
+
+    public OrderDetailResponse updateOrder(Long id, OrderRequest orderRequest){
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order doesn't existed !"));
 
         orderMapper.update(order, orderRequest);
 
-        return orderMapper.toResponse(orderRepository.save(order));
+        return orderMapper.toDetailResponse(orderRepository.save(order));
     }
 
 }
