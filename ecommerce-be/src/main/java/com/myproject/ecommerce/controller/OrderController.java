@@ -32,6 +32,7 @@ public class OrderController {
             @RequestParam Long orderId,
             @AuthenticationPrincipal Jwt jwt
     ){
+
         Long accountId = jwt.getClaim("accountId");  // get account_id from JWT
         var apiResponse = new ApiResponse<>(
                 true,
@@ -39,7 +40,6 @@ public class OrderController {
                 orderService.getOrderDetail(accountId, orderId)
         );
         return ResponseEntity.ok(apiResponse);
-
     }
 
 

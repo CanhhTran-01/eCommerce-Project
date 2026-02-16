@@ -17,6 +17,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
        SELECT new com.myproject.ecommerce.dto.response.OrderItemResponse(
             oi.id,
             oi.order.id,
+            oi.product.id,
             oi.imageUrl,
             oi.productName,
             oi.quantity,
@@ -25,7 +26,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
        )
        FROM OrderItem oi
        WHERE oi.order.user.account.id = :accountId AND oi.order.status IN ('PENDING', 'CONFIRMED', 'SHIPPING')
-       """)
+    """)
     List<OrderItemResponse> findActiveOrderItemsByAccountId(@Param("accountId") Long accountId);
 
 
@@ -34,6 +35,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
        SELECT new com.myproject.ecommerce.dto.response.OrderItemResponse(
             oi.id,
             oi.order.id,
+            oi.product.id,
             oi.imageUrl,
             oi.productName,
             oi.quantity,
@@ -42,6 +44,23 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
        )
        FROM OrderItem oi
        WHERE oi.order.user.account.id = :accountId AND oi.order.status IN ('COMPLETED', 'CANCELED')
-       """)
+    """)
     List<OrderItemResponse> getOrderItemsHistory(@Param("accountId") Long accountId);
+
+    // get order item for feedback with productId not null
+    @Query("""
+       SELECT new com.myproject.ecommerce.dto.response.OrderItemResponse(
+            oi.id,
+            oi.order.id,
+            oi.product.id,
+            oi.imageUrl,
+            oi.productName,
+            oi.quantity,
+            oi.order.status,
+            oi.totalPrice
+       )
+       FROM OrderItem oi
+       WHERE oi.order.id = :orderId AND oi.order.status = 'COMPLETED'
+    """)
+    List<OrderItemResponse> getOrderItemsforFeedback(@Param("orderId") Long orderId);
 }

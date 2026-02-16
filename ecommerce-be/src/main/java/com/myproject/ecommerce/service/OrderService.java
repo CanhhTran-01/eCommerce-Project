@@ -7,6 +7,7 @@ import com.myproject.ecommerce.entity.Order;
 import com.myproject.ecommerce.enums.ErrorCode;
 import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.mapper.OrderMapper;
+import com.myproject.ecommerce.repository.OrderItemRepository;
 import com.myproject.ecommerce.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.List;
 @Transactional
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
     private final OrderMapper orderMapper;
 
 
@@ -37,10 +39,8 @@ public class OrderService {
                 .orElseThrow(() -> new BaseException(ErrorCode.ORDER_NOT_FOUND));
 
         OrderDetailResponse response = orderMapper.toDetailResponse(order);
-        List<OrderItemResponse> orderItemResponses = order.getOrderItemList()
-                .stream()
-                .map(orderMapper::toItemResponse)
-                .toList();
+
+        List<OrderItemResponse> orderItemResponses = orderItemRepository.getOrderItemsforFeedback(order.getId());
         response.setOrderItemResponseList(orderItemResponses);
 
         return response;
