@@ -8,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewRequest {
+    private Long productId;
     private Integer rating;
     private String title;
     private String comment;
-    private String imageUrl;
 }

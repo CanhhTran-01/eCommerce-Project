@@ -20,7 +20,8 @@ public enum ErrorCode {
     USER_NOT_FOUND(1008, "user not found!", HttpStatus.NOT_FOUND),
     PRODUCT_NOT_FOUND(1009, "product not found!", HttpStatus.NOT_FOUND),
     FAV_PRODUCT_EXISTED(1010, "favourite product existed!", HttpStatus.BAD_REQUEST),
-    ORDER_NOT_FOUND(1011, "order not found!", HttpStatus.NOT_FOUND)
+    ORDER_NOT_FOUND(1011, "order not found!", HttpStatus.NOT_FOUND),
+    USER_REVIEWED(1012, "user reviewed this product!", HttpStatus.BAD_REQUEST)
     ;
 
 

@@ -24,7 +24,7 @@ public class Review {
     private String title;
 
     @Lob
-    @Column(name = "comment")
+    @Column(name = "comment", columnDefinition = "TEXT")
     private String comment;
 
     @Lob
