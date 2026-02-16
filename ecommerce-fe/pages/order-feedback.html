@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,180 +12,40 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
+
 <body class="bg-light">
 
-<div class="container py-4">
+    <div class="container py-4">
 
-    <!-- Header -->
-    <div class="bg-white rounded shadow-sm p-3 mb-3">
-        <div class="d-flex align-items-center">
-            <a href="#" class="text-decoration-none text-dark me-2">
-                <i class="bi bi-arrow-left"></i>
-            </a>
-            <div>
-                <div class="fw-semibold">Đánh giá đơn hàng #DH123456</div>
-                <div class="small text-muted">3 sản phẩm cần đánh giá</div>
+        <!-- Header -->
+        <div class="bg-white rounded shadow-sm p-3 mb-3">
+            <div class="d-flex align-items-center">
+                <div id="feedbackTitle">
+                    <!-- JS handle -->
+                </div>
             </div>
         </div>
+
+        <!-- Product Review Item 1 -->
+        <div id="itemFeedback">
+            <!-- JS handle -->
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-white rounded shadow-sm p-3">
+            <div class="d-grid">
+                <button id="returnToIndexPageBtn" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> Về trang chủ
+                </button>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Product Review Item 1 -->
-    <div class="bg-white rounded shadow-sm p-3 mb-3">
-        <div class="d-flex mb-3">
-            <img src="https://via.placeholder.com/80" class="rounded me-3" alt="product">
-            <div>
-                <h6 class="mb-1">Tai nghe Bluetooth XYZ</h6>
-                <small class="text-muted">Phân loại: Màu Đen</small>
-            </div>
-        </div>
 
-        <!-- Rating -->
-        <div class="mb-3">
-            <div class="mb-1 fw-semibold">Đánh giá của bạn</div>
-            <div class="fs-4 text-warning">
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-            </div>
-        </div>
-
-        <!-- Title -->
-        <div class="mb-3">
-            <label class="form-label fw-semibold">Tiêu đề đánh giá</label>
-            <input type="text" class="form-control" maxlength="100"
-                   placeholder="Ví dụ: Sản phẩm rất đáng tiền">
-            <div class="text-end small text-muted">0/100</div>
-        </div>
-
-        <!-- Comment -->
-        <div class="mb-3">
-            <label class="form-label fw-semibold">Nội dung đánh giá</label>
-            <textarea class="form-control" rows="3" maxlength="500"
-                placeholder="Hãy chia sẻ cảm nhận chi tiết của bạn về sản phẩm..."></textarea>
-            <div class="text-end small text-muted">0/500</div>
-        </div>
-
-        <!-- Upload -->
-        <div class="mb-3">
-            <label class="form-label fw-semibold">Hình ảnh (tùy chọn)</label>
-            <input type="file" class="form-control" multiple>
-        </div>
-
-        <!-- Submit -->
-        <div class="d-grid">
-            <button class="btn btn-danger">
-                <i class="bi bi-send"></i> Gửi đánh giá
-            </button>
-        </div>
-    </div>
-
-    <!-- Product Review Item 2 -->
-    <div class="bg-white rounded shadow-sm p-3 mb-3">
-        <div class="d-flex mb-3">
-            <img src="https://via.placeholder.com/80" class="rounded me-3" alt="product">
-            <div>
-                <h6 class="mb-1">Chuột Gaming ABC</h6>
-                <small class="text-muted">Phân loại: RGB</small>
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <div class="mb-1 fw-semibold">Đánh giá của bạn</div>
-            <div class="fs-4 text-warning">
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label fw-semibold">Tiêu đề đánh giá</label>
-            <input type="text" class="form-control" maxlength="100"
-                   placeholder="Ví dụ: Chuột cầm rất chắc tay">
-            <div class="text-end small text-muted">0/100</div>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label fw-semibold">Nội dung đánh giá</label>
-            <textarea class="form-control" rows="3" maxlength="500"
-                placeholder="Hãy chia sẻ cảm nhận chi tiết của bạn về sản phẩm..."></textarea>
-            <div class="text-end small text-muted">0/500</div>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label fw-semibold">Hình ảnh (tùy chọn)</label>
-            <input type="file" class="form-control" multiple>
-        </div>
-
-        <div class="d-grid">
-            <button class="btn btn-danger">
-                <i class="bi bi-send"></i> Gửi đánh giá
-            </button>
-        </div>
-    </div>
-
-    <!-- Product Review Item 3 -->
-    <div class="bg-white rounded shadow-sm p-3 mb-4">
-        <div class="d-flex mb-3">
-            <img src="https://via.placeholder.com/80" class="rounded me-3" alt="product">
-            <div>
-                <h6 class="mb-1">Bàn phím Cơ DEF</h6>
-                <small class="text-muted">Phân loại: Blue Switch</small>
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <div class="mb-1 fw-semibold">Đánh giá của bạn</div>
-            <div class="fs-4 text-warning">
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label fw-semibold">Tiêu đề đánh giá</label>
-            <input type="text" class="form-control" maxlength="100"
-                   placeholder="Ví dụ: Gõ rất đã tay">
-            <div class="text-end small text-muted">0/100</div>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label fw-semibold">Nội dung đánh giá</label>
-            <textarea class="form-control" rows="3" maxlength="500"
-                placeholder="Hãy chia sẻ cảm nhận chi tiết của bạn về sản phẩm..."></textarea>
-            <div class="text-end small text-muted">0/500</div>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label fw-semibold">Hình ảnh (tùy chọn)</label>
-            <input type="file" class="form-control" multiple>
-        </div>
-
-        <div class="d-grid">
-            <button class="btn btn-danger">
-                <i class="bi bi-send"></i> Gửi đánh giá
-            </button>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="bg-white rounded shadow-sm p-3">
-        <div class="d-grid">
-            <button class="btn btn-outline-secondary">
-                <i class="bi bi-arrow-left"></i> Quay lại đơn hàng
-            </button>
-        </div>
-    </div>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../js/pages/order-feedback.js"></script>
 </body>
+
 </html>

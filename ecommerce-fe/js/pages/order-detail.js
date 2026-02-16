@@ -22,8 +22,8 @@ handleOrderDetailPage();
 async function handleOrderDetailPage() {
     try {
         const response = await fetchOrderDetail(orderId);
-        sessionStorage.setItem('order_items_for_repurchase', 
-            JSON.stringify(response.data.orderItemResponseList));
+        sessionStorage.setItem('order_detail', 
+            JSON.stringify(response.data));
 
         orderDetailTitle.innerHTML = `
                     <div>
@@ -69,7 +69,7 @@ async function handleOrderDetailPage() {
 document.getElementById('repurchaseBtn').addEventListener('click', (e) => {
     e.preventDefault();
 
-    const repurchaseItemsObj = JSON.parse(sessionStorage.getItem('order_items_for_repurchase'));
+    const repurchaseItemsObj = (JSON.parse(sessionStorage.getItem('order_detail'))).orderItemResponseList;
     repurchaseItemsHTML.innerHTML = repurchaseItemsObj.map(item => `
                 <div class="d-flex align-items-center border-bottom pb-3 mb-3">
                     <img src="${item.imageUrl}" class="rounded me-3" alt="order-item">
@@ -83,5 +83,11 @@ document.getElementById('repurchaseBtn').addEventListener('click', (e) => {
                 </div>
         `).join('');
 
+});
+
+
+document.getElementById('feedbackOrder').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = window.location.origin + '/ecommerce-fe/pages/order-feedback.html';
 });
 
