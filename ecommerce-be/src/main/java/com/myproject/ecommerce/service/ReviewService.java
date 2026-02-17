@@ -27,6 +27,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ReviewMapper reviewMapper;
 
+
     // create review
     public void createReview(Long accountId, ReviewRequest reviewRequest){
 
@@ -57,15 +58,4 @@ public class ReviewService {
         return reviewRepository.findReviewsByProductId(productId);
     }
 
-    public ReviewResponse updateReview(Long id, ReviewRequest reviewRequest){
-        Review review = reviewRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Not Found !"));
-
-        reviewMapper.update(review, reviewRequest);
-        return reviewMapper.toResponse(review);
-    }
-
-    public void deleteReview(Long id){
-        reviewRepository.deleteById(id);
-    }
 }

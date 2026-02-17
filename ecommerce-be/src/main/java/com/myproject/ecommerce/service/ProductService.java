@@ -1,6 +1,5 @@
 package com.myproject.ecommerce.service;
 
-import com.myproject.ecommerce.dto.request.ProductRequest;
 import com.myproject.ecommerce.dto.response.ProductDetailResponse;
 import com.myproject.ecommerce.dto.response.ProductSummaryResponse;
 import com.myproject.ecommerce.entity.Product;
@@ -8,7 +7,6 @@ import com.myproject.ecommerce.enums.ErrorCode;
 import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.mapper.ProductMapper;
 import com.myproject.ecommerce.repository.ProductRepository;
-import com.myproject.ecommerce.utils.ProductCodeMakingUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,16 +19,6 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
-
-
-    public ProductSummaryResponse createProduct(ProductRequest productRequest){
-        Product product = productMapper.toEntity(productRequest);
-
-        // set product code
-        product.setProductCode(ProductCodeMakingUtils.generateProductCode());
-
-        return productMapper.toProductSummaryResponse(productRepository.save(product));
-    }
 
 
     // get product on sale list

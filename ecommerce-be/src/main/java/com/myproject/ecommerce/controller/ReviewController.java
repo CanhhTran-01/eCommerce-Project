@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class ReviewController {
     private final ReviewService reviewService;
 
+
     @PostMapping("")
     public ResponseEntity<ApiResponse<Void>> createReview(
             @RequestBody ReviewRequest reviewRequest,
@@ -33,17 +34,4 @@ public class ReviewController {
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
 
-
-    @PutMapping("/api/reviews/{id}")
-    public ResponseEntity<ReviewResponse> updateReview(@PathVariable Long id,
-                                                       @RequestBody ReviewRequest reviewRequest){
-        return ResponseEntity.ok(reviewService.updateReview(id, reviewRequest));
-    }
-
-
-    @DeleteMapping("/api/reviews/{id}")
-    public String deleteReview(@PathVariable Long id){
-        reviewService.deleteReview(id);
-        return ("Deleted review with id " + id + " ! ");
-    }
 }

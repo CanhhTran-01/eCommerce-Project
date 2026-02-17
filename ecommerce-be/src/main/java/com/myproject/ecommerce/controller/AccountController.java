@@ -16,18 +16,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/accounts")
 @Slf4j
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
     private final UserService userService;
 
-    @PostMapping("/accounts")
+
+    @PostMapping("")
     public ResponseEntity<ApiResponse<AccountResponse>> createAccount(@RequestBody @Valid AccountRequest accountRequest){
 
         ApiResponse<AccountResponse> apiResponse = new ApiResponse<>(
@@ -40,6 +38,7 @@ public class AccountController {
                 .status(HttpStatus.CREATED)
                 .body(apiResponse);
     }
+
 
     @GetMapping("/me/info")
     public ResponseEntity<ApiResponse<UserInfoResponse>> getInfo(@AuthenticationPrincipal Jwt jwt){
@@ -54,19 +53,8 @@ public class AccountController {
         return ResponseEntity.ok(apiResponse);
     }
 
-    @GetMapping("/accounts")
-    public ResponseEntity<ApiResponse<List<AccountResponse>>> getListAccount(){
 
-        ApiResponse<List<AccountResponse>> apiResponse = new ApiResponse<>(
-                true,
-                null,
-                accountService.getListAccount()
-        );
-
-        return ResponseEntity.ok(apiResponse);
-    }
-
-    @GetMapping("/accounts/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<AccountResponse>> getAccount(@PathVariable Long id){
 
         // take auth from current account
@@ -83,7 +71,8 @@ public class AccountController {
         return ResponseEntity.ok(apiResponse);
     }
 
-    @PutMapping("/accounts/{id}")
+
+    @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<AccountResponse>>  updateAccount(@PathVariable Long id,
                                                              @RequestBody AccountRequest accountRequest){
 
@@ -96,9 +85,4 @@ public class AccountController {
         return ResponseEntity.ok(apiResponse);
     }
 
-    @DeleteMapping("/accounts/{id}")
-    public ResponseEntity<Void> deleteAccount(@PathVariable Long id){
-        accountService.deleteAccount(id);
-        return ResponseEntity.noContent().build();
-    }
 }

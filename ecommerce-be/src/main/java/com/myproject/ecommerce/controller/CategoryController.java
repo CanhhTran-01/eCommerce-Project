@@ -1,6 +1,5 @@
 package com.myproject.ecommerce.controller;
 
-import com.myproject.ecommerce.dto.request.CategoryRequest;
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.dto.response.CategoryResponse;
 import com.myproject.ecommerce.dto.response.ProductSummaryResponse;
@@ -18,12 +17,6 @@ import java.util.List;
 public class CategoryController {
     private final CategoryService categoryService;
     private final ProductService productService;
-
-
-    @PostMapping("")
-    public ResponseEntity<CategoryResponse> createCategory(@RequestBody CategoryRequest categoryRequest){
-        return ResponseEntity.ok(categoryService.createCategory(categoryRequest));
-    }
 
 
     @GetMapping("/list")

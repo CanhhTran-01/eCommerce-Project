@@ -27,6 +27,7 @@ public class AccountService {
     private final AccountMapper accountMapper;
     private final PasswordEncoder passwordEncoder;
 
+
     public AccountResponse createAccount(AccountRequest accountRequest){
 
         if (accountRepository.existsByUsername(accountRequest.getUsername())){
@@ -55,6 +56,7 @@ public class AccountService {
         return accountMapper.toResponse(account);
     }
 
+
     @Transactional(readOnly = true)
     public List<AccountResponse> getListAccount(){
         return accountRepository.findAll()
@@ -63,11 +65,13 @@ public class AccountService {
                 .toList();
     }
 
+
     public AccountResponse getAccount(Long id){
         return accountMapper.toResponse(accountRepository.findById(id)
                 .orElseThrow(() -> new BaseException (ErrorCode.ACCOUNT_NOT_FOUND)));
     }
 
+    
     public AccountResponse updateAccount(Long id, AccountRequest accountRequest){
         Account account = accountRepository.findById(id)
                 .orElseThrow(() ->  new BaseException (ErrorCode.ACCOUNT_NOT_FOUND));
@@ -77,8 +81,4 @@ public class AccountService {
         return accountMapper.toResponse(accountRepository.save(account));
     }
 
-    // delete acc
-    public void deleteAccount(Long id){
-        accountRepository.deleteById(id);
-    }
 }

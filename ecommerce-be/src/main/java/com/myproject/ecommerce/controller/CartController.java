@@ -20,12 +20,14 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
 
+
     @PostMapping("")
     public ResponseEntity<CartResponse> createCart(@RequestBody CartRequest cartRequest){
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(null);
     }
+
 
     @GetMapping("")
     public ResponseEntity<ApiResponse<List<CartItemResponse>>> getCartItems(@AuthenticationPrincipal Jwt jwt){
@@ -38,6 +40,7 @@ public class CartController {
         );
         return ResponseEntity.ok(apiResponse);
     }
+
 
     @DeleteMapping("/api/carts/{id}")
     public String deleteCart(@PathVariable Long id){

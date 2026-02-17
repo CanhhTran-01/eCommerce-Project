@@ -1,6 +1,5 @@
 package com.myproject.ecommerce.service;
 
-import com.myproject.ecommerce.dto.request.OrderRequest;
 import com.myproject.ecommerce.dto.response.OrderDetailResponse;
 import com.myproject.ecommerce.dto.response.OrderItemResponse;
 import com.myproject.ecommerce.entity.Order;
@@ -24,13 +23,6 @@ public class OrderService {
     private final OrderMapper orderMapper;
 
 
-    public OrderDetailResponse createOrder(OrderRequest orderRequest){
-        Order order = orderMapper.toEntity(orderRequest);
-
-        return orderMapper.toDetailResponse(orderRepository.save(order));
-    }
-
-
     // get my order detail
     @Transactional(readOnly = true)
     public OrderDetailResponse getOrderDetail(Long accountId, Long orderId){
@@ -44,25 +36,6 @@ public class OrderService {
         response.setOrderItemResponseList(orderItemResponses);
 
         return response;
-    }
-
-
-    @Transactional(readOnly = true)
-    public List<OrderDetailResponse> getOrderList(){
-        return orderRepository.findAll()
-                .stream()
-                .map(orderMapper::toDetailResponse)
-                .toList();
-    }
-
-
-    public OrderDetailResponse updateOrder(Long id, OrderRequest orderRequest){
-        Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order doesn't existed !"));
-
-        orderMapper.update(order, orderRequest);
-
-        return orderMapper.toDetailResponse(orderRepository.save(order));
     }
 
 }

@@ -11,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -20,7 +18,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    // thêm mới user
+    // register user
     public UserInfoResponse createUser(InfoUpdateRequest infoUpdateRequest){
         User user = userMapper.toEntity(infoUpdateRequest);
         return userMapper.toInfoResponse(userRepository.save(user));
@@ -35,14 +33,6 @@ public class UserService {
         return userMapper.toInfoResponse(user);
     }
 
-    // lấy ra danh sách user
-    @Transactional(readOnly = true)
-    public List<UserInfoResponse> getUserList(){
-        return userRepository.findAll()
-                .stream()
-                .map(userMapper::toInfoResponse)
-                .toList();
-    }
 
     // update user
     public UserInfoResponse updateUserInfo(Long id, InfoUpdateRequest infoUpdateRequest){

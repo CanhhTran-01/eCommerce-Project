@@ -23,6 +23,7 @@ import java.text.ParseException;
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
+
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<AuthenticationResponse>> authenticate(@RequestBody AuthenticationRequest req){
 
@@ -33,6 +34,7 @@ public class AuthenticationController {
                 authenticationData
         ));
     }
+
 
     @PostMapping("/introspect")
     public ResponseEntity<ApiResponse<IntrospectResponse>> authenticate(@RequestBody IntrospectRequest request)
@@ -46,6 +48,7 @@ public class AuthenticationController {
         ));
     }
 
+
     @PostMapping("/logout")
     public ResponseEntity<ApiResponse<Void>> logout(@RequestBody LogoutRequest logoutRequest)
             throws ParseException, JOSEException {
@@ -53,4 +56,5 @@ public class AuthenticationController {
         authenticationService.logout(logoutRequest);
         return ResponseEntity.noContent().build();
     }
+
 }

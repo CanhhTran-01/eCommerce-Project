@@ -27,6 +27,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final InvalidatedTokenRepository invalidatedTokenRepository;
 
+
     // login
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest){
 
@@ -49,6 +50,7 @@ public class AuthenticationService {
                 .build();
     }
 
+
     // check token
     public IntrospectResponse introspect(IntrospectRequest introspectRequest) throws ParseException, JOSEException {
 
@@ -60,6 +62,7 @@ public class AuthenticationService {
                 .valid(isValid)
                 .build();
     }
+
 
     // logout
     public void logout(LogoutRequest logoutRequest) throws ParseException, JOSEException {
@@ -73,4 +76,5 @@ public class AuthenticationService {
 
         invalidatedTokenRepository.save(invalidToken);
     }
+
 }
