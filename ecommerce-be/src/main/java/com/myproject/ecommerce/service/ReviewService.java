@@ -39,11 +39,6 @@ public class ReviewService {
 
         User user = account.getUser();
 
-        boolean exist = reviewRepository.existsByProductIdAndUserId(reviewRequest.getProductId(), user.getId());
-        if (exist){
-            throw  new BaseException(ErrorCode.USER_REVIEWED);
-        }
-
         Review review = reviewMapper.toEntity(reviewRequest);
         review.setUser(user);
         review.setProduct(product);
