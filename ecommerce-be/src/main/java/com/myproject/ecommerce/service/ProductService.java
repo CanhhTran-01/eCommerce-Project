@@ -1,5 +1,6 @@
 package com.myproject.ecommerce.service;
 
+import com.myproject.ecommerce.dto.request.ProductFilterSearchRequest;
 import com.myproject.ecommerce.dto.response.ProductDetailResponse;
 import com.myproject.ecommerce.dto.response.ProductSummaryResponse;
 import com.myproject.ecommerce.entity.Product;
@@ -49,6 +50,13 @@ public class ProductService {
                 .orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));
 
         return productMapper.toProductDetailResponse(product);
+    }
+
+
+    // filter product
+    @Transactional(readOnly = true)
+    public List<ProductSummaryResponse> getFilterSearchProduct(ProductFilterSearchRequest request){
+        return productRepository.searchbyFilter(request);
     }
 
 }

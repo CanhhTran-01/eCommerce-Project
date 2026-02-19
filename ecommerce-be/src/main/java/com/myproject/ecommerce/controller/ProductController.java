@@ -1,5 +1,6 @@
 package com.myproject.ecommerce.controller;
 
+import com.myproject.ecommerce.dto.request.ProductFilterSearchRequest;
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.dto.response.ProductDetailResponse;
 import com.myproject.ecommerce.dto.response.ProductSummaryResponse;
@@ -51,6 +52,25 @@ public class ProductController {
                 true,
                 null,
                 reviewService.getProductReviews(id)
+        );
+        return ResponseEntity.ok(apiResponse);
+    }
+
+
+    @GetMapping("")
+    public ResponseEntity<ApiResponse<List<ProductSummaryResponse>>> getProductsByFilterSearch(
+            ProductFilterSearchRequest request
+    ){
+
+        System.out.println("categoryId = " + request.getCategoryId());
+        System.out.println("searchText = " + request.getSearchText());
+        System.out.println("minPrice = " + request.getMinPrice());
+        System.out.println("maxPrice = " + request.getMaxPrice());
+
+        var apiResponse = new ApiResponse<>(
+                true,
+                null,
+                productService.getFilterSearchProduct(request)
         );
         return ResponseEntity.ok(apiResponse);
     }
