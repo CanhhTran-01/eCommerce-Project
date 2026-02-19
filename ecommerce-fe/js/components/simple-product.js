@@ -18,9 +18,6 @@ export function renderProductCard(data, container) {
                     <div class="product-image">
                         <img src="${product.imageUrl}" alt="${product.productName}">
                         ${discountBadgeHTML}
-                        <button class="wishlist-btn">
-                            <i class="far fa-heart"></i>
-                        </button>
                     </div>
                     <div class="product-info">
                         <h6 style="white-space: nowrap; 
@@ -45,7 +42,7 @@ export function renderProductCard(data, container) {
         const targetCard = event.target.closest('.product-card');
         if (!targetCard) return;
 
-        // skip redirect with button (add to cart and wishlist)
+        // skip redirect with button (add to cart)
         if (event.target.closest('button')) return;
 
         const productId = targetCard.dataset.productId;

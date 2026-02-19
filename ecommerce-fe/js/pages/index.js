@@ -1,6 +1,5 @@
 import { fetchCategories } from "../api/category-api.js";
 import { fetchSaleProducts } from "../api/product-api.js";
-import { renderCategoryMenu } from "../components/category.js";
 import { renderProductCard } from "../components/simple-product.js";
 
 // call functions
@@ -18,8 +17,18 @@ async function handleCategoryMenu() {
         // store in session storage
         sessionStorage.setItem('category_list', JSON.stringify(response));
 
-        // render HTML
-        renderCategoryMenu(response.data, categoryHomeView);
+        // render Category Menu Home Page HTML
+        categoryHomeView.innerHTML = response.data.map(category => `
+                <div class="category-item-wrapper" data-category-id="${category.id}">
+                    <div class="category-item-circle">
+                        <img src="${category.imageUrl}" alt="${category.categoryName}">
+                    </div>
+                    <span style="white-space: nowrap; 
+                                    overflow: hidden; 
+                                    text-overflow: ellipsis;" 
+                        class="category-item-text">${category.categoryName}</span>
+                </div>
+            `).join('');
 
         // handle category click events
         categoryHomeView.addEventListener('click', (event) => {

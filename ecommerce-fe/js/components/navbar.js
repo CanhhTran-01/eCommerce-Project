@@ -2,6 +2,8 @@ import { checkToken } from "../common/check-token.js";
 import { handleLogout } from "../common/logout.js";
 import { formatVND } from "../utils/format.js";
 
+const searchTextInput = document.getElementById('searchTextInput');
+const searchTextBtn = document.getElementById('searchTextBtn');
 const userInfoLink = document.getElementById('infoLink');
 const myOrdersLink = document.getElementById('myOrdersLink')
 const wishListLink = document.getElementById('wishListLink');
@@ -32,6 +34,17 @@ async function handleUserIcon() {
         loginLink.classList.remove('d-none');
         logoutLinkInNavbar.classList.add('d-none');
     }
+
+    // search text click event
+    searchTextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const searchText = searchTextInput.value.trim();
+        if (searchText) {
+            window.location.href =
+                `${window.location.origin}/ecommerce-fe/pages/product-list.html?searchText=${encodeURIComponent(searchText)}`;
+        }
+    });
 
     // profile click event
     userInfoLink.addEventListener('click', (event) => {

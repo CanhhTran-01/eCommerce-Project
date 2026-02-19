@@ -25,9 +25,9 @@
             <!-- Search Bar -->
             <div class="search-box-wrapper d-none d-lg-block">
                 <div class="search-box">
-                    <input type="text" class="search-input" placeholder="Search products, brands and more..."
-                        id="searchInput">
-                    <button class="search-btn">
+                    <input type="text" class="search-input" placeholder="Tìm kiếm theo tên, thương hiệu, mã sản phẩm..."
+                        id="searchTextInput">
+                    <button class="search-btn" id="searchTextBtn">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
@@ -35,13 +35,6 @@
 
             <!-- Right Actions -->
             <div class="navbar-actions">
-                <div class="action-item">
-                    <button class="btn-action">
-                        <i class="fas fa-bell"></i>
-                        <span class="badge-count">0</span>
-                    </button>
-                </div>
-
                 <div class="action-item">
                     <button class="btn-action" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
                         <i class="fas fa-shopping-cart"></i>
@@ -93,15 +86,18 @@
                 <p class="text-muted text-center">Không có dữ liệu.</p>
 
                 <!-- Cart Item 1 -->
-                <div class="d-flex mb-3 align-items-center border-bottom pb-2">
-                    <img src="" alt="iPhone 15 Pro" class="me-3" style="width:60px; height:60px; object-fit:cover;">
-                    <div class="flex-grow-1">
-                        <h6 class="mb-1">iPhone 15 Pro</h6>
-                        <p class="mb-0 text-muted small">Quantity: 1</p>
-                        <p class="mb-0 text-danger fw-bold">26.990.000 ₫</p>
-                    </div>
-                    <button class="btn btn-sm btn-outline-danger ms-2">&times;</button>
+                <div id="cart-items">
+                    <!-- Cart items will be inserted here -->
                 </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <strong>Tổng tiền:</strong>
+                    <span id="cart-total">0 ₫</span>
+                </div>
+
+                <button class="btn btn-primary w-100">Đặt mua</button>
             </div>
         </div>
     </div>

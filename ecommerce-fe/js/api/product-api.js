@@ -23,6 +23,39 @@ export async function fetchProductByCategoryId(categoryId) {
 }
 
 
+// get products by filter search
+export async function fetchProductByFilter(filter) {
+
+    const params = new URLSearchParams();
+
+    if (filter.searchText) {
+        params.append("searchText", filter.searchText);
+    }
+    if (filter.categoryId && filter.categoryId.length > 0) {
+        filter.categoryId.forEach(id =>
+            params.append("categoryId", id)
+        );
+    }
+    if (filter.minPrice != null) {
+        params.append("minPrice", filter.minPrice);
+    }
+    if (filter.maxPrice != null) {
+        params.append("maxPrice", filter.maxPrice);
+    }
+    if (filter.sort) {
+        params.append("sort", filter.sort);
+    }
+
+    const response = await fetch(`http://localhost:8080/eCommerce/api/products?${params.toString()}`);
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch products by filter');
+    }
+
+    return response.json();
+}
+
+
 // get product detail 
 export async function fetchProductDetail(productId) {
     const response = await fetch(`http://localhost:8080/eCommerce/api/products/${productId}/detail`);
@@ -45,3 +78,4 @@ export async function fetchProductReviews(productId) {
 
     return response.json();
 }
+
