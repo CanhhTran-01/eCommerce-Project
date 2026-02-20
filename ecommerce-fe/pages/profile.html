@@ -54,6 +54,41 @@
                         </div>
                     </div>
 
+                    <!-- Avatar display Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="btn" data-bs-toggle="collapse" href="#collapseAvatarDisplay"
+                                id="avatarDisplayBtn">
+                                <i class="fas fa-image"></i> Ảnh đại diện
+                            </a>
+                        </div>
+
+                        <div id="collapseAvatarDisplay" class="collapse" data-bs-parent="#accountAccordion">
+                            <div class="card-body">
+
+                                <!-- Avatar preview -->
+                                <div class="text-center mb-3">
+                                    <img id="avatarImg" src="" class="rounded-circle" width="400" height="400"
+                                        style="object-fit: cover;">
+                                </div>
+
+                                <!-- Upload area -->
+                                <div class="text-center">
+                                    <input type="file" id="avatarInput" hidden>
+                                    <button class="btn btn-primary" id="uploadBtn">
+                                        Cập nhật ảnh mới
+                                    </button>
+                                </div>
+
+                                <!-- Spinner -->
+                                <div id="avatarSpinner" class="mt-2" style="display:none;">
+                                    <div class="spinner-border text-primary" role="status"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Purchase History Card -->
                     <div class="card">
                         <div class="card-header">
@@ -72,7 +107,6 @@
                     </div>
                 </div>
             </main>
-
         </div>
     </div>
 

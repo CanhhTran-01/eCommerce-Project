@@ -4,10 +4,15 @@ import { formatDateVN } from "../utils/format.js";
 import { fetchOrderItemsHistory } from "../api/order-item-api.js";
 import { renderOrderItem } from "../components/order-item.js";
 import { handleLogout } from "../common/logout.js";
+import { uploadAvatar } from "../api/upload-file-api.js";
+import { hideLoading, showLoading } from "../utils/loading.js";
 
 const profileBox = document.getElementById('profileBox');
 const nickNameHTML = document.getElementById('nickName');
 const avtHTML = document.getElementById('avatar');
+const avatarInput = document.getElementById("avatarInput");
+const uploadBtn = document.getElementById("uploadBtn");
+const avatarImg = document.getElementById("avatarImg");
 
 // call functions
 handleProfile();
@@ -19,9 +24,9 @@ async function handleProfile() {
         sessionStorage.setItem('user_info', JSON.stringify(response));
 
         // display nick name and avt
-        avtHTML.innerHTML = `<img src="${response.data.avatarUrl ??
-            '/ecommerce-fe/assets/icons/default-avt.jpg'}" alt="profile-avatar">`;
+        avtHTML.innerHTML = `<img src="${response.data.avatarUrl}" alt="profile-avatar">`;
         nickNameHTML.innerHTML = `<h5>${response.data.nickName}</h5>` || '...';
+        avatarImg.src = response.data.avatarUrl;
 
         // display profile
         profileBox.innerHTML = `
@@ -148,16 +153,6 @@ async function handleProfile() {
                         </div>
                     </div>
 
-                    <div class="mb-4">
-                        <label class="form-label fw-bold d-block">Ảnh đại diện</label>
-                        <div class="d-flex align-items-center gap-3">
-                            <img id="avatarPreview" src="${userInfoObj.data.avatarUrl ||
-                '/ecommerce-fe/assets/icons/default-avt.jpg'}" alt="avatar-preview" class="rounded-circle border"
-                                style="width: 80px; height: 80px; object-fit: cover;">
-                            <button type="button" class="btn btn-outline-secondary btn-sm">Thay đổi ảnh</button>
-                        </div>
-                    </div>
-
                     <div class="d-flex gap-2 pt-2">
                         <button type="submit" class="btn btn-primary px-4 shadow-sm">Lưu thay đổi</button>
                         <button type="button" id="cancelEditBtn" class="btn btn-light px-4 border">Hủy</button>
@@ -229,3 +224,51 @@ document.getElementById('logoutLinkInProfile').addEventListener('click', (event)
     event.preventDefault();
     handleLogout();
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    uploadBtn.addEventListener("click", () => {
+        avatarInput.click();
+    });
+
+    avatarInput.addEventListener("change", async () => {
+
+        const file = avatarInput.files[0];
+        if (!file) return;
+
+        if (!file.type.startsWith("image/")) {
+            alert("File phải là ảnh");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = e => {
+            avatarImg.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+
+        const formData = new FormData();
+        formData.append("image", file);
+
+        try {
+            showLoading(); 
+            const response = await uploadAvatar(formData);
+            
+            avatarImg.src = response.data;
+
+            hideLoading(); 
+            alert("Upload thành công!");
+
+        } catch (error) {
+            hideLoading();
+            console.log(error);
+            alert("Upload thất bại!");
+        }
+
+    });
+
+});
+
+
+
