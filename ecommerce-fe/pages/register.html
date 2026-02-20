@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="../assets/icons/favicon.jpg">
+    <title>Register</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+    <div class="container vh-100 d-flex justify-content-center align-items-center">
+
+        <div class="card shadow w-100" style="max-width:420px;">
+            <div class="card-body">
+
+                <!-- header -->
+                <div class="text-center mb-4">
+                    <h3 class="fw-bold text-danger">eCommerce</h3>
+                    <div class="text-muted">Đăng ký tài khoản</div>
+                </div>
+
+                <!-- STEP 1 EMAIL -->
+                <div class="step" id="step1">
+                    <h5 class="mb-3">Nhập email</h5>
+                    <input type="email" class="form-control mb-3" id="email" placeholder="Email">
+                    <button id="btn-next-email" class="btn btn-danger w-100">Tiếp tục</button>
+                </div>
+
+                <!-- STEP 2 USERNAME PASSWORD -->
+                <div class="step d-none" id="step2">
+                    <h5 class="mb-3">Thông tin tài khoản</h5>
+
+                    <input type="text" class="form-control mb-3" id="username" placeholder="Username">
+                    <input type="password" class="form-control mb-3" id="password" placeholder="Password">
+
+                    <button id="btn-send-otp" class="btn btn-danger w-100">Gửi mã xác nhận</button>
+                </div>
+
+                <!-- STEP 3 OTP -->
+                <div class="step d-none" id="step3">
+                    <h5 class="mb-3">Xác nhận email</h5>
+
+                    <div class="small text-muted mb-2">
+                        Mã xác nhận đã gửi tới email của bạn
+                    </div>
+
+                    <input type="text" maxlength="6" class="form-control text-center mb-3" id="otp"
+                        placeholder="Nhập OTP">
+
+                    <button id="btn-verify-otp" class="btn btn-danger w-100">Hoàn tất đăng ký</button>
+                </div>
+
+                <!-- login redirect -->
+                <div class="text-center mt-3 small">
+                    Đã có tài khoản?
+                    <a href="../pages/login.html">Đăng nhập</a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    
+    <!-- Script -->
+    <script type="module" src="../js/pages/register.js"></script>
+</body>
+
+</html>
