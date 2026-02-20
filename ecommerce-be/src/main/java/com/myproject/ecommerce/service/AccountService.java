@@ -1,9 +1,10 @@
 package com.myproject.ecommerce.service;
 
-import com.myproject.ecommerce.dto.request.AccountRequest;
+import com.myproject.ecommerce.dto.request.SignUpRequest;
 import com.myproject.ecommerce.dto.response.AccountResponse;
 import com.myproject.ecommerce.entity.User;
 import com.myproject.ecommerce.entity.Account;
+import com.myproject.ecommerce.enums.AccountStatus;
 import com.myproject.ecommerce.enums.ErrorCode;
 import com.myproject.ecommerce.enums.Role;
 import com.myproject.ecommerce.exception.BaseException;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -27,42 +27,35 @@ public class AccountService {
     private final AccountMapper accountMapper;
     private final PasswordEncoder passwordEncoder;
 
+    // register account
+    public void createAccount(SignUpRequest signUpRequest){
 
-    public AccountResponse createAccount(AccountRequest accountRequest){
-
-        if (accountRepository.existsByUsername(accountRequest.getUsername())){
+        if (accountRepository.existsByUsername(signUpRequest.getUsername())){
             throw new BaseException(ErrorCode.USERNAME_EXISTED);
         }
 
-        // MapStruct convert DTO->Entity
-        Account account = accountMapper.toEntity(accountRequest);
+        // MapStruct convert DTO -> Entity
+        Account account = accountMapper.toEntity(signUpRequest);
 
-        // set mat khau
-        account.setPassword(passwordEncoder.encode(accountRequest.getPassword()));
+        // set password
+        account.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
 
         // set roles
         Set<Role> accountRoles = new HashSet<>();
         accountRoles.add(Role.USER); // setting default role when account is created
         account.setAccountRoles(accountRoles);
 
-        // set tay Customer (tạo acc sẽ tạo Customer mặc định)
+        // set Status
+        account.setAccountStatus(AccountStatus.ACTIVE);
+
+        // set default user (created user automatically)
         User user = new User();
-        user.setFullName(UserNameRandomUtils.generateDefaultName());
+        user.setNickName(UserNameRandomUtils.generateDefaultNickName());
 
         account.setUser(user);
         user.setAccount(account);
 
-        accountRepository.save(account); // nếu cascade chưa set -> Hibernate tự động throw Exception
-        return accountMapper.toResponse(account);
-    }
-
-
-    @Transactional(readOnly = true)
-    public List<AccountResponse> getListAccount(){
-        return accountRepository.findAll()
-                .stream()
-                .map(accountMapper::toResponse)
-                .toList();
+        accountRepository.save(account); // without cascade -> Hibernate throw Exception
     }
 
 
@@ -72,12 +65,12 @@ public class AccountService {
     }
 
     
-    public AccountResponse updateAccount(Long id, AccountRequest accountRequest){
+    public AccountResponse updateAccount(Long id, SignUpRequest signUpRequest){
         Account account = accountRepository.findById(id)
                 .orElseThrow(() ->  new BaseException (ErrorCode.ACCOUNT_NOT_FOUND));
 
         // dùng map struct thay vì phải map bằng tay
-        accountMapper.updateAccount(account, accountRequest);
+        accountMapper.updateAccount(account, signUpRequest);
         return accountMapper.toResponse(accountRepository.save(account));
     }
 

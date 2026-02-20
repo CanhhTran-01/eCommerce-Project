@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(TransientObjectException.class)
     public ResponseEntity<String> handlingRelationalErrorInDB(TransientObjectException ex){
-        // phía service không cần throw vì exception này Hibernate tự throw dồi
+        // Hibernate auto throw this exception insted of throw it manually in service
         return ResponseEntity.badRequest().body(
                 ex.getMessage() + " - bên owning side phải có trước (hoặc dùng cascade)");
     }

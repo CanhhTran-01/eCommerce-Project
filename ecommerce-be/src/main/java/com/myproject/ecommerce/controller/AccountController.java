@@ -1,6 +1,6 @@
 package com.myproject.ecommerce.controller;
 
-import com.myproject.ecommerce.dto.request.AccountRequest;
+import com.myproject.ecommerce.dto.request.SignUpRequest;
 import com.myproject.ecommerce.dto.response.AccountResponse;
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.dto.response.UserInfoResponse;
@@ -26,12 +26,15 @@ public class AccountController {
 
 
     @PostMapping("")
-    public ResponseEntity<ApiResponse<AccountResponse>> createAccount(@RequestBody @Valid AccountRequest accountRequest){
+    public ResponseEntity<ApiResponse<Void>> createAccount(
+            @RequestBody @Valid SignUpRequest signUpRequest
+    ){
 
-        ApiResponse<AccountResponse> apiResponse = new ApiResponse<>(
+        accountService.createAccount(signUpRequest);
+        var apiResponse = new ApiResponse<Void>(
                 true,
                 null,
-                accountService.createAccount(accountRequest)
+                null
         );
 
         return ResponseEntity
@@ -74,12 +77,12 @@ public class AccountController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<AccountResponse>>  updateAccount(@PathVariable Long id,
-                                                             @RequestBody AccountRequest accountRequest){
+                                                             @RequestBody SignUpRequest signUpRequest){
 
         ApiResponse<AccountResponse> apiResponse = new ApiResponse<>(
                 true,
                 null,
-                accountService.updateAccount(id, accountRequest)
+                accountService.updateAccount(id, signUpRequest)
         );
 
         return ResponseEntity.ok(apiResponse);

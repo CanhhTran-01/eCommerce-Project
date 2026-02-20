@@ -1,17 +1,24 @@
 package com.myproject.ecommerce.utils;
 
-import java.util.concurrent.ThreadLocalRandom;
+import lombok.NoArgsConstructor;
 
-public class UserNameRandomUtils {
+import java.util.UUID;
 
-    // Sinh số nguyên ngẫu nhiên trong khoảng [min, max)
-    public static int randomInt(int min, int max) {
-        return ThreadLocalRandom.current().nextInt(min, max);
+@NoArgsConstructor
+public final class UserNameRandomUtils {
+
+    private static final String PREFIX = "user";
+    private static final int RANDOM_LENGTH = 4;
+
+    public static String generateDefaultNickName() {
+        return PREFIX + "_" + randomSegment();
     }
 
-    // Sinh tên mặc định dạng "User_XXXX"
-    public static String generateDefaultName() {
-        int randomNumber = randomInt(1000, 10000);
-        return ("User_" + randomNumber);
+    private static String randomSegment() {
+        return UUID.randomUUID()
+                .toString()
+                .replace("-", "")
+                .substring(0, RANDOM_LENGTH)
+                .toLowerCase();
     }
 }
