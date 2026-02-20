@@ -60,6 +60,7 @@ public class User {
 
     @PrePersist
     protected void onCreate(){
+        this.avatarUrl = "https://res.cloudinary.com/djw4qdufh/image/upload/v1771559891/avatar/2412713c-547d-45a7-94f9-397d8bee400b_default-avatar.webp";
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }

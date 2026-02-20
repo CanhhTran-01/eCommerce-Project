@@ -37,9 +37,7 @@ public class AccountController {
                 null
         );
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(apiResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
 
 

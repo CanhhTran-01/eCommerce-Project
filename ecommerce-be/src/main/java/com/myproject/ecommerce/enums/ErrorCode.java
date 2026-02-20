@@ -21,7 +21,9 @@ public enum ErrorCode {
     PRODUCT_NOT_FOUND(1009, "product not found!", HttpStatus.NOT_FOUND),
     FAV_PRODUCT_EXISTED(1010, "favourite product existed!", HttpStatus.BAD_REQUEST),
     ORDER_NOT_FOUND(1011, "order not found!", HttpStatus.NOT_FOUND),
-    USER_REVIEWED(1012, "user reviewed this product!", HttpStatus.BAD_REQUEST)
+    USER_REVIEWED(1012, "user reviewed this product!", HttpStatus.BAD_REQUEST),
+    FILE_NAME_INVALID(1013, "file name is invalid!", HttpStatus.BAD_REQUEST),
+    FILE_UPLOAD_FAILED(1014, "upload failed!", HttpStatus.BAD_REQUEST)
     ;
 
 
