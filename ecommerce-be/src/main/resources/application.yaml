@@ -17,6 +17,28 @@ spring:
     show-sql: true
     properties:
       hibernate.format_sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 659075838642-3pciirlkbcmb2f5qaf5rgcr7pu4ru7jo.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - openid
+              - profile
+              - email
+          facebook:
+            client-id: 1598403707845413
+            client-secret: 618206ea760c8d0836444d13b25f3e69
+            scope:
+              - public_profile
+              - email
 
 jwt:
   signerKey: "mRZ7rF7uZJ2KQ0Z3V5y9BvJ9P3T8A4XWq6N5C8sYp2A="
+
+app:
+  oauth2:
+    redirect:
+      frontend-url: http://localhost:5500

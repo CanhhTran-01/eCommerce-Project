@@ -3,6 +3,7 @@ package com.myproject.ecommerce.security;
 import com.myproject.ecommerce.enums.Role;
 import com.myproject.ecommerce.security.handler.JwtAccessDeniedHandler;
 import com.myproject.ecommerce.security.handler.JwtAuthenticationEntryPoint;
+import com.myproject.ecommerce.security.handler.OAuth2LoginSuccessHandler;
 import com.myproject.ecommerce.security.jwt.JwtDecoderCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,22 +24,27 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.List;
 
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final String[] PUBLIC_ENDPOINTS_POST = {"/api/accounts", "/api/auth/login",
-            "/api/auth/introspect", "/api/auth/logout"};
+    private final String[] PUBLIC_ENDPOINTS_POST = {
+            "/api/accounts",
+            "/api/auth/login",
+            "/api/auth/introspect",
+            "/api/auth/logout"
+    };
 
     private final String[] PUBLIC_ENDPOINTS_GET = {
             "/api/products/**",
-            "/api/categories/**"
+            "/api/categories/**",
+            "/api/auth/social-login"
     };
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
     private final JwtDecoderCustom jwtDecoderCustom;
 
     
@@ -61,6 +67,10 @@ public class SecurityConfig {
                                 .jwtAuthenticationConverter(jwtAuthenticationConverter()))
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint) // 401 Unauthorized Handling
                 .accessDeniedHandler(jwtAccessDeniedHandler) // 403 Forbidden Handling
+        );
+
+        httpSecurity.oauth2Login(oauth -> oauth
+                .successHandler(oAuth2LoginSuccessHandler)
         );
 
         return httpSecurity.build();
@@ -95,6 +105,7 @@ public class SecurityConfig {
                 "http://192.168.0.100:5500",
                 "http://localhost:5500",
                 "http://192.168.0.102:5500",
+                "http://192.168.0.101:5500",
                 "http://192.168.1.4:5500"
         ));
         corsConfiguration.addAllowedMethod("*");

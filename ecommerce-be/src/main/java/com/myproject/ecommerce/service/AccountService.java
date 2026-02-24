@@ -5,12 +5,14 @@ import com.myproject.ecommerce.dto.response.AccountResponse;
 import com.myproject.ecommerce.entity.User;
 import com.myproject.ecommerce.entity.Account;
 import com.myproject.ecommerce.enums.AccountStatus;
+import com.myproject.ecommerce.enums.AuthProvider;
 import com.myproject.ecommerce.enums.ErrorCode;
 import com.myproject.ecommerce.enums.Role;
 import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.mapper.AccountMapper;
 import com.myproject.ecommerce.repository.AccountRepository;
-import com.myproject.ecommerce.utils.UserNameRandomUtils;
+import com.myproject.ecommerce.utils.NickNameRandomUtils;
+import com.myproject.ecommerce.utils.UserCodeRandomUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -48,9 +50,13 @@ public class AccountService {
         // set Status
         account.setAccountStatus(AccountStatus.ACTIVE);
 
+        // set Provider
+        account.setAuthProvider(AuthProvider.LOCAL);
+
         // set default user (created user automatically)
         User user = new User();
-        user.setNickName(UserNameRandomUtils.generateDefaultNickName());
+        user.setNickName(NickNameRandomUtils.generateDefaultNickName());
+        user.setUserCode(UserCodeRandomUtils.generateUserCode());
 
         account.setUser(user);
         user.setAccount(account);
@@ -63,7 +69,6 @@ public class AccountService {
         return accountMapper.toResponse(accountRepository.findById(id)
                 .orElseThrow(() -> new BaseException (ErrorCode.ACCOUNT_NOT_FOUND)));
     }
-
     
     public AccountResponse updateAccount(Long id, SignUpRequest signUpRequest){
         Account account = accountRepository.findById(id)

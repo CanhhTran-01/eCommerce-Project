@@ -8,13 +8,13 @@ import com.myproject.ecommerce.dto.response.AuthenticationResponse;
 import com.myproject.ecommerce.dto.response.IntrospectResponse;
 import com.myproject.ecommerce.service.AuthenticationService;
 import com.nimbusds.jose.JOSEException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.text.ParseException;
 
 @RestController
@@ -55,6 +55,21 @@ public class AuthenticationController {
 
         authenticationService.logout(logoutRequest);
         return ResponseEntity.noContent().build();
+    }
+
+
+    @GetMapping("/social-login")
+    public void socialAuth (
+            @RequestParam("loginType") String loginType,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws IOException {
+
+        loginType = loginType.trim().toLowerCase();
+
+        String redirectUrl = request.getContextPath() + "/oauth2/authorization/" + loginType;
+
+        response.sendRedirect(redirectUrl);
     }
 
 }

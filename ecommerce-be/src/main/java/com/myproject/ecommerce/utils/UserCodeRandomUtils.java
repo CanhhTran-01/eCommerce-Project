@@ -5,13 +5,13 @@ import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 @NoArgsConstructor
-public final class UserNameRandomUtils {
+public class UserCodeRandomUtils {
 
-    private static final String PREFIX = "user";
+    private static final String PREFIX = "USR";
     private static final int RANDOM_LENGTH = 4;
 
-    public static String generateDefaultNickName() {
-        return PREFIX + "_" + randomSegment();
+    public static String generateUserCode() {
+        return PREFIX + randomSegment();
     }
 
     private static String randomSegment() {
@@ -19,6 +19,6 @@ public final class UserNameRandomUtils {
                 .toString()
                 .replace("-", "")
                 .substring(0, RANDOM_LENGTH)
-                .toLowerCase();
+                .toUpperCase();
     }
 }
