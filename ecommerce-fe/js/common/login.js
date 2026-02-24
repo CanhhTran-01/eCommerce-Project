@@ -1,6 +1,9 @@
 import { login } from "../api/auth-api.js";
 
+const passwordInput = document.getElementById("password");
 
+
+// normal login
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -21,3 +24,24 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     }
 });
 
+
+// login with google 
+document.getElementById('loginWithGoogle').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'http://localhost:8080/eCommerce/api/auth/social-login?loginType=google';
+});
+
+// login with facebook 
+document.getElementById('loginWithFacebook').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'http://localhost:8080/eCommerce/api/auth/social-login?loginType=facebook';
+});
+
+
+document.getElementById("togglePassword").addEventListener("click", function () {
+    const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+    passwordInput.setAttribute("type", type);
+
+    this.querySelector("i").classList.toggle("fa-eye");
+    this.querySelector("i").classList.toggle("fa-eye-slash");
+});

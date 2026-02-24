@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Signing you in...</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+    <div class="d-flex vh-100 justify-content-center align-items-center">
+        <div class="card shadow-sm p-4 text-center" style="width: 360px; border-radius: 16px;">
+            <div class="spinner-border text-primary mb-3" role="status"></div>
+
+            <h5 class="mb-2">Signing you in</h5>
+            <p class="text-muted small mb-0">Please wait while we complete your login...</p>
+        </div>
+    </div>
+
+    <script>
+        handleSocialLoginSuccess();
+        function handleSocialLoginSuccess() {
+            const params = new URLSearchParams(window.location.search);
+            const encodedToken = params.get("token");
+
+            const token = decodeURIComponent(encodedToken);
+
+            setTimeout(() => {
+                if (token) {
+                    localStorage.setItem("access_token", token);
+
+                    // clear URL query
+                    window.history.replaceState({}, document.title, window.location.pathname);
+
+                    // redirect app
+                    window.location.href = window.location.origin + '/ecommerce-fe/pages/index.html';
+
+                } else {
+                    alert("Đăng nhập không thành công !");
+                    window.location.href = window.location.origin + '/ecommerce-fe/pages/login.html';
+                }
+            }, 1000);
+        }
+    </script>
+
+</body>
+
+</html>
