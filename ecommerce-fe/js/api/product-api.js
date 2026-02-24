@@ -79,3 +79,14 @@ export async function fetchProductReviews(productId) {
     return response.json();
 }
 
+
+// get related product for product detail page
+export async function fetchRelatedProducts(productId) {
+    const response = await fetch(`http://localhost:8080/eCommerce/api/products/${productId}/related`);
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch products detail');
+    }
+
+    return response.json();
+}

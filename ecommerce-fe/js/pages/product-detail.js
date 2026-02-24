@@ -1,7 +1,8 @@
-import { fetchProductDetail } from "../api/product-api.js";
+import { fetchProductDetail, fetchRelatedProducts } from "../api/product-api.js";
 import { formatVND, formatDateTime } from "../utils/format.js";
 import { fetchProductReviews } from "../api/product-api.js";
 import { addProductToWishList } from "../api/wishlist-api.js";
+import { renderProductCard } from "../components/simple-product.js";
 
 const productId = Number(new URLSearchParams(window.location.search).get('productId'));
 const productName = document.getElementById('productName');
@@ -11,12 +12,14 @@ const productInfo = document.getElementById('productInfo');
 const productDesc = document.getElementById('description');
 const addToWishListBtn = document.getElementById('addToWishlistBtn');
 const addToCartBtn = document.getElementById('addToCartBtn');
+const relatedProducts = document.getElementById('relatedProducts');
 
 // call functions
-handleProductDetailPage();
+handleProductDetail();
+handleRelatedProducts();
 
 
-async function handleProductDetailPage() {
+async function handleProductDetail() {
     try {
         const response = await fetchProductDetail(productId);
 
@@ -106,6 +109,23 @@ document.getElementById('reviews-tab').addEventListener('click', async (event) =
 });
 
 
+async function  handleRelatedProducts() {
+    try {
+        const response = await fetchRelatedProducts(productId);
+
+        if (!response.data || response.data.length == 0){
+            relatedProducts.innerHTML = `<div class="text-danger"><strong>Không có sản phẩm.</strong></div>`;
+            return;
+        }
+        renderProductCard(response.data.slice(0, 12), relatedProducts);
+
+    } catch (error) {
+        console.log(error);
+        relatedProducts.innerHTML = `<div class="text-danger"><strong>Không thể tải lên sản phẩm.</strong></div>`;
+    } 
+}
+
+
 addToWishListBtn.addEventListener('click', (e) => {
     e.preventDefault();
     addProductToWishList(productId);
@@ -120,6 +140,4 @@ addToCartBtn.addEventListener('click', (e) => {
 
 });
 
-
-function renderProductImage() { }
 
