@@ -47,8 +47,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
     """)
     List<ProductSummaryResponse> getWishlistByAccountId(@Param("accountId") Long accountId);
 
-
-
     @Query("""
             SELECT new com.myproject.ecommerce.dto.response.ProductSummaryResponse(
                 p.id,
@@ -63,5 +61,5 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
             WHERE p.category.id = :categoryId
             GROUP BY (p.id, p.productName, p.price, p.discountPrice)
     """)
-    List<ProductSummaryResponse> getProductByCategoryId(Long categoryId);
+    List<ProductSummaryResponse> getProductsByCategoryId(Long categoryId);
 }

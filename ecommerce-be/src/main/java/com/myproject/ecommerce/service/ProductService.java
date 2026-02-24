@@ -32,7 +32,7 @@ public class ProductService {
     // get product by category
     @Transactional(readOnly = true)
     public List<ProductSummaryResponse> getProductsByCategory(Long categoryId){
-        return productRepository.getProductByCategoryId(categoryId);
+        return productRepository.getProductsByCategoryId(categoryId);
     }
 
 
@@ -50,6 +50,16 @@ public class ProductService {
                 .orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));
 
         return productMapper.toProductDetailResponse(product);
+    }
+
+
+    // get related product (same category)
+    @Transactional(readOnly = true)
+    public List<ProductSummaryResponse> getRelatedProducts(Long productId){
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        return productRepository.getProductsByCategoryId(product.getCategory().getId());
     }
 
 

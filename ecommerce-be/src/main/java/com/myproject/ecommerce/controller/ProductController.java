@@ -57,15 +57,24 @@ public class ProductController {
     }
 
 
+    @GetMapping("/{productId}/related")
+    public ResponseEntity<ApiResponse<List<ProductSummaryResponse>>> getRelatedProducts(
+            @PathVariable("productId") Long productId
+    ){
+
+        var apiResponse = new ApiResponse<>(
+                true,
+                null,
+                productService.getRelatedProducts(productId)
+        );
+        return ResponseEntity.ok(apiResponse);
+    }
+
+
     @GetMapping("")
     public ResponseEntity<ApiResponse<List<ProductSummaryResponse>>> getProductsByFilterSearch(
             ProductFilterSearchRequest request
     ){
-
-        System.out.println("categoryId = " + request.getCategoryId());
-        System.out.println("searchText = " + request.getSearchText());
-        System.out.println("minPrice = " + request.getMinPrice());
-        System.out.println("maxPrice = " + request.getMaxPrice());
 
         var apiResponse = new ApiResponse<>(
                 true,
