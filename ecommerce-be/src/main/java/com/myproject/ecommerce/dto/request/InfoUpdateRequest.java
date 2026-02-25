@@ -1,6 +1,7 @@
 package com.myproject.ecommerce.dto.request;
 
 import com.myproject.ecommerce.enums.Gender;
+import com.myproject.ecommerce.validator.DobConstraint;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -15,7 +16,10 @@ public class InfoUpdateRequest {
     private String fullName;
     private String phoneNumber;
     private Gender gender;
+
+    @DobConstraint(min = 10, message = "Date of birth must be at least 10 years old")
     private LocalDate dateOfBirth;
+
     private String avatarUrl;
     private String address;
 }

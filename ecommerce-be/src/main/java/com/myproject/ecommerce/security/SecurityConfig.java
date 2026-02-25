@@ -33,6 +33,7 @@ public class SecurityConfig {
             "/api/accounts",
             "/api/auth/login",
             "/api/auth/introspect",
+            "/api/auth/refresh",
             "/api/auth/logout"
     };
 

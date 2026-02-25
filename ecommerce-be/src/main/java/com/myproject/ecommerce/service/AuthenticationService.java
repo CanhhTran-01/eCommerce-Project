@@ -3,6 +3,7 @@ package com.myproject.ecommerce.service;
 import com.myproject.ecommerce.dto.request.AuthenticationRequest;
 import com.myproject.ecommerce.dto.request.IntrospectRequest;
 import com.myproject.ecommerce.dto.request.LogoutRequest;
+import com.myproject.ecommerce.dto.request.RefreshTokenRequest;
 import com.myproject.ecommerce.dto.response.AuthenticationResponse;
 import com.myproject.ecommerce.dto.response.IntrospectResponse;
 import com.myproject.ecommerce.entity.Account;
@@ -51,8 +52,9 @@ public class AuthenticationService {
     }
 
 
-    // check token
-    public IntrospectResponse introspect(IntrospectRequest introspectRequest) throws ParseException, JOSEException {
+    // introspect token
+    public IntrospectResponse introspect(IntrospectRequest introspectRequest)
+            throws ParseException, JOSEException {
 
         JWTClaimsSet jwtClaimsSet = jwtService.verifyToken(introspectRequest.getToken());
 
@@ -60,6 +62,39 @@ public class AuthenticationService {
 
         return IntrospectResponse.builder()
                 .valid(isValid)
+                .build();
+    }
+
+
+    // refresh token
+    public AuthenticationResponse refreshToken(RefreshTokenRequest request)
+            throws ParseException, JOSEException {
+
+        var jwtClaimsSet = jwtService.verifyToken(request.getToken());
+
+        var jti = jwtClaimsSet.getJWTID();
+        if (invalidatedTokenRepository.existsById(jti)) {
+            throw new BaseException(ErrorCode.UNAUTHENTICATED);
+        }
+        var expiryTime = jwtClaimsSet.getExpirationTime();
+
+        // logout
+        InvalidToken invalidToken = InvalidToken.builder()
+                .id(jti)
+                .expiryTime(expiryTime)
+                .build();
+        invalidatedTokenRepository.save(invalidToken);
+
+        // generate new token
+        var username = jwtClaimsSet.getSubject();
+        Account account = accountRepository.findByUsername(username)
+                .orElseThrow(() -> new BaseException(ErrorCode.UNAUTHENTICATED));
+
+        String token = jwtService.generateToken(account);
+
+        return AuthenticationResponse.builder()
+                .token(token)
+                .authenticated(true)
                 .build();
     }
 

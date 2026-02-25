@@ -3,6 +3,7 @@ package com.myproject.ecommerce.controller;
 import com.myproject.ecommerce.dto.request.AuthenticationRequest;
 import com.myproject.ecommerce.dto.request.IntrospectRequest;
 import com.myproject.ecommerce.dto.request.LogoutRequest;
+import com.myproject.ecommerce.dto.request.RefreshTokenRequest;
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.dto.response.AuthenticationResponse;
 import com.myproject.ecommerce.dto.response.IntrospectResponse;
@@ -37,7 +38,7 @@ public class AuthenticationController {
 
 
     @PostMapping("/introspect")
-    public ResponseEntity<ApiResponse<IntrospectResponse>> authenticate(@RequestBody IntrospectRequest request)
+    public ResponseEntity<ApiResponse<IntrospectResponse>> introspect(@RequestBody IntrospectRequest request)
             throws ParseException, JOSEException {
 
         var introspectData = authenticationService.introspect(request);
@@ -45,6 +46,18 @@ public class AuthenticationController {
                 true,
                 null,
                 introspectData
+        ));
+    }
+
+
+    @PostMapping("/refresh")
+    public ResponseEntity<ApiResponse<AuthenticationResponse>> refreshToken(@RequestBody RefreshTokenRequest request)
+            throws ParseException, JOSEException {
+
+        return ResponseEntity.ok(new ApiResponse<>(
+                true,
+                null,
+                authenticationService.refreshToken(request)
         ));
     }
 
@@ -59,7 +72,7 @@ public class AuthenticationController {
 
 
     @GetMapping("/social-login")
-    public void socialAuth (
+    public void socialAuthenticate(
             @RequestParam("loginType") String loginType,
             HttpServletRequest request,
             HttpServletResponse response
