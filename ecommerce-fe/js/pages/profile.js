@@ -3,7 +3,7 @@ import { updateProfileRequest } from "../api/profile-api.js";
 import { formatDateVN } from "../utils/format.js";
 import { fetchOrderItemsHistory } from "../api/order-item-api.js";
 import { renderOrderItem } from "../components/order-item.js";
-import { handleLogout } from "../common/logout.js";
+import { handleLogout } from "../api/logout.js";
 import { uploadAvatar } from "../api/upload-file-api.js";
 import { hideLoading, showLoading } from "../utils/loading.js";
 

@@ -1,8 +1,9 @@
+const BASE_URL = 'http://localhost:8080/eCommerce/api';
 
 export async function httpClient(url, options = {}) {
-    const token = getAccessToken();
+    const token = localStorage.getItem('access_token');
 
-    const res = await fetch(url, {
+    const response = await fetch(BASE_URL + url, {
         ...options,
         headers: {
             'Content-Type': 'application/json',
@@ -11,17 +12,23 @@ export async function httpClient(url, options = {}) {
         }
     });
 
-    // session expired
-    if (res.status === 401) {
-        alert ('Hết phiên đăng nhập !'); // it's only a specific subset, perhaps not authenticated is more reasonable
+    if (response.status === 401) {
+        alert('Hết phiên đăng nhập !');
         throw new Error('Unauthorized');
     }
 
-    // generic error handling
-    if (!res.ok) {
-        const message = await res.text();
-        throw new Error(message || 'Request failed');
+    if (!response.ok) {
+        let message = 'Request failed !';
+
+        try {
+            const err = await response.json();
+            message = err.message || message;
+        } catch {
+            message = await response.text();
+        }
+
+        throw new Error(message);
     }
 
-    return res.json();
+    return response.json();
 }

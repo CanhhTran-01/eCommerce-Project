@@ -1,5 +1,5 @@
-import { checkToken } from "../common/check-token.js";
-import { handleLogout } from "../common/logout.js";
+import { checkToken } from "../api/check-token.js";
+import { handleLogout } from "../api/logout.js";
 import { formatVND } from "../utils/format.js";
 
 const searchTextInput = document.getElementById('searchTextInput');

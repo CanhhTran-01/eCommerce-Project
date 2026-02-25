@@ -1,4 +1,4 @@
-import { login } from "../api/auth-api.js";
+import { login } from "./auth-api.js";
 
 const passwordInput = document.getElementById("password");
 

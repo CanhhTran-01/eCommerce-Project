@@ -1,22 +1,9 @@
 const token = localStorage.getItem('access_token');
 
-export async function fetchProfile() {
-    const response = await fetch(`http://localhost:8080/eCommerce/api/accounts/me/info`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-        },
-    });
+import { httpClient } from "../common/httpClient.js";
 
-    if (response.status === 401) {
-        throw new Error('Unauthorized');
-    }
-
-    if (!response.ok) {
-        throw new Error('Failed to get user info');
-    }
-
-    return response.json();
+export function fetchProfile() {
+    return httpClient('/accounts/me/info');
 }
 
 
