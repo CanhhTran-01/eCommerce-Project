@@ -1,18 +1,8 @@
-const token = localStorage.getItem('access_token');
+import { httpClient } from "../common/httpClient.js";
 
 export async function sendReviewtoServer(reviewRequest) {
-    const response = await fetch(`http://localhost:8080/eCommerce/api/reviews`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        },
+    return httpClient('/reviews', {
+        method: 'POST',
         body: JSON.stringify(reviewRequest)
     });
-
-    if (!response.ok) {
-        throw new Error("Failed to submit review");
-    }
-
-    return response.json();
 }

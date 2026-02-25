@@ -1,7 +1,7 @@
 import { fetchWishlist } from "../api/wishlist-api.js";
 import { handleSidebarProfile } from "../components/sidebar-profile.js";
 import { renderProductCard } from "../components/simple-product.js";
-import { handleLogout } from "../api/logout.js";
+import { handleLogout } from "../pages/logout.js";
 
 
 // call functions

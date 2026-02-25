@@ -1,18 +1,11 @@
+import { httpClient } from "../common/httpClient.js";
+
 
 export async function login(username, password) {
-    const response = await fetch(`http://localhost:8080/eCommerce/api/auth/login`, {
+    return httpClient('/auth/login', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password })
     });
-
-    if (!response.ok) {
-        throw new Error('Login failed');
-    }
-
-    return response.json();
 }
 
 

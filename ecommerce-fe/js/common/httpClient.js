@@ -14,6 +14,7 @@ export async function httpClient(url, options = {}) {
 
     if (response.status === 401) {
         alert('Hết phiên đăng nhập !');
+        window.location.href = window.location.origin + "/ecommerce-fe/pages/index.html";
         throw new Error('Unauthorized');
     }
 
