@@ -5,8 +5,7 @@ import { formatVND } from "../utils/format.js";
 const searchTextInput = document.getElementById('searchTextInput');
 const searchTextBtn = document.getElementById('searchTextBtn');
 const userInfoLink = document.getElementById('infoLink');
-const myOrdersLink = document.getElementById('myOrdersLink')
-const wishListLink = document.getElementById('wishListLink');
+const myAccountLink = document.getElementById('myAccountLink');
 const loginLink = document.getElementById('loginLink');
 const logoutLinkInNavbar = document.getElementById('logoutLinkInNavbar');
 const cartItemsContainer = document.getElementById('cart-items');
@@ -56,23 +55,13 @@ async function handleUserIcon() {
         }
     });
 
-    // my orders click event
-    myOrdersLink.addEventListener('click', (event) => {
+    // my account click event
+    myAccountLink.addEventListener('click', (event) => {
         if (!isLoggedIn) {
             event.preventDefault();
             alert('Vui lòng đăng nhập để truy cập trang này.');
         } else {
-            window.location.href = window.location.origin + '/ecommerce-fe/pages/my-orders.html';
-        }
-    });
-
-    // wishlist click event
-    wishListLink.addEventListener('click', (event) => {
-        if (!isLoggedIn) {
-            event.preventDefault();
-            alert('Vui lòng đăng nhập để truy cập trang này.');
-        } else {
-            window.location.href = window.location.origin + '/ecommerce-fe/pages/wishlist.html';
+            window.location.href = window.location.origin + '/ecommerce-fe/pages/my-account.html';
         }
     });
 
