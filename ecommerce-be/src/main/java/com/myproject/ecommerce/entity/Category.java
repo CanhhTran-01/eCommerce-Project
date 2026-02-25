@@ -23,11 +23,12 @@ public class Category {
     private String categoryName;
 
     @Lob
+    @Column(name = "category_image")
+    private String categoryImage;
+
+    @Lob
     @Column(name = "category_description")
     private String categoryDescription;
-
-    @Column(name = "display_order")
-    private Integer displayOrder;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

@@ -90,6 +90,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                         ProductSummaryResponse.class,
                         product.get("id"),
                         product.get("productName"),
+                        product.get("mainImageUrl"),
                         product.get("price"),
                         product.get("discountPrice"),
                         ratingCount,
@@ -106,6 +107,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         cq.groupBy(
                 product.get("id"),
                 product.get("productName"),
+                product.get("mainImageUrl"),
                 product.get("price"),
                 product.get("discountPrice")
         );

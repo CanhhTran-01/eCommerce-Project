@@ -7,7 +7,6 @@ import com.myproject.ecommerce.entity.User;
 import com.myproject.ecommerce.enums.ErrorCode;
 import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.repository.AccountRepository;
-import com.myproject.ecommerce.repository.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,6 @@ import java.util.UUID;
 @Slf4j
 public class UploadFileService {
     private final AccountRepository accountRepository;
-    private final ProductImageRepository productImageRepository;
     private final Cloudinary cloudinary;
 
 
@@ -63,7 +61,6 @@ public class UploadFileService {
             throw new BaseException(ErrorCode.FILE_UPLOAD_FAILED);
         }
     }
-
 
 
 

@@ -27,10 +27,6 @@ public class Review {
     @Column(name = "comment", columnDefinition = "TEXT")
     private String comment;
 
-    @Lob
-    @Column(name = "image_url")
-    private String imageUrl;
-
     @Column(name = "likes")
     private Long likes;
 

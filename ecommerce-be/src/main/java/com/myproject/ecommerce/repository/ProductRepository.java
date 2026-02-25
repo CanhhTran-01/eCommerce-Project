@@ -17,6 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
             SELECT new com.myproject.ecommerce.dto.response.ProductSummaryResponse(
                 p.id,
                 p.productName,
+                p.mainImageUrl,
                 p.price,
                 p.discountPrice,
                 COUNT(r),
@@ -25,7 +26,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
             FROM Product p
             LEFT JOIN p.reviewList r
             WHERE p.discountPrice IS NOT NULL AND p.discountPrice < p.price
-            GROUP BY p.id, p.productName, p.price, p.discountPrice
+            GROUP BY p.id, p.productName, p.mainImageUrl, p.price, p.discountPrice
     """)
     List<ProductSummaryResponse> getProductOnSaleList();
 
@@ -33,6 +34,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
             SELECT new com.myproject.ecommerce.dto.response.ProductSummaryResponse(
                 p.id,
                 p.productName,
+                p.mainImageUrl,
                 p.price,
                 p.discountPrice,
                 COUNT(r.id),
@@ -43,7 +45,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
             JOIN u.wishList p
             LEFT JOIN Review r ON r.product.id = p.id
             WHERE a.id = :accountId
-            GROUP BY p.id, p.productName, p.price, p.discountPrice
+            GROUP BY p.id, p.productName, p.mainImageUrl, p.price, p.discountPrice
     """)
     List<ProductSummaryResponse> getWishlistByAccountId(@Param("accountId") Long accountId);
 
@@ -51,6 +53,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
             SELECT new com.myproject.ecommerce.dto.response.ProductSummaryResponse(
                 p.id,
                 p.productName,
+                p.mainImageUrl,
                 p.price,
                 p.discountPrice,
                 COUNT(r),
@@ -59,7 +62,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
             FROM Product p
             LEFT JOIN p.reviewList r
             WHERE p.category.id = :categoryId
-            GROUP BY (p.id, p.productName, p.price, p.discountPrice)
+            GROUP BY (p.id, p.productName, p.mainImageUrl, p.price, p.discountPrice)
     """)
     List<ProductSummaryResponse> getProductsByCategoryId(Long categoryId);
 }

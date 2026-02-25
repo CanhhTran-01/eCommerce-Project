@@ -37,6 +37,10 @@ public class Product {
     private String madeIn;
 
     @Lob
+    @Column(name = "main_image_url")
+    private String mainImageUrl;
+
+    @Lob
     @Column(name = "short_description")
     private String shortDescription;
 
@@ -75,7 +79,7 @@ public class Product {
     private Category category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductImage> productImageList = new ArrayList<>();
+    private List<ProductThumbnailImage> productThumbnailImageList = new ArrayList<>();
 
     @OneToMany(mappedBy = "product")
     private List<OrderItem> orderItemList = new ArrayList<>();
