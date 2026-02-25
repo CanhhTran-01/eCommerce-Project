@@ -10,10 +10,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountResponse {
-    private Long id;
+public class AccountInfoResponse {
     private String username;
-    private List<String> accountRoles;
     private String email;
-    private LocalDateTime lastLogin;
+    private LocalDateTime createdAt;
 }

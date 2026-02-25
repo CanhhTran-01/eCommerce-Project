@@ -1,7 +1,8 @@
 package com.myproject.ecommerce.service;
 
+import com.myproject.ecommerce.dto.request.ResetPasswordRequest;
 import com.myproject.ecommerce.dto.request.SignUpRequest;
-import com.myproject.ecommerce.dto.response.AccountResponse;
+import com.myproject.ecommerce.dto.response.AccountInfoResponse;
 import com.myproject.ecommerce.entity.User;
 import com.myproject.ecommerce.entity.Account;
 import com.myproject.ecommerce.enums.AccountStatus;
@@ -28,6 +29,7 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
     private final PasswordEncoder passwordEncoder;
+
 
     // register account
     public void createAccount(SignUpRequest signUpRequest){
@@ -65,18 +67,25 @@ public class AccountService {
     }
 
 
-    public AccountResponse getAccount(Long id){
-        return accountMapper.toResponse(accountRepository.findById(id)
+    // get account info
+    @Transactional(readOnly = true)
+    public AccountInfoResponse getAccountInfo(Long id){
+        return accountMapper.toInfoResponse(accountRepository.findById(id)
                 .orElseThrow(() -> new BaseException (ErrorCode.ACCOUNT_NOT_FOUND)));
     }
-    
-    public AccountResponse updateAccount(Long id, SignUpRequest signUpRequest){
-        Account account = accountRepository.findById(id)
-                .orElseThrow(() ->  new BaseException (ErrorCode.ACCOUNT_NOT_FOUND));
 
-        // dùng map struct thay vì phải map bằng tay
-        accountMapper.updateAccount(account, signUpRequest);
-        return accountMapper.toResponse(accountRepository.save(account));
+
+    // update account password
+    public void resetAccountPass(Long accountId, ResetPasswordRequest request){
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new BaseException(ErrorCode.ACCOUNT_NOT_FOUND));
+
+        // check old password
+        if (!passwordEncoder.matches(request.getOldPassword(), account.getPassword())){
+            throw new BaseException(ErrorCode.OLD_PASSWORD_INCORRECT);
+        }
+
+        account.setPassword(passwordEncoder.encode(request.getNewPassword()));
     }
 
 }
