@@ -2,6 +2,8 @@ import { fetchCategories } from "../api/category-api.js";
 import { fetchSaleProducts } from "../api/product-api.js";
 import { renderProductCard } from "../components/simple-product.js";
 
+const defaultCategoryImage = "https://res.cloudinary.com/djw4qdufh/image/upload/v1772030742/avatar/43708b91-bcf6-4b6b-bb71-531f59ba4ff8_no_image_category_.png";
+
 // call functions
 handleCategoryMenu();
 handleSaleProducts();
@@ -21,7 +23,7 @@ async function handleCategoryMenu() {
         categoryHomeView.innerHTML = response.data.map(category => `
                 <div class="category-item-wrapper" data-category-id="${category.id}">
                     <div class="category-item-circle">
-                        <img src="${category.imageUrl}" alt="${category.categoryName}">
+                        <img src="${category.categoryImage ?? defaultCategoryImage}" alt="${category.categoryName}">
                     </div>
                     <span style="white-space: nowrap; 
                                     overflow: hidden; 

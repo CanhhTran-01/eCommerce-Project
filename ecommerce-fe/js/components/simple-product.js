@@ -1,5 +1,7 @@
 import { formatVND } from '../utils/format.js';
 
+const defaultProductImage = "https://res.cloudinary.com/djw4qdufh/image/upload/v1772030872/avatar/cfcdd9b4-9850-4775-ac05-c87523b29439_no_image_product.png"
+
 export function renderProductCard(data, container) {
 
     container.innerHTML = data.map(product => {
@@ -16,7 +18,7 @@ export function renderProductCard(data, container) {
         return `
                 <div class="product-card" data-product-id="${product.id}">
                     <div class="product-image">
-                        <img src="${product.imageUrl}" alt="${product.productName}">
+                        <img src="${product.mainImageUrl ?? defaultProductImage}" alt="${product.productName}">
                         ${discountBadgeHTML}
                     </div>
                     <div class="product-info">

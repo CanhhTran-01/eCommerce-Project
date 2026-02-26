@@ -57,3 +57,9 @@ export async function fetchProductReviews(productId) {
 export async function fetchRelatedProducts(productId) {
     return httpClient(`/products/${productId}/related`);
 }
+
+
+// get product gallery
+export async function fetchProductGallery(productId) {
+    return httpClient(`/product-gallery?productId=${productId}`);
+}

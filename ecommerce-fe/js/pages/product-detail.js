@@ -1,4 +1,4 @@
-import { fetchProductDetail, fetchRelatedProducts } from "../api/product-api.js";
+import { fetchProductDetail, fetchProductGallery, fetchRelatedProducts } from "../api/product-api.js";
 import { formatVND, formatDateTime } from "../utils/format.js";
 import { fetchProductReviews } from "../api/product-api.js";
 import { addProductToWishList } from "../api/wishlist-api.js";
@@ -13,16 +13,42 @@ const productDesc = document.getElementById('description');
 const addToWishListBtn = document.getElementById('addToWishlistBtn');
 const addToCartBtn = document.getElementById('addToCartBtn');
 const relatedProducts = document.getElementById('relatedProducts');
+const thumbnailGallery = document.getElementById('thumbnailGallery');
+const defaultProductImage = "https://res.cloudinary.com/djw4qdufh/image/upload/v1772030872/avatar/cfcdd9b4-9850-4775-ac05-c87523b29439_no_image_product.png";
+
 
 // call functions
+handleThumbnailGallery();
 handleProductDetail();
 handleRelatedProducts();
+
+
+async function handleThumbnailGallery(){
+    try {
+        const response = await fetchProductGallery(productId);
+        
+        thumbnailGallery.innerHTML = response.data.slice(0, 4).map(item => `
+                <div class="col-3">
+                    <img class="thumbnail-img rounded border cursor-pointer"
+                        src="${item.imageUrl}"
+                        data-image="${item.imageUrl}" alt="thumbnail-image"
+                        style="width:100%; height:80px; object-fit:cover;">
+                </div>
+            `).join('');
+
+
+    } catch (error){
+        console.log(error);
+        productGallery.innerHTML = `<div class="text-danger"><strong>${error.message}</strong></div>`;
+    }
+}
 
 
 async function handleProductDetail() {
     try {
         const response = await fetchProductDetail(productId);
 
+        mainImage.src = response.data.mainImageUrl ?? defaultProductImage; 
         productName.innerText = response.data.productName || '...';
 
 
