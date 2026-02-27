@@ -38,8 +38,12 @@
 
                     <input type="text" class="form-control mb-3" id="username" placeholder="Username">
                     <input type="password" class="form-control mb-3" id="password" placeholder="Password">
+                    <input type="password" class="form-control mb-3" id="confirmPassword" placeholder="Confirm Password">
 
                     <button id="btn-send-otp" class="btn btn-danger w-100">Gửi mã xác nhận</button>
+                    <div class="d-flex justify-content-center align-items-center d-none" id="waittingSendOtp">
+                        <div class="spinner-border m-2"></div>Loading...
+                    </div>
                 </div>
 
                 <!-- STEP 3 OTP -->
@@ -54,6 +58,9 @@
                         placeholder="Nhập OTP">
 
                     <button id="btn-verify-otp" class="btn btn-danger w-100">Hoàn tất đăng ký</button>
+                    <div class="d-flex justify-content-center align-items-center d-none" id="waittingCreateNewAccount">
+                        <div class="spinner-border m-2"></div> Loading...
+                    </div>
                 </div>
 
                 <!-- login redirect -->
@@ -67,7 +74,7 @@
 
     </div>
 
-    
+
     <!-- Script -->
     <script type="module" src="../js/pages/register.js"></script>
 </body>

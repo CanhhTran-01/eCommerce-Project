@@ -1,26 +1,29 @@
 const steps = document.querySelectorAll(".step");
 const emailInput = document.getElementById("email");
 const otpInput = document.getElementById("otp");
-const usernameInput = document.getElementById("username");
+const newPasswordInput = document.getElementById('newPassword');
+const oldPasswordInput = document.getElementById('oldPassword');
+const confirmNewPasswordInput = document.getElementById('confirmNewPassword');
 const btnSendEmail = document.getElementById("btn-send-email");
 const notifyOtpSending = document.getElementById('notifyOtpSending');
 const btnVerifyOtp = document.getElementById("btn-verify-otp");
+const btnResetPassword = document.getElementById('btn-reset-password');
 const waittingOtp = document.getElementById('waittingOtp');
 const waittingSendNewPass = document.getElementById('waittingSendNewPass');
 
 const genOtpRequest = {
     email: null,
-    otpType: "FORGOT_PASSWORD"
+    otpType: "UPDATE_PASSWORD"
 }
 const verifyOtpRequest = {
     email: null,
     otp: null,
-    otpType: "FORGOT_PASSWORD"
+    otpType: "UPDATE_PASSWORD"
 }
-const forgotPassRequest = {
-    email: null,
-    username: null,
-    otpType: "FORGOT_PASSWORD"
+const updatePassRequest = {
+    oldPassword: null,
+    newPassword: null,
+    otpType: "UPDATE_PASSWORD"
 }
 
 
@@ -49,7 +52,7 @@ function handleSendEmail() {
 
     genOtpRequest.email = email;
     verifyOtpRequest.email = email;
-    forgotPassRequest.email = email;
+    updatePassRequest.email = email;
     nextStep(2);
 }
 
@@ -70,33 +73,42 @@ function handleVerifyOtp() {
     } catch (error) {
         console.log(error);
         notifyOtpSending.innerHTML = error.message;
-    } finally {
+    } finally  {
         btnVerifyOtp.classList.remove('d-none');
         waittingOtp.classList.add('d-none');
     }
 }
 
 
-function handleUsernameEnter() {
-    const username = usernameInput.value.trim();
+function handleChangePassword() {
+    const oldPassword = oldPasswordInput.value.trim();
+    const newPassword = newPasswordInput.value.trim();
+    const confirmNewPassword = confirmNewPasswordInput.value.trim();
 
-    forgotPassRequest.username = username;
+    if (!oldPassword || !newPassword || !confirmNewPassword){
+        alert('Chưa nhập đủ thông tin');
+        return;
+    }
+
+    updatePassRequest.newPassword = newPassword;
+    updatePassRequest.oldPassword = oldPassword;
 
     waittingSendNewPass.classList.remove('d-none');
     try {
-        // call http://localhost:8080/eCommerce/api/accounts/forgot-password
+        // call http://localhost:8080/eCommerce/api/accounts/reset-password
 
         alert(response.message);
+
+        // logout + href
         window.location.href = "../pages/login.html";
 
     } catch (error) {
         console.log(error);
         alert(error.message);
-        window.location.href = "../pages/forgot-password.html";
     }
 }
 
 
 btnSendEmail.addEventListener("click", handleSendEmail);
 btnVerifyOtp.addEventListener("click", handleVerifyOtp);
-btnResetPassword.addEventListener("click", handleUsernameEnter);
+btnResetPassword.addEventListener("click", handleChangePassword);

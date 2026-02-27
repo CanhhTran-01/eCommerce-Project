@@ -1,67 +1,123 @@
-let generatedOtp = null;
-
-// ===== cache DOM =====
 const steps = document.querySelectorAll(".step");
-
 const emailInput = document.getElementById("email");
 const usernameInput = document.getElementById("username");
 const passwordInput = document.getElementById("password");
+const confirmPasswordInput = document.getElementById("confirmPassword");
 const otpInput = document.getElementById("otp");
-
 const btnNextEmail = document.getElementById("btn-next-email");
 const btnSendOtp = document.getElementById("btn-send-otp");
 const btnVerifyOtp = document.getElementById("btn-verify-otp");
+const waittingSendOtp = document.getElementById('waittingSendOtp');
+const waittingCreateNewAccount = document.getElementById('waittingCreateNewAccount');
+
+const genOtpRequest = {
+    email: null,
+    otpType: "REGISTER"
+}
+const verifyOtpRequest = {
+    email: null,
+    otp: null,
+    otpType: "REGISTER"
+}
+const registerRequest = {
+    email: null,
+    username: null,
+    password: null
+}
 
 
-// ===== step control =====
+// view step control
 function nextStep(step) {
     steps.forEach(s => s.classList.add("d-none"));
     document.getElementById("step" + step).classList.remove("d-none");
 }
 
 
-// ===== business logic =====
+// logic
 function handleNextEmail() {
     const email = emailInput.value.trim();
 
     if (!email) {
-        alert("Nhập email");
+        alert("Chưa nhập email");
         return;
     }
 
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailPattern.test(email)) {
+        alert("Email không đúng định dạng");
+        return;
+    }
+
+    genOtpRequest.email = email;
+    verifyOtpRequest.email = email;
+    registerRequest.email = email;
     nextStep(2);
 }
 
-function handleSendOtp() {
+
+async function handleSendOtp() {
     const username = usernameInput.value.trim();
     const password = passwordInput.value.trim();
+    const confirmPassword = confirmPasswordInput.value.trim();
 
-    if (!username || !password) {
-        alert("Nhập đủ username + password");
+    if (!username || !password || !confirmPassword) {
+        alert("Nhập đủ trường thông tin");
         return;
     }
 
-    generatedOtp = Math.floor(100000 + Math.random() * 900000);
-    console.log("OTP:", generatedOtp);
+    if (password.length < 8) {
+        alert("Mật khẩu tối thiểu 8 ký tự");
+        return;
+    }
 
-    alert("OTP đã gửi (mock). Check console");
+    if (confirmPassword != password) {
+        alert("Mật khẩu xác nhận không khớp");
+        return;
+    }
 
-    nextStep(3);
+    registerRequest.username = username;
+    registerRequest.password = password;
+
+    btnSendOtp.classList.add('d-none');
+    waittingSendOtp.classList.remove('d-none');
+    try {
+        // fetch http://localhost:8080/eCommerce/api/accounts/register/email/otp
+
+        nextStep(3);
+
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        btnSendOtp.classList.remove('d-none');
+        waittingSendOtp.classList.add('d-none');
+    }
+
 }
 
-function handleVerifyOtp() {
-    const otp = otpInput.value;
 
-    if (otp == generatedOtp) {
-        alert("Đăng ký thành công");
+async function handleVerifyOtp() {
+    const otp = otpInput.value.trim();
+
+    verifyOtpRequest.otp = otp;
+    try {
+        // call http://localhost:8080/eCommerce/api/accounts/email/verify
+
+        waittingCreateNewAccount.classList.remove('d-none');
+
+        // call http://localhost:8080/eCommerce/api/accounts
+
+        alert(response.message);
         window.location.href = "../pages/login.html";
-    } else {
-        alert("OTP sai");
+
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        waittingCreateNewAccount.classList.add('d-none');
     }
 }
 
 
-// ===== event binding =====
 btnNextEmail.addEventListener("click", handleNextEmail);
 btnSendOtp.addEventListener("click", handleSendOtp);
 btnVerifyOtp.addEventListener("click", handleVerifyOtp);
