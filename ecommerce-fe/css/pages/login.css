@@ -2,7 +2,7 @@
 
 .login-bg {
     min-height: 100vh;
-    background: url("/ecommerce-fe/assets/images/banner-welcome.jpg") center/cover no-repeat;
+    background: url("https://res.cloudinary.com/djw4qdufh/image/upload/v1772196632/avatar/d39280fc-4cbd-4414-9171-6751bc07be7e_security.webp") center/cover no-repeat;
     position: relative;
 }
 
