@@ -40,7 +40,7 @@ public class Account {
     private Set<Role> accountRoles;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "account_status", nullable = false)
+    @Column(name = "account_status")
     private AccountStatus accountStatus;
 
     @Enumerated(EnumType.STRING)
@@ -68,7 +68,7 @@ public class Account {
     }
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "user_id", unique = true, nullable = false)
+    @JoinColumn(name = "user_id", unique = true)
     private User user;
 
 }

@@ -24,7 +24,13 @@ public enum ErrorCode {
     USER_REVIEWED(1012, "user reviewed this product!", HttpStatus.BAD_REQUEST),
     FILE_NAME_INVALID(1013, "file name is invalid!", HttpStatus.BAD_REQUEST),
     FILE_UPLOAD_FAILED(1014, "upload failed!", HttpStatus.BAD_REQUEST),
-    OLD_PASSWORD_INCORRECT(1015, "old password is incorrect!", HttpStatus.BAD_REQUEST)
+    OLD_PASSWORD_INCORRECT(1015, "old password is incorrect!", HttpStatus.BAD_REQUEST),
+    EMAIL_EXISTED(1016, "email existed!", HttpStatus.BAD_REQUEST),
+    OTP_EXPIRED(1017, "OTP expired!", HttpStatus.BAD_REQUEST),
+    OTP_INVALID(1018, "OTP invalid!", HttpStatus.BAD_REQUEST),
+    OTP_ALREADY_SENT(1019, "hold on for a new OTP (2 minutes)!", HttpStatus.BAD_REQUEST),
+    USERNAME_NOT_FOUND(1020, "username not found !", HttpStatus.BAD_REQUEST),
+    OTP_NOT_VERIFIED(1021, "OTP doesn't verify", HttpStatus.BAD_REQUEST)
     ;
 
 

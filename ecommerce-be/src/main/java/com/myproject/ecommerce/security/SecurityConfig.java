@@ -22,8 +22,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import java.util.List;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -31,6 +29,9 @@ public class SecurityConfig {
 
     private final String[] PUBLIC_ENDPOINTS_POST = {
             "/api/accounts",
+            "/api/accounts/register/email/otp",
+            "/api/accounts/email/verify",
+            "/api/accounts/forgot-password",
             "/api/auth/login",
             "/api/auth/introspect",
             "/api/auth/refresh",
@@ -103,13 +104,8 @@ public class SecurityConfig {
 
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-        corsConfiguration.setAllowedOrigins(List.of(
-                "http://192.168.0.100:5500",
-                "http://localhost:5500",
-                "http://192.168.0.102:5500",
-                "http://192.168.0.101:5500",
-                "http://192.168.1.4:5500"
-        ));
+        // corsConfiguration.setAllowedOrigins(List.of("*"));  later use
+        corsConfiguration.addAllowedOrigin("*");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.addAllowedHeader("*");
 

@@ -1,14 +1,10 @@
 package com.myproject.ecommerce.service;
 
-import com.myproject.ecommerce.dto.request.ResetPasswordRequest;
-import com.myproject.ecommerce.dto.request.SignUpRequest;
+import com.myproject.ecommerce.dto.request.*;
 import com.myproject.ecommerce.dto.response.AccountInfoResponse;
 import com.myproject.ecommerce.entity.User;
 import com.myproject.ecommerce.entity.Account;
-import com.myproject.ecommerce.enums.AccountStatus;
-import com.myproject.ecommerce.enums.AuthProvider;
-import com.myproject.ecommerce.enums.ErrorCode;
-import com.myproject.ecommerce.enums.Role;
+import com.myproject.ecommerce.enums.*;
 import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.mapper.AccountMapper;
 import com.myproject.ecommerce.repository.AccountRepository;
@@ -21,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,20 +26,37 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
     private final PasswordEncoder passwordEncoder;
+    private final OtpService otpService;
+    private final MailService mailService;
+
+
+    public void sendRegisterOtp(GenerateOtpRequest request){
+        // check email
+        if (accountRepository.findByEmail(request.getEmail()).isPresent()){
+            throw new BaseException(ErrorCode.EMAIL_EXISTED);
+        }
+
+        otpService.generateOtp(request);
+    }
+
+
+    public void verifyOtp(VerifyOtpRequest request){
+        otpService.verifyOtp(request);
+    }
 
 
     // register account
-    public void createAccount(SignUpRequest signUpRequest){
+    public void createAccount(RegisterRequest registerRequest){
 
-        if (accountRepository.existsByUsername(signUpRequest.getUsername())){
+        if (accountRepository.existsByUsername(registerRequest.getUsername())){
             throw new BaseException(ErrorCode.USERNAME_EXISTED);
         }
 
         // MapStruct convert DTO -> Entity
-        Account account = accountMapper.toEntity(signUpRequest);
+        Account account = accountMapper.toEntity(registerRequest);
 
         // set password
-        account.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+        account.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
         // set roles
         Set<Role> accountRoles = new HashSet<>();
@@ -57,6 +71,7 @@ public class AccountService {
 
         // set default user (created user automatically)
         User user = new User();
+        user.setGender(Gender.HIDE);
         user.setNickName(NickNameRandomUtils.generateDefaultNickName());
         user.setUserCode(UserCodeRandomUtils.generateUserCode());
 
@@ -67,16 +82,26 @@ public class AccountService {
     }
 
 
-    // get account info
-    @Transactional(readOnly = true)
-    public AccountInfoResponse getAccountInfo(Long id){
-        return accountMapper.toInfoResponse(accountRepository.findById(id)
-                .orElseThrow(() -> new BaseException (ErrorCode.ACCOUNT_NOT_FOUND)));
+    // forgot account password
+    public void forgotPassword(ForgotPasswordRequest request){
+
+        Account account = accountRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new BaseException(ErrorCode.USERNAME_NOT_FOUND));
+
+        // check OTP flag for verifying
+        otpService.ensureOtpVerified(request.getEmail(), request.getOtpType());
+
+        String newPassword = UUID.randomUUID().toString();
+        account.setPassword(passwordEncoder.encode(newPassword));
+
+        otpService.clearVerify(request.getEmail(), request.getOtpType()); // verify sucessfully
+
+        mailService.sendNewPassword(request.getEmail(), request.getUsername(), newPassword);
     }
 
 
     // update account password
-    public void resetAccountPass(Long accountId, ResetPasswordRequest request){
+    public void changeAccountPass(Long accountId, ChangePasswordRequest request){
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new BaseException(ErrorCode.ACCOUNT_NOT_FOUND));
 
@@ -85,7 +110,19 @@ public class AccountService {
             throw new BaseException(ErrorCode.OLD_PASSWORD_INCORRECT);
         }
 
+        // check OTP flag for verifying
+        otpService.ensureOtpVerified(account.getEmail(), request.getOtpType());
+
+        otpService.clearVerify(account.getEmail(), request.getOtpType()); // verify sucessfully
+
         account.setPassword(passwordEncoder.encode(request.getNewPassword()));
     }
 
+
+    // get account info
+    @Transactional(readOnly = true)
+    public AccountInfoResponse getAccountInfo(Long id){
+        return accountMapper.toInfoResponse(accountRepository.findById(id)
+                .orElseThrow(() -> new BaseException (ErrorCode.ACCOUNT_NOT_FOUND)));
+    }
 }

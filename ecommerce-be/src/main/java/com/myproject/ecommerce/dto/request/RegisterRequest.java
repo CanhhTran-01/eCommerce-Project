@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SignUpRequest {
+public class RegisterRequest {
 
     @Email(message = "EMAIL_INVALID")
     private String email;

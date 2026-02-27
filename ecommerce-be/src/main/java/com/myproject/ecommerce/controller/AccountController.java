@@ -1,7 +1,6 @@
 package com.myproject.ecommerce.controller;
 
-import com.myproject.ecommerce.dto.request.ResetPasswordRequest;
-import com.myproject.ecommerce.dto.request.SignUpRequest;
+import com.myproject.ecommerce.dto.request.*;
 import com.myproject.ecommerce.dto.response.AccountInfoResponse;
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.dto.response.UserInfoResponse;
@@ -25,15 +24,41 @@ public class AccountController {
     private final UserService userService;
 
 
+    @PostMapping("/register/email/otp")
+    public ResponseEntity<ApiResponse<?>> sendOtpForSignUp(@RequestBody GenerateOtpRequest request){
+
+        accountService.sendRegisterOtp(request);
+        var apiResponse = new ApiResponse<>(
+                true,
+                "OTP đã được gửi đi, vui lòng kiểm tra email của bạn",
+                null
+        );
+        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
+    }
+
+
+    @PostMapping("/email/verify")
+    public ResponseEntity<ApiResponse<?>> verifyOtp(@RequestBody VerifyOtpRequest request){
+
+        accountService.verifyOtp(request);
+        var apiResponse = new ApiResponse<>(
+                true,
+                "OTP hợp lệ, xác minh hoàn tất !",
+                null
+        );
+        return ResponseEntity.ok(apiResponse);
+    }
+
+
     @PostMapping("")
-    public ResponseEntity<ApiResponse<Void>> createAccount(
-            @RequestBody @Valid SignUpRequest signUpRequest
+    public ResponseEntity<ApiResponse<Void>> registerNewAccount(
+            @RequestBody @Valid RegisterRequest registerRequest
     ){
 
-        accountService.createAccount(signUpRequest);
+        accountService.createAccount(registerRequest);
         var apiResponse = new ApiResponse<Void>(
                 true,
-                null,
+                "Đăng kí thành công, vui lòng đăng nhập để sử dụng dịch vụ.",
                 null
         );
 
@@ -69,14 +94,27 @@ public class AccountController {
     }
 
 
+    @PostMapping("/forgot-password")
+    public ResponseEntity<ApiResponse<?>> forgotAccountPassword(@RequestBody ForgotPasswordRequest request){
+
+        accountService.forgotPassword(request);
+        var apiResponse = new ApiResponse<>(
+                true,
+                "Mật khẩu mới đã được gửi tới gmail: " + request.getEmail(),
+                null
+        );
+        return ResponseEntity.ok(apiResponse);
+    }
+
+
     @PutMapping("/reset-password")
-    public ResponseEntity<ApiResponse<Void>> resetAccountPass(
+    public ResponseEntity<ApiResponse<Void>> resetAccountPassword(
             @AuthenticationPrincipal Jwt jwt,
-            @RequestBody ResetPasswordRequest request
+            @RequestBody ChangePasswordRequest request
     ){
 
         Long accountId = jwt.getClaim("accountId"); // get account_id from JWT
-        accountService.resetAccountPass(accountId, request);
+        accountService.changeAccountPass(accountId, request);
 
         var apiResponse = new ApiResponse<Void>(
                 true,
