@@ -4,6 +4,7 @@ import com.myproject.ecommerce.entity.Account;
 import com.myproject.ecommerce.entity.User;
 import com.myproject.ecommerce.enums.AccountStatus;
 import com.myproject.ecommerce.enums.AuthProvider;
+import com.myproject.ecommerce.enums.Gender;
 import com.myproject.ecommerce.enums.Role;
 import com.myproject.ecommerce.repository.AccountRepository;
 import com.myproject.ecommerce.service.JwtService;
@@ -71,6 +72,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
                     User newUser = User.builder()
                             .nickName(NickNameRandomUtils.generateDefaultNickName())
                             .userCode(UserCodeRandomUtils.generateUserCode())
+                            .gender(Gender.HIDE)
                             .avatarUrl(avatarUrl)
                             .fullName(name)
                             .build();

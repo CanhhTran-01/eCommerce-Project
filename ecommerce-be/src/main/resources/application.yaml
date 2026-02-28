@@ -6,52 +6,15 @@ server:
 spring:
   application:
     name: eCommerce
-  datasource:
-    url: jdbc:mysql://localhost:3306/ecommerce?useSSL=false&serverTimezone=UTC
-    username: root
-    password: canhtran2005
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      timeout: 60000
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: levitran1102005@gmail.com
-    password: sizzoboqjvapiytk
-    properties:
-      mail.smtp.auth: true
-      mail.smtp.starttls.enable: true
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate.format_sql: true
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 659075838642-3pciirlkbcmb2f5qaf5rgcr7pu4ru7jo.apps.googleusercontent.com
-            client-secret: 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
-            scope:
-              - openid
-              - profile
-              - email
-          facebook:
-            client-id: 1598403707845413
-            client-secret: 618206ea760c8d0836444d13b25f3e69
-            scope:
-              - public_profile
-              - email
+
+logging:
+  level:
+    org.hibernate.orm.connections.pooling: WARN
 
 jwt:
-  signerKey: "mRZ7rF7uZJ2KQ0Z3V5y9BvJ9P3T8A4XWq6N5C8sYp2A="
+  signerKey: ${SIGNERKEY_DEV}
 
 app:
   oauth2:
     redirect:
-      frontend-url: http://localhost:5500
+      frontend-url: ${FRONTEND_URL:http://localhost:5500}
