@@ -15,5 +15,6 @@ public interface ReviewMapper {
     Review toEntity(ReviewRequest reviewRequest);
 
     ReviewResponse toResponse(Review review);
+
     void update(@MappingTarget Review review, ReviewRequest reviewRequest);
 }

@@ -2,8 +2,6 @@ package com.myproject.ecommerce.entity;
 
 import com.myproject.ecommerce.enums.Gender;
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import lombok.*;
 
 @Entity
 @Table(name = "user")
@@ -53,21 +52,22 @@ public class User {
     @Column(name = "personal_points")
     private BigDecimal personalPoints;
 
-    @Column(name="created_at")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name="updated_at")
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @PrePersist
-    protected void onCreate(){
-        this.avatarUrl = "https://res.cloudinary.com/djw4qdufh/image/upload/v1771559891/avatar/2412713c-547d-45a7-94f9-397d8bee400b_default-avatar.webp";
+    protected void onCreate() {
+        this.avatarUrl =
+                "https://res.cloudinary.com/djw4qdufh/image/upload/v1771559891/avatar/2412713c-547d-45a7-94f9-397d8bee400b_default-avatar.webp";
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
-    protected void onUpdate(){
+    protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
 
@@ -87,8 +87,6 @@ public class User {
     @JoinTable(
             name = "wish_list",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> wishList = new HashSet<>();
-
 }

@@ -1,9 +1,8 @@
 package com.myproject.ecommerce.utils;
 
-import lombok.NoArgsConstructor;
-
 import java.time.Year;
 import java.util.UUID;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public final class ProductCodeMakingUtils {

@@ -15,20 +15,12 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     private final OrderService orderService;
 
-
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<OrderDetailResponse>> getOrderDetail(
-            @RequestParam Long orderId,
-            @AuthenticationPrincipal Jwt jwt
-    ){
+            @RequestParam Long orderId, @AuthenticationPrincipal Jwt jwt) {
 
-        Long accountId = jwt.getClaim("accountId");  // get account_id from JWT
-        var apiResponse = new ApiResponse<>(
-                true,
-                null,
-                orderService.getOrderDetail(accountId, orderId)
-        );
+        Long accountId = jwt.getClaim("accountId"); // get account_id from JWT
+        var apiResponse = new ApiResponse<>(true, null, orderService.getOrderDetail(accountId, orderId));
         return ResponseEntity.ok(apiResponse);
     }
-
 }

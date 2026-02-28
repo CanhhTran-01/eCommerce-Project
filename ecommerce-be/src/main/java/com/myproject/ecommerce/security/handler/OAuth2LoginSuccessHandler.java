@@ -12,6 +12,12 @@ import com.myproject.ecommerce.utils.NickNameRandomUtils;
 import com.myproject.ecommerce.utils.UserCodeRandomUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -19,13 +25,6 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -39,10 +38,8 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            Authentication authentication
-    ) throws IOException {
+            HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+            throws IOException {
 
         OAuth2User user = (OAuth2User) authentication.getPrincipal();
 
@@ -50,38 +47,35 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         String name = user.getAttribute("name");
         String avatarUrl = extractAvatar(user);
 
-        Account account = accountRepository.findByEmail(email)
-                .orElseGet(() -> {
-                    // set roles
-                    Set<Role> accountRoles = new HashSet<>();
-                    accountRoles.add(Role.USER);
+        Account account = accountRepository.findByEmail(email).orElseGet(() -> {
+            // set roles
+            Set<Role> accountRoles = new HashSet<>();
+            accountRoles.add(Role.USER);
 
-                    // set auth provider
-                    String registrationId =
-                            ((OAuth2AuthenticationToken) authentication)
-                                    .getAuthorizedClientRegistrationId();
-                    AuthProvider provider = AuthProvider.valueOf(registrationId.toUpperCase());
+            // set auth provider
+            String registrationId = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
+            AuthProvider provider = AuthProvider.valueOf(registrationId.toUpperCase());
 
-                    Account newAcc = Account.builder()
-                            .email(email)
-                            .authProvider(provider)
-                            .accountStatus(AccountStatus.ACTIVE)
-                            .accountRoles(accountRoles)
-                            .build();
+            Account newAcc = Account.builder()
+                    .email(email)
+                    .authProvider(provider)
+                    .accountStatus(AccountStatus.ACTIVE)
+                    .accountRoles(accountRoles)
+                    .build();
 
-                    User newUser = User.builder()
-                            .nickName(NickNameRandomUtils.generateDefaultNickName())
-                            .userCode(UserCodeRandomUtils.generateUserCode())
-                            .gender(Gender.HIDE)
-                            .avatarUrl(avatarUrl)
-                            .fullName(name)
-                            .build();
+            User newUser = User.builder()
+                    .nickName(NickNameRandomUtils.generateDefaultNickName())
+                    .userCode(UserCodeRandomUtils.generateUserCode())
+                    .gender(Gender.HIDE)
+                    .avatarUrl(avatarUrl)
+                    .fullName(name)
+                    .build();
 
-                    newAcc.setUser(newUser);
-                    newUser.setAccount(newAcc);
+            newAcc.setUser(newUser);
+            newUser.setAccount(newAcc);
 
-                    return accountRepository.save(newAcc);
-                });
+            return accountRepository.save(newAcc);
+        });
 
         String token = jwtService.generateToken(account);
 
@@ -92,7 +86,6 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         // redirect
         response.sendRedirect(redirectUrl);
     }
-
 
     private String extractAvatar(OAuth2User user) {
         Object pictureObj = user.getAttribute("picture");

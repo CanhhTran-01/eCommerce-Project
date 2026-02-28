@@ -1,5 +1,3 @@
 package com.myproject.ecommerce.dto.response;
 
-public class CartResponse {
-
-}
+public class CartResponse {}

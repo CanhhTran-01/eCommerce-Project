@@ -1,11 +1,10 @@
 package com.myproject.ecommerce.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.*;
 
 @Entity
 @Table(name = "category")
@@ -37,16 +36,16 @@ public class Category {
     private LocalDateTime updatedAt;
 
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
-    protected void onUpdate(){
+    protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
 
-    @OneToMany (mappedBy = "category")
+    @OneToMany(mappedBy = "category")
     private List<Product> productList = new ArrayList<>();
 }

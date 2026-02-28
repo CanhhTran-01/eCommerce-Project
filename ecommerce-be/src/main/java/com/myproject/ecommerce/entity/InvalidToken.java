@@ -4,9 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.*;
-
 import java.util.Date;
+import lombok.*;
 
 @Entity
 @Table(name = "invalid_token")
@@ -23,5 +22,4 @@ public class InvalidToken {
 
     @Column(name = "expiry_time")
     private Date expiryTime;
-
 }

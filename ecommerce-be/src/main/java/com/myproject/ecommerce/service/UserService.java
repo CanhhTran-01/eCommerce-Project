@@ -19,28 +19,25 @@ public class UserService {
     private final UserMapper userMapper;
 
     // register user
-    public UserInfoResponse createUser(InfoUpdateRequest infoUpdateRequest){
+    public UserInfoResponse createUser(InfoUpdateRequest infoUpdateRequest) {
         User user = userMapper.toEntity(infoUpdateRequest);
         return userMapper.toInfoResponse(userRepository.save(user));
-
     }
 
     // take user info from account
-    public UserInfoResponse getInfo(Long accountId){
-        User user = userRepository.findByAccountId(accountId)
+    public UserInfoResponse getInfo(Long accountId) {
+        User user = userRepository
+                .findByAccountId(accountId)
                 .orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
 
         return userMapper.toInfoResponse(user);
     }
 
-
     // update user
-    public UserInfoResponse updateUserInfo(Long id, InfoUpdateRequest infoUpdateRequest){
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+    public UserInfoResponse updateUserInfo(Long id, InfoUpdateRequest infoUpdateRequest) {
+        User user = userRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
 
         userMapper.updateUser(user, infoUpdateRequest);
         return userMapper.toInfoResponse(userRepository.save(user));
     }
-
 }

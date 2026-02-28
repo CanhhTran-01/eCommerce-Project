@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatusCode;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
-
     UNCATEGORIZED_EXCEPTION(9999, "uncategorized error!", HttpStatus.INTERNAL_SERVER_ERROR),
     USERNAME_EXISTED(1001, "username existed!", HttpStatus.BAD_REQUEST),
     USERNAME_INVALID(1002, "username invalid!", HttpStatus.BAD_REQUEST),
@@ -30,9 +29,7 @@ public enum ErrorCode {
     OTP_INVALID(1018, "OTP invalid!", HttpStatus.BAD_REQUEST),
     OTP_ALREADY_SENT(1019, "hold on for a new OTP (2 minutes)!", HttpStatus.BAD_REQUEST),
     USERNAME_NOT_FOUND(1020, "username not found !", HttpStatus.BAD_REQUEST),
-    OTP_NOT_VERIFIED(1021, "OTP doesn't verify", HttpStatus.BAD_REQUEST)
-    ;
-
+    OTP_NOT_VERIFIED(1021, "OTP doesn't verify", HttpStatus.BAD_REQUEST);
 
     private final int code; // future use
     private final String message;

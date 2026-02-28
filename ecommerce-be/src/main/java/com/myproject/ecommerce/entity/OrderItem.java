@@ -1,9 +1,8 @@
 package com.myproject.ecommerce.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.math.BigDecimal;
+import lombok.*;
 
 @Data
 @Entity

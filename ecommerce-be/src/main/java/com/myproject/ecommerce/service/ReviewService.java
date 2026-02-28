@@ -12,11 +12,10 @@ import com.myproject.ecommerce.mapper.ReviewMapper;
 import com.myproject.ecommerce.repository.AccountRepository;
 import com.myproject.ecommerce.repository.ProductRepository;
 import com.myproject.ecommerce.repository.ReviewRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,14 +26,14 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ReviewMapper reviewMapper;
 
-
     // create review
-    public void createReview(Long accountId, ReviewRequest reviewRequest){
+    public void createReview(Long accountId, ReviewRequest reviewRequest) {
 
-        Account account = accountRepository.findById(accountId)
-                .orElseThrow(() -> new BaseException(ErrorCode.ACCOUNT_NOT_FOUND));
+        Account account =
+                accountRepository.findById(accountId).orElseThrow(() -> new BaseException(ErrorCode.ACCOUNT_NOT_FOUND));
 
-        Product product = productRepository.findById(reviewRequest.getProductId())
+        Product product = productRepository
+                .findById(reviewRequest.getProductId())
                 .orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));
 
         User user = account.getUser();
@@ -46,11 +45,9 @@ public class ReviewService {
         reviewRepository.save(review);
     }
 
-
     // get reviews by product
     @Transactional(readOnly = true)
-    public List<ReviewResponse> getProductReviews(Long productId){
+    public List<ReviewResponse> getProductReviews(Long productId) {
         return reviewRepository.findReviewsByProductId(productId);
     }
-
 }

@@ -1,8 +1,7 @@
 package com.myproject.ecommerce.dto.response;
 
-import lombok.*;
-
 import java.time.LocalDateTime;
+import lombok.*;
 
 @Data
 @Getter

@@ -1,9 +1,8 @@
 package com.myproject.ecommerce.dto.response;
 
 import com.myproject.ecommerce.enums.OrderStatus;
-import lombok.*;
-
 import java.math.BigDecimal;
+import lombok.*;
 
 @Data
 @Getter

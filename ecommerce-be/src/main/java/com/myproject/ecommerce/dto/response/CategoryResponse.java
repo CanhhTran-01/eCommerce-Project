@@ -2,8 +2,6 @@ package com.myproject.ecommerce.dto.response;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Data
 @Getter
 @Setter

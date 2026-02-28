@@ -1,8 +1,7 @@
 package com.myproject.ecommerce.utils;
 
-import lombok.NoArgsConstructor;
-
 import java.util.UUID;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class UserCodeRandomUtils {

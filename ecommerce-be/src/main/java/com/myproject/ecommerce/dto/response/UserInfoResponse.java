@@ -1,10 +1,9 @@
 package com.myproject.ecommerce.dto.response;
 
 import com.myproject.ecommerce.enums.Gender;
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import lombok.*;
 
 @Data
 @Getter

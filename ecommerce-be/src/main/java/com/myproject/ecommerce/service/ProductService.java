@@ -8,11 +8,10 @@ import com.myproject.ecommerce.enums.ErrorCode;
 import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.mapper.ProductMapper;
 import com.myproject.ecommerce.repository.ProductRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,52 +20,45 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
-
     // get product on sale list
     @Transactional(readOnly = true)
-    public List<ProductSummaryResponse> getProductOnSaleList(){
+    public List<ProductSummaryResponse> getProductOnSaleList() {
         return productRepository.getProductOnSaleList();
     }
 
-
     // get product by category
     @Transactional(readOnly = true)
-    public List<ProductSummaryResponse> getProductsByCategory(Long categoryId){
+    public List<ProductSummaryResponse> getProductsByCategory(Long categoryId) {
         return productRepository.getProductsByCategoryId(categoryId);
     }
 
-
     // get wish list by accountId
     @Transactional(readOnly = true)
-    public List<ProductSummaryResponse> getMyWishlist(Long accountId){
+    public List<ProductSummaryResponse> getMyWishlist(Long accountId) {
         return productRepository.getWishlistByAccountId(accountId);
     }
 
-
     // get product detail
     @Transactional(readOnly = true)
-    public ProductDetailResponse getDetail(Long id){
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));
+    public ProductDetailResponse getDetail(Long id) {
+        Product product =
+                productRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));
 
         return productMapper.toProductDetailResponse(product);
     }
 
-
     // get related product (same category)
     @Transactional(readOnly = true)
-    public List<ProductSummaryResponse> getRelatedProducts(Long productId){
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));
+    public List<ProductSummaryResponse> getRelatedProducts(Long productId) {
+        Product product =
+                productRepository.findById(productId).orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));
 
         return productRepository.getProductsByCategoryId(product.getCategory().getId());
     }
 
-
     // filter product
     @Transactional(readOnly = true)
-    public List<ProductSummaryResponse> getFilterSearchProduct(ProductFilterSearchRequest request){
+    public List<ProductSummaryResponse> getFilterSearchProduct(ProductFilterSearchRequest request) {
         return productRepository.searchbyFilter(request);
     }
-
 }

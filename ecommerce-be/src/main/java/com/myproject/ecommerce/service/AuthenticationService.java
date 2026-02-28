@@ -14,12 +14,11 @@ import com.myproject.ecommerce.repository.AccountRepository;
 import com.myproject.ecommerce.repository.InvalidatedTokenRepository;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.JWTClaimsSet;
+import java.text.ParseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.text.ParseException;
 
 @Service
 @RequiredArgsConstructor
@@ -28,47 +27,36 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final InvalidatedTokenRepository invalidatedTokenRepository;
 
-
     // login
-    public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest){
+    public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
 
-        Account account = accountRepository.findByUsername(authenticationRequest.getUsername())
-                .orElseThrow(()-> new BaseException(ErrorCode.USERNAME_EXISTED));
+        Account account = accountRepository
+                .findByUsername(authenticationRequest.getUsername())
+                .orElseThrow(() -> new BaseException(ErrorCode.USERNAME_EXISTED));
 
         // check password
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
-        boolean authenticated =  passwordEncoder.matches(authenticationRequest.getPassword(),
-                                                                account.getPassword());
-        if (!authenticated)
-            throw new BaseException(ErrorCode.UNAUTHENTICATED);
+        boolean authenticated = passwordEncoder.matches(authenticationRequest.getPassword(), account.getPassword());
+        if (!authenticated) throw new BaseException(ErrorCode.UNAUTHENTICATED);
 
         // take token
         String token = jwtService.generateToken(account);
 
-        return AuthenticationResponse.builder()
-                .token(token)
-                .authenticated(true)
-                .build();
+        return AuthenticationResponse.builder().token(token).authenticated(true).build();
     }
 
-
     // introspect token
-    public IntrospectResponse introspect(IntrospectRequest introspectRequest)
-            throws ParseException, JOSEException {
+    public IntrospectResponse introspect(IntrospectRequest introspectRequest) throws ParseException, JOSEException {
 
         JWTClaimsSet jwtClaimsSet = jwtService.verifyToken(introspectRequest.getToken());
 
         boolean isValid = !(invalidatedTokenRepository.existsById(jwtClaimsSet.getJWTID()));
 
-        return IntrospectResponse.builder()
-                .valid(isValid)
-                .build();
+        return IntrospectResponse.builder().valid(isValid).build();
     }
 
-
     // refresh token
-    public AuthenticationResponse refreshToken(RefreshTokenRequest request)
-            throws ParseException, JOSEException {
+    public AuthenticationResponse refreshToken(RefreshTokenRequest request) throws ParseException, JOSEException {
 
         var jwtClaimsSet = jwtService.verifyToken(request.getToken());
 
@@ -79,25 +67,20 @@ public class AuthenticationService {
         var expiryTime = jwtClaimsSet.getExpirationTime();
 
         // logout
-        InvalidToken invalidToken = InvalidToken.builder()
-                .id(jti)
-                .expiryTime(expiryTime)
-                .build();
+        InvalidToken invalidToken =
+                InvalidToken.builder().id(jti).expiryTime(expiryTime).build();
         invalidatedTokenRepository.save(invalidToken);
 
         // generate new token
         var username = jwtClaimsSet.getSubject();
-        Account account = accountRepository.findByUsername(username)
+        Account account = accountRepository
+                .findByUsername(username)
                 .orElseThrow(() -> new BaseException(ErrorCode.UNAUTHENTICATED));
 
         String token = jwtService.generateToken(account);
 
-        return AuthenticationResponse.builder()
-                .token(token)
-                .authenticated(true)
-                .build();
+        return AuthenticationResponse.builder().token(token).authenticated(true).build();
     }
-
 
     // logout
     public void logout(LogoutRequest logoutRequest) throws ParseException, JOSEException {
@@ -111,5 +94,4 @@ public class AuthenticationService {
 
         invalidatedTokenRepository.save(invalidToken);
     }
-
 }

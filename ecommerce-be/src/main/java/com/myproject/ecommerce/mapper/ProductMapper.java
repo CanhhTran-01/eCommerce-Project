@@ -10,7 +10,10 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
     Product toEntity(ProductRequest productRequest);
+
     ProductSummaryResponse toProductSummaryResponse(Product product);
+
     ProductDetailResponse toProductDetailResponse(Product product);
+
     void update(@MappingTarget Product product, ProductRequest productRequest);
 }

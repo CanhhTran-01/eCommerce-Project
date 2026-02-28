@@ -1,12 +1,11 @@
 package com.myproject.ecommerce.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.*;
 
 @Entity
 @Table(name = "cart")
@@ -37,6 +36,7 @@ public class Cart {
         this.createdAt = LocalDateTime.now();
         this.lastUpdated = this.createdAt;
     }
+
     @PreUpdate
     public void preUpdate() {
         this.lastUpdated = LocalDateTime.now();

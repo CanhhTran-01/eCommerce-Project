@@ -7,11 +7,10 @@ import com.myproject.ecommerce.entity.Review;
 import com.myproject.ecommerce.repository.custom.ProductRepositoryCustom;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.*;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
@@ -36,18 +35,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             String pattern = "%" + request.getSearchText().toLowerCase() + "%";
 
-            Predicate namePredicate = cb.like(
-                    cb.lower(product.get("productName")),
-                    pattern
-            );
-            Predicate brandPredicate = cb.like(
-                    cb.lower(product.get("brand")),
-                    pattern
-            );
-            Predicate codePredicate = cb.like(
-                    cb.lower(product.get("productCode")),
-                    pattern
-            );
+            Predicate namePredicate = cb.like(cb.lower(product.get("productName")), pattern);
+            Predicate brandPredicate = cb.like(cb.lower(product.get("brand")), pattern);
+            Predicate codePredicate = cb.like(cb.lower(product.get("productCode")), pattern);
 
             Predicate searchPredicate = cb.or(namePredicate, brandPredicate, codePredicate);
             predicates.add(searchPredicate);
@@ -55,29 +45,15 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
         // filter by category
         if (request.getCategoryId() != null && !request.getCategoryId().isEmpty()) {
-            predicates.add(
-                    product.get("category").get("id")
-                            .in(request.getCategoryId())
-            );
+            predicates.add(product.get("category").get("id").in(request.getCategoryId()));
         }
-
 
         // filter by price
         if (request.getMinPrice() != null) {
-            predicates.add(
-                    cb.greaterThanOrEqualTo(
-                            product.get("price"),
-                            request.getMinPrice()
-                    )
-            );
+            predicates.add(cb.greaterThanOrEqualTo(product.get("price"), request.getMinPrice()));
         }
         if (request.getMaxPrice() != null) {
-            predicates.add(
-                    cb.lessThanOrEqualTo(
-                            product.get("price"),
-                            request.getMaxPrice()
-                    )
-            );
+            predicates.add(cb.lessThanOrEqualTo(product.get("price"), request.getMaxPrice()));
         }
 
         // aggregate
@@ -85,18 +61,15 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         Expression<Double> ratingAvg = cb.coalesce(cb.avg(review.get("rating")), 0.0);
 
         // SELECT new ProductSummaryResponse(...)
-        cq.select(
-                cb.construct(
-                        ProductSummaryResponse.class,
-                        product.get("id"),
-                        product.get("productName"),
-                        product.get("mainImageUrl"),
-                        product.get("price"),
-                        product.get("discountPrice"),
-                        ratingCount,
-                        ratingAvg
-                )
-        );
+        cq.select(cb.construct(
+                ProductSummaryResponse.class,
+                product.get("id"),
+                product.get("productName"),
+                product.get("mainImageUrl"),
+                product.get("price"),
+                product.get("discountPrice"),
+                ratingCount,
+                ratingAvg));
 
         // WHERE
         if (!predicates.isEmpty()) {
@@ -109,8 +82,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 product.get("productName"),
                 product.get("mainImageUrl"),
                 product.get("price"),
-                product.get("discountPrice")
-        );
+                product.get("discountPrice"));
 
         // ORDER BY
         if (request.getSort() != null) {

@@ -1,9 +1,8 @@
 package com.myproject.ecommerce.dto.request;
 
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.util.List;
+import lombok.*;
 
 @Getter
 @Setter
@@ -16,4 +15,3 @@ public class ProductFilterSearchRequest {
     private BigDecimal maxPrice;
     private String sort;
 }
-

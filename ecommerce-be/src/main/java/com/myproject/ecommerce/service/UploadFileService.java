@@ -7,14 +7,13 @@ import com.myproject.ecommerce.entity.User;
 import com.myproject.ecommerce.enums.ErrorCode;
 import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.repository.AccountRepository;
+import java.io.IOException;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -23,7 +22,6 @@ import java.util.UUID;
 public class UploadFileService {
     private final AccountRepository accountRepository;
     private final Cloudinary cloudinary;
-
 
     // upload avatar for profile
     public String uploadAvatarImage(Long accountId, MultipartFile file) {
@@ -35,19 +33,16 @@ public class UploadFileService {
 
         String publicValue = generateValue(originalFileName);
         try {
-            var result = cloudinary.uploader().upload(
-                    file.getBytes(),
-                    ObjectUtils.asMap(
-                            "public_id", publicValue,
-                            "folder", "avatar"
-                    )
-            );
+            var result = cloudinary
+                    .uploader()
+                    .upload(file.getBytes(), ObjectUtils.asMap("public_id", publicValue, "folder", "avatar"));
 
             String url = (String) result.get("secure_url");
 
             log.info("Upload success: publicId={}, url={}", publicValue, url);
 
-            Account account = accountRepository.findById(accountId)
+            Account account = accountRepository
+                    .findById(accountId)
                     .orElseThrow(() -> new BaseException(ErrorCode.ACCOUNT_NOT_FOUND));
 
             // update avatar url
@@ -61,9 +56,6 @@ public class UploadFileService {
             throw new BaseException(ErrorCode.FILE_UPLOAD_FAILED);
         }
     }
-
-
-
 
     // Generate public_id for Cloudinary
     public String generateValue(String originalName) {
@@ -79,12 +71,12 @@ public class UploadFileService {
 
         int index = originalName.lastIndexOf(".");
         if (index == -1) {
-            return new String[]{originalName, ""};
+            return new String[] {originalName, ""};
         }
 
         String name = originalName.substring(0, index);
         String ext = originalName.substring(index + 1);
 
-        return new String[]{name, ext};
+        return new String[] {name, ext};
     }
 }

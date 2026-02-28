@@ -3,12 +3,11 @@ package com.myproject.ecommerce.entity;
 import com.myproject.ecommerce.enums.OrderStatus;
 import com.myproject.ecommerce.enums.PaymentStatus;
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.*;
 
 @Entity
 @Table(name = "orders")
@@ -58,20 +57,20 @@ public class Order {
     @Column(name = "note")
     private String note;
 
-    @Column(name="created_at")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name="updated_at")
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
-    protected void onUpdate(){
+    protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
 
@@ -84,5 +83,4 @@ public class Order {
 
     @OneToOne(mappedBy = "order")
     private Payment payment;
-
 }

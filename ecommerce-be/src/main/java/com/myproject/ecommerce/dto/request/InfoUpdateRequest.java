@@ -2,9 +2,8 @@ package com.myproject.ecommerce.dto.request;
 
 import com.myproject.ecommerce.enums.Gender;
 import com.myproject.ecommerce.validator.DobConstraint;
-import lombok.*;
-
 import java.time.LocalDate;
+import lombok.*;
 
 @Data
 @Getter

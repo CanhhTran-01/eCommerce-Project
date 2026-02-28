@@ -1,12 +1,11 @@
 package com.myproject.ecommerce.dto.response;
 
 import com.myproject.ecommerce.enums.OrderStatus;
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.*;
 
 @Data
 @Getter

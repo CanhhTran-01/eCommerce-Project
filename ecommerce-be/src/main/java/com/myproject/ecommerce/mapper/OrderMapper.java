@@ -11,7 +11,10 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
     Order toEntity(OrderRequest orderRequest);
+
     OrderDetailResponse toDetailResponse(Order order);
+
     OrderItemResponse toItemResponse(OrderItem orderItem);
+
     void update(@MappingTarget Order order, OrderRequest orderRequest);
 }
