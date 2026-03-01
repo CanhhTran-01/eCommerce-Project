@@ -37,6 +37,15 @@ public class AccountService {
         otpService.generateOtp(request);
     }
 
+    public void sendForgotAndPassOtp(GenerateOtpRequest request) {
+        // check email
+        if (accountRepository.findByEmail(request.getEmail()).isEmpty()) {
+            throw new BaseException(ErrorCode.EMAIL_NOT_EXISTS);
+        }
+
+        otpService.generateOtp(request);
+    }
+
     public void verifyOtp(VerifyOtpRequest request) {
         otpService.verifyOtp(request);
     }

@@ -31,6 +31,22 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
 
+    @PostMapping("/forgot-pass/email/otp")
+    public ResponseEntity<ApiResponse<?>> sendOtpForForgotPass(@RequestBody GenerateOtpRequest request) {
+
+        accountService.sendForgotAndPassOtp(request);
+        var apiResponse = new ApiResponse<>(true, "OTP đã được gửi đi, " + "vui lòng kiểm tra email của bạn", null);
+        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
+    }
+
+    @PostMapping("/update-pass/email/otp")
+    public ResponseEntity<ApiResponse<?>> sendOtpForChangePass(@RequestBody GenerateOtpRequest request) {
+
+        accountService.sendForgotAndPassOtp(request);
+        var apiResponse = new ApiResponse<>(true, "OTP đã được gửi đi, " + "vui lòng kiểm tra email của bạn", null);
+        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
+    }
+
     @PostMapping("/email/verify")
     public ResponseEntity<ApiResponse<?>> verifyOtp(@RequestBody VerifyOtpRequest request) {
 
@@ -60,7 +76,7 @@ public class AccountController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<ApiResponse<AccountInfoResponse>> getAccount(@AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<ApiResponse<AccountInfoResponse>> getAccountInfo(@AuthenticationPrincipal Jwt jwt) {
 
         Long accountId = jwt.getClaim("accountId"); // get account_id from JWT
         ApiResponse<AccountInfoResponse> apiResponse =

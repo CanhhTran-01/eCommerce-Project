@@ -30,6 +30,7 @@ public class SecurityConfig {
     private final String[] PUBLIC_ENDPOINTS_POST = {
         "/api/accounts",
         "/api/accounts/register/email/otp",
+        "/api/accounts/forgot-pass/email/otp",
         "/api/accounts/email/verify",
         "/api/accounts/forgot-password",
         "/api/auth/login",
