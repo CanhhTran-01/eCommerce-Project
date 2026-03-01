@@ -1,3 +1,6 @@
+import { register } from "../api/auth-api.js";
+import { generateOtp, verifyOtp } from "../api/otp.js";
+
 const steps = document.querySelectorAll(".step");
 const emailInput = document.getElementById("email");
 const usernameInput = document.getElementById("username");
@@ -82,8 +85,7 @@ async function handleSendOtp() {
     btnSendOtp.classList.add('d-none');
     waittingSendOtp.classList.remove('d-none');
     try {
-        // fetch http://localhost:8080/eCommerce/api/accounts/register/email/otp
-
+        await generateOtp(genOtpRequest);
         nextStep(3);
 
     } catch (error) {
@@ -101,11 +103,11 @@ async function handleVerifyOtp() {
 
     verifyOtpRequest.otp = otp;
     try {
-        // call http://localhost:8080/eCommerce/api/accounts/email/verify
-
+        btnVerifyOtp.classList.add('d-none');
         waittingCreateNewAccount.classList.remove('d-none');
+        await verifyOtp(verifyOtpRequest);
 
-        // call http://localhost:8080/eCommerce/api/accounts
+        const response = await register(registerRequest);
 
         alert(response.message);
         window.location.href = "../pages/login.html";
@@ -114,6 +116,7 @@ async function handleVerifyOtp() {
         alert(error.message);
     } finally {
         waittingCreateNewAccount.classList.add('d-none');
+        btnVerifyOtp.classList.remove('d-none');
     }
 }
 

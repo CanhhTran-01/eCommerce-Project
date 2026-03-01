@@ -1,15 +1,20 @@
+import { resetPass } from "../api/auth-api.js";
+import { generateOtp, verifyOtp } from "../api/otp.js";
+
+const emailData = sessionStorage.getItem('email_account');
+document.getElementById('emailData').innerText = 'Xác minh email: ' + emailData;
+
 const steps = document.querySelectorAll(".step");
-const emailInput = document.getElementById("email");
 const otpInput = document.getElementById("otp");
 const newPasswordInput = document.getElementById('newPassword');
 const oldPasswordInput = document.getElementById('oldPassword');
 const confirmNewPasswordInput = document.getElementById('confirmNewPassword');
-const btnSendEmail = document.getElementById("btn-send-email");
 const notifyOtpSending = document.getElementById('notifyOtpSending');
+const btnRequireOtp = document.getElementById("btn-require-otp");
 const btnVerifyOtp = document.getElementById("btn-verify-otp");
-const btnResetPassword = document.getElementById('btn-reset-password');
-const waittingOtp = document.getElementById('waittingOtp');
+const waittingProcessOtp = document.getElementById('waittingProcessOtp');
 const waittingSendNewPass = document.getElementById('waittingSendNewPass');
+const btnResetPassword = document.getElementById('btn-reset-password');
 
 const genOtpRequest = {
     email: null,
@@ -35,52 +40,52 @@ function nextStep(step) {
 
 
 // logic
-function handleSendEmail() {
-    const email = emailInput.value.trim();
+async function handleRequireOtp() {
+    genOtpRequest.email = emailData;
+    verifyOtpRequest.email = emailData;
 
-    if (!email) {
-        alert("Chưa nhập email");
-        return;
-    }
+    btnRequireOtp.classList.add('d-none');
+    waittingProcessOtp.classList.remove('d-none');
 
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailPattern.test(email)) {
-        alert("Email không đúng định dạng");
-        return;
-    }
-
-    genOtpRequest.email = email;
-    verifyOtpRequest.email = email;
-    updatePassRequest.email = email;
-    nextStep(2);
-}
-
-
-function handleVerifyOtp() {
-    const otp = otpInput.value.trim();
-
-    genOtpRequest.otp = otp;
-    verifyOtpRequest.otp = otp;
-
-    btnVerifyOtp.classList.add('d-none');
-    waittingOtp.classList.remove('d-none');
     try {
-        // call http://localhost:8080/eCommerce/api/accounts/email/verify
-        alert(response.message)
-        nextStep(3);
+        const response = await generateOtp(genOtpRequest);  // gen OTP
+
+        waittingProcessOtp.classList.add('d-none');
+        btnVerifyOtp.classList.remove('d-none');
+
+        notifyOtpSending.innerText = response.message;
 
     } catch (error) {
         console.log(error);
-        notifyOtpSending.innerHTML = error.message;
-    } finally  {
-        btnVerifyOtp.classList.remove('d-none');
-        waittingOtp.classList.add('d-none');
+        notifyOtpSending.innerText = error.message;
+        btnRequireOtp.classList.remove('d-none');
+        waittingProcessOtp.classList.add('d-none');
     }
 }
 
+async function handleVerifyOtp() {
+    const otp = otpInput.value.trim();
+    
+    verifyOtpRequest.otp = otp;
 
-function handleChangePassword() {
+    btnVerifyOtp.classList.add('d-none');
+    waittingProcessOtp.classList.remove('d-none');
+    try {
+        const response = await verifyOtp(verifyOtpRequest);
+        alert(response.message);
+
+        nextStep(2);
+
+    } catch (error) {
+        console.log(error);
+        notifyOtpSending.innerText = error.message;
+    } finally {
+        btnVerifyOtp.classList.remove('d-none');
+        waittingProcessOtp.classList.add('d-none');
+    }
+}
+
+async function handleChangePassword() {
     const oldPassword = oldPasswordInput.value.trim();
     const newPassword = newPasswordInput.value.trim();
     const confirmNewPassword = confirmNewPasswordInput.value.trim();
@@ -93,22 +98,23 @@ function handleChangePassword() {
     updatePassRequest.newPassword = newPassword;
     updatePassRequest.oldPassword = oldPassword;
 
+    btnResetPassword.classList.add('d-none');
     waittingSendNewPass.classList.remove('d-none');
-    try {
-        // call http://localhost:8080/eCommerce/api/accounts/reset-password
 
+    try {
+        const response = await resetPass(updatePassRequest);
         alert(response.message);
 
-        // logout + href
-        window.location.href = "../pages/login.html";
+        window.location.href = "../pages/index.html";
 
     } catch (error) {
         console.log(error);
         alert(error.message);
     }
+
 }
 
 
-btnSendEmail.addEventListener("click", handleSendEmail);
-btnVerifyOtp.addEventListener("click", handleVerifyOtp);
+btnRequireOtp.addEventListener("click", handleRequireOtp);
+btnVerifyOtp.addEventListener('click', handleVerifyOtp);
 btnResetPassword.addEventListener("click", handleChangePassword);

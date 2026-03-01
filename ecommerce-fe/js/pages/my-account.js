@@ -13,7 +13,10 @@ async function handleMyAccountInfo(){
         const response = await fetchAccountInfo();
 
         username.innerText = response.data.username;
+        
         email.innerText = response.data.email;
+        sessionStorage.setItem('email_account', response.data.email);
+
         createdAt.innerText = formatDateTime(response.data.createdAt);
 
     } catch (error){

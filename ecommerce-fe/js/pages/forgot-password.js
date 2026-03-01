@@ -1,12 +1,20 @@
+import { forgotPass } from "../api/auth-api.js";
+import { generateOtp, verifyOtp } from "../api/otp.js";
+
 const steps = document.querySelectorAll(".step");
 const emailInput = document.getElementById("email");
 const otpInput = document.getElementById("otp");
 const usernameInput = document.getElementById("username");
+
 const btnSendEmail = document.getElementById("btn-send-email");
 const notifyOtpSending = document.getElementById('notifyOtpSending');
+
+const btnRequireOtp = document.getElementById("btn-require-otp");
 const btnVerifyOtp = document.getElementById("btn-verify-otp");
-const waittingOtp = document.getElementById('waittingOtp');
+const waittingProcessOtp = document.getElementById('waittingProcessOtp');
+
 const waittingSendNewPass = document.getElementById('waittingSendNewPass');
+const btnResetPassword = document.getElementById('btn-reset-password');
 
 const genOtpRequest = {
     email: null,
@@ -54,37 +62,60 @@ function handleSendEmail() {
 }
 
 
-function handleVerifyOtp() {
-    const otp = otpInput.value.trim();
+async function handleRequireOtp() {
 
-    genOtpRequest.otp = otp;
-    verifyOtpRequest.otp = otp;
+    btnRequireOtp.classList.add('d-none');
+    waittingProcessOtp.classList.remove('d-none');
 
-    btnVerifyOtp.classList.add('d-none');
-    waittingOtp.classList.remove('d-none');
     try {
-        // call http://localhost:8080/eCommerce/api/accounts/email/verify
-        alert(response.message)
-        nextStep(3);
+        const response = await generateOtp(genOtpRequest);  // gen OTP
+
+        waittingProcessOtp.classList.add('d-none');
+        btnVerifyOtp.classList.remove('d-none');
+
+        notifyOtpSending.innerText = response.message;
 
     } catch (error) {
         console.log(error);
-        notifyOtpSending.innerHTML = error.message;
-    } finally {
-        btnVerifyOtp.classList.remove('d-none');
-        waittingOtp.classList.add('d-none');
+        notifyOtpSending.innerText = error.message;
+        btnRequireOtp.classList.remove('d-none');
+        waittingProcessOtp.classList.add('d-none');
     }
 }
 
 
-function handleUsernameEnter() {
+async function handleVerifyOtp() {
+    const otp = otpInput.value.trim();
+    
+    verifyOtpRequest.otp = otp;
+
+    btnVerifyOtp.classList.add('d-none');
+    waittingProcessOtp.classList.remove('d-none');
+    try {
+        const response = await verifyOtp(verifyOtpRequest);
+        alert(response.message);
+
+        nextStep(3);
+
+    } catch (error) {
+        console.log(error);
+        notifyOtpSending.innerText = error.message;
+    } finally {
+        btnVerifyOtp.classList.remove('d-none');
+        waittingProcessOtp.classList.add('d-none');
+    }
+}
+
+
+async function handleUsernameEnter() {
     const username = usernameInput.value.trim();
 
     forgotPassRequest.username = username;
 
+    btnResetPassword.classList.add('d-none');
     waittingSendNewPass.classList.remove('d-none');
     try {
-        // call http://localhost:8080/eCommerce/api/accounts/forgot-password
+        const response = await forgotPass(forgotPassRequest);
 
         alert(response.message);
         window.location.href = "../pages/login.html";
@@ -98,5 +129,6 @@ function handleUsernameEnter() {
 
 
 btnSendEmail.addEventListener("click", handleSendEmail);
-btnVerifyOtp.addEventListener("click", handleVerifyOtp);
+btnRequireOtp.addEventListener("click", handleRequireOtp);
+btnVerifyOtp.addEventListener('click', handleVerifyOtp);
 btnResetPassword.addEventListener("click", handleUsernameEnter);
