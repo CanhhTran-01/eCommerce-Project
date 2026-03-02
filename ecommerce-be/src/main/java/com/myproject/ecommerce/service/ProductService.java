@@ -61,4 +61,9 @@ public class ProductService {
     public List<ProductSummaryResponse> getFilterSearchProduct(ProductFilterSearchRequest request) {
         return productRepository.searchbyFilter(request);
     }
+
+    // check wishlisted by user
+    public boolean isWishListed(Long productId, Long accountId) {
+        return productRepository.existsByIdAndWishedByAccountId(productId, accountId);
+    }
 }

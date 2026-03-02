@@ -2,12 +2,14 @@ package com.myproject.ecommerce.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.myproject.ecommerce.entity.Account;
-import com.myproject.ecommerce.entity.User;
+import com.myproject.ecommerce.entity.*;
 import com.myproject.ecommerce.enums.ErrorCode;
 import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.repository.AccountRepository;
+import com.myproject.ecommerce.repository.CategoryRepository;
+import com.myproject.ecommerce.repository.ProductRepository;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @Slf4j
 public class UploadFileService {
-    private final AccountRepository accountRepository;
     private final Cloudinary cloudinary;
+    private final AccountRepository accountRepository;
+    private final CategoryRepository categoryRepository;
+    private final ProductRepository productRepository;
 
     // upload avatar for profile
     public String uploadAvatarImage(Long accountId, MultipartFile file) {
@@ -37,15 +41,13 @@ public class UploadFileService {
                     .uploader()
                     .upload(file.getBytes(), ObjectUtils.asMap("public_id", publicValue, "folder", "avatar"));
 
-            String url = (String) result.get("secure_url");
-
-            log.info("Upload success: publicId={}, url={}", publicValue, url);
+            String url = result.get("secure_url").toString();
 
             Account account = accountRepository
                     .findById(accountId)
                     .orElseThrow(() -> new BaseException(ErrorCode.ACCOUNT_NOT_FOUND));
 
-            // update avatar url
+            // update image url
             User user = account.getUser();
             user.setAvatarUrl(url);
 
@@ -54,6 +56,78 @@ public class UploadFileService {
         } catch (IOException e) {
             log.error("Upload image failed", e);
             throw new BaseException(ErrorCode.FILE_UPLOAD_FAILED);
+        }
+    }
+
+    // upload image for category
+    public String uploadCategoryImage(Long categoryId, MultipartFile file) {
+
+        String originalFileName = file.getOriginalFilename();
+        if (originalFileName == null || originalFileName.isBlank()) {
+            throw new BaseException(ErrorCode.FILE_NAME_INVALID);
+        }
+
+        String publicValue = generateValue(originalFileName);
+        try {
+            var result = cloudinary
+                    .uploader()
+                    .upload(file.getBytes(), ObjectUtils.asMap("public_id", publicValue, "folder", "category"));
+
+            String url = result.get("secure_url").toString();
+
+            Category category = categoryRepository
+                    .findById(categoryId)
+                    .orElseThrow(() -> new BaseException(ErrorCode.CATEGORY_NOT_FOUND));
+
+            // update image url
+            category.setCategoryImage(url);
+
+            return url;
+
+        } catch (IOException e) {
+            log.error("Upload image failed", e);
+            throw new BaseException(ErrorCode.FILE_UPLOAD_FAILED);
+        }
+    }
+
+    // upload images for category
+    public void uploadProductImages(Long productId, List<MultipartFile> files) {
+        Product product =
+                productRepository.findById(productId).orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        if (files == null || files.isEmpty()) {
+            throw new BaseException(ErrorCode.PRODUCT_IMAGES_EMPTY);
+        }
+
+        for (MultipartFile file : files) {
+            String originalFileName = file.getOriginalFilename();
+            if (originalFileName == null || originalFileName.isBlank()) {
+                throw new BaseException(ErrorCode.FILE_NAME_INVALID);
+            }
+
+            String publicValue = generateValue(originalFileName);
+            try {
+                var result = cloudinary
+                        .uploader()
+                        .upload(
+                                file.getBytes(),
+                                ObjectUtils.asMap(
+                                        "public_id", publicValue, "folder", "product/" + product.getId() + "/images"));
+
+                String url = result.get("secure_url").toString();
+
+                ProductThumbnailImage image = ProductThumbnailImage.builder()
+                        .imageUrl(url)
+                        .product(product)
+                        .build();
+
+                // update product image
+                product.getProductThumbnailImageList().add(image);
+
+            } catch (IOException e) {
+                log.error("Upload image failed", e);
+                throw new BaseException(ErrorCode.FILE_UPLOAD_FAILED);
+            }
         }
     }
 

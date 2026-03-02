@@ -30,7 +30,9 @@ public enum ErrorCode {
     OTP_ALREADY_SENT(1019, "hold on for a new OTP (2 minutes)!", HttpStatus.BAD_REQUEST),
     USERNAME_NOT_FOUND(1020, "username not found !", HttpStatus.BAD_REQUEST),
     OTP_NOT_VERIFIED(1021, "OTP doesn't verify", HttpStatus.BAD_REQUEST),
-    EMAIL_NOT_EXISTS(1022, "email doesn't exist !", HttpStatus.BAD_REQUEST);
+    EMAIL_NOT_EXISTS(1022, "email doesn't exist !", HttpStatus.BAD_REQUEST),
+    CATEGORY_NOT_FOUND(1023, "category doesn't exist", HttpStatus.BAD_REQUEST),
+    PRODUCT_IMAGES_EMPTY(1024, "image list is empty!", HttpStatus.BAD_REQUEST);
 
     private final int code; // future use
     private final String message;

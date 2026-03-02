@@ -56,4 +56,13 @@ public class UserController {
         var apiResponse = new ApiResponse<Void>(true, null, null);
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
+
+    @GetMapping("/me/wish-list/{productId}/exists")
+    public ResponseEntity<ApiResponse<?>> getWishListStatus(
+            @PathVariable("productId") Long productId, @AuthenticationPrincipal Jwt jwt) {
+        Long accountId = jwt.getClaim("accountId"); // get account_id from JWT
+
+        var apiResponse = new ApiResponse<>(true, null, productService.isWishListed(productId, accountId));
+        return ResponseEntity.ok(apiResponse);
+    }
 }
