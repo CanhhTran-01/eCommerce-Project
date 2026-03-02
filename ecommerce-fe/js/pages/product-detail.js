@@ -1,7 +1,7 @@
 import { fetchProductDetail, fetchProductGallery, fetchRelatedProducts } from "../api/product-api.js";
 import { formatVND, formatDateTime } from "../utils/format.js";
 import { fetchProductReviews } from "../api/product-api.js";
-import { addProductToWishList } from "../api/wishlist-api.js";
+import { addProductToWishList, isWishListed } from "../api/wishlist-api.js";
 import { renderProductCard } from "../components/simple-product.js";
 
 const productId = Number(new URLSearchParams(window.location.search).get('productId'));
@@ -81,6 +81,11 @@ async function handleProductDetail() {
                     <li class="mb-2"><strong>Color:</strong> ${response.data.color || 'Ngẫu nhiên'}</li>
                     <li class="mb-2"><strong>Made in:</strong> ${response.data.madeIn || 'Không rõ'}</li>                   
                 `
+
+        const check = await isWishListed(productId);
+        if (!! localStorage.getItem('access_token') && check.data){
+            addToWishListBtn.classList.add('d-none');
+        }
 
         productDesc.innerHTML = `
                     <p>${response.data.shortDescription}</p>

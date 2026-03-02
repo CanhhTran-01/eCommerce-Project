@@ -10,3 +10,8 @@ export async function addProductToWishList(productId) {
         body: JSON.stringify({ productId })
     });
 }
+
+export async function isWishListed(productId) {
+    return httpClient(`/users/me/wish-list/${productId}/exists`);
+}
+
