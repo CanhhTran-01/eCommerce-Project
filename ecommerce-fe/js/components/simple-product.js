@@ -33,7 +33,9 @@ export function renderProductCard(data, container) {
                         <div class="product-price">
                             ${priceHTML}
                         </div>
-                        <button class="add-to-cart-btn">Add to Cart</button>
+                        <button class="add-to-cart-btn">Thêm vào giỏ hàng</button>
+                        <button class="view-in-cart-btn d-none" data-bs-toggle="offcanvas" 
+                                data-bs-target="#cartOffcanvas">Đặt mua ngay !</button>
                     </div>
                 </div>
     `}).join('');
@@ -53,5 +55,9 @@ export function renderProductCard(data, container) {
                 `${window.location.origin}/ecommerce-fe/pages/product-detail.html?productId=${productId}`;
         }
     });
+
+    // handle click add to cart btn
+
+    // handle click view in cart btn
 
 }

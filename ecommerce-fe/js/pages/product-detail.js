@@ -13,6 +13,7 @@ const productInfo = document.getElementById('productInfo');
 const productDesc = document.getElementById('description');
 const addToWishListBtn = document.getElementById('addToWishlistBtn');
 const addToCartBtn = document.getElementById('addToCartBtn');
+const deleteFromCartBtn = document.getElementById('deleteFromCartBtn');
 const relatedProducts = document.getElementById('relatedProducts');
 const thumbnailGallery = document.getElementById('thumbnailGallery');
 const defaultProductImage = "https://res.cloudinary.com/djw4qdufh/image/upload/v1772030872/avatar/cfcdd9b4-9850-4775-ac05-c87523b29439_no_image_product.png";
@@ -170,7 +171,8 @@ addToWishListBtn.addEventListener('click', (e) => {
 addToCartBtn.addEventListener('click', (e) => { 
     e.preventDefault();
 
-
+    addToCartBtn.classList.add('d-none');
+    deleteFromCartBtn.classList.remove('d-none');
 });
 
 

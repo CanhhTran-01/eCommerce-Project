@@ -121,8 +121,8 @@
                 <div class="col-lg-5 col-md-6 mb-4">
                     <div class="product-gallery">
                         <div class="main-image mb-3">
-                            <img id="mainImage" src="" alt="product-main-image"
-                                class="img-fluid rounded border" data-bs-toggle="modal" data-bs-target="#imageModal">
+                            <img id="mainImage" src="" alt="product-main-image" class="img-fluid rounded border"
+                                data-bs-toggle="modal" data-bs-target="#imageModal">
                         </div>
                         <div class="thumbnail-gallery">
                             <div class="row g-2" id="thumbnailGallery">
@@ -172,11 +172,15 @@
                     <!-- Action Buttons -->
                     <div class="d-grid gap-4 d-md-flex mb-4">
                         <button class="btn btn-danger btn-lg flex-grow-1" id="addToCartBtn">
-                            <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng
+                            <i class="fa fa-cart-plus"></i> Thêm vào giỏ hàng
+                        </button>
+                        <button class="btn btn-danger btn-lg flex-grow-1 d-none" data-bs-toggle="offcanvas"
+                            data-bs-target="#cartOffcanvas" id="deleteFromCartBtn">
+                            <i class="fa fa-cart-check"></i> Sẵn có trong giỏ hàng, xem ngay !
                         </button>
                         <button class="btn btn-outline-danger btn-lg flex-grow-1" id="addToWishlistBtn">
-                            <i class="bi bi-heart"></i> Thêm vào yêu thích
-                        </button>`
+                            <i class="fa fa-heart"></i> Thêm vào yêu thích
+                        </button>
                     </div>
 
                     <!-- Shipping Info -->
