@@ -3,6 +3,7 @@ import { formatVND, formatDateTime } from "../utils/format.js";
 import { fetchProductReviews } from "../api/product-api.js";
 import { addProductToWishList, isWishListed } from "../api/wishlist-api.js";
 import { renderProductCard } from "../components/simple-product.js";
+import { checkToken } from "../api/check-token.js";
 
 const productId = Number(new URLSearchParams(window.location.search).get('productId'));
 const productName = document.getElementById('productName');
@@ -83,7 +84,8 @@ async function handleProductDetail() {
                 `
 
         const check = await isWishListed(productId);
-        if (!! localStorage.getItem('access_token') && check.data){
+        const isLoggedIn = checkToken();
+        if (isLoggedIn && check.data){
             addToWishListBtn.classList.add('d-none');
         }
 
