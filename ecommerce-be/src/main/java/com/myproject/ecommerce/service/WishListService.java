@@ -18,7 +18,6 @@ public class WishListService {
     private final ProductRepository productRepository;
 
     // insert Product to user's wishlist
-    @Transactional
     public void insertToWishList(Long accountId, Long productId) {
         User user = userRepository
                 .findByAccountId(accountId)
@@ -32,6 +31,19 @@ public class WishListService {
         }
 
         user.getWishList().add(product);
+        userRepository.save(user);
+    }
+
+    // delete product from wish list
+    public void delete(Long accountId, Long productId) {
+        User user = userRepository
+                .findByAccountId(accountId)
+                .orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+
+        Product product =
+                productRepository.findById(productId).orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        user.getWishList().remove(product);
         userRepository.save(user);
     }
 }

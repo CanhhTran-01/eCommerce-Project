@@ -3,11 +3,12 @@ package com.myproject.ecommerce.entity;
 import com.myproject.ecommerce.enums.OrderStatus;
 import com.myproject.ecommerce.enums.ShippingMethod;
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.*;
 
 @Entity
 @Table(name = "orders")
@@ -21,7 +22,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "order_code")
+    @Column(name = "order_code", unique = true)
     private String orderCode;
 
     @Enumerated(EnumType.STRING)

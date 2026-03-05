@@ -8,13 +8,14 @@ import com.myproject.ecommerce.dto.response.UserInfoResponse;
 import com.myproject.ecommerce.service.ProductService;
 import com.myproject.ecommerce.service.UserService;
 import com.myproject.ecommerce.service.WishListService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -64,5 +65,15 @@ public class UserController {
 
         var apiResponse = new ApiResponse<>(true, null, productService.isWishListed(productId, accountId));
         return ResponseEntity.ok(apiResponse);
+    }
+
+    @DeleteMapping("/me/wish-list/{productId}")
+    public ResponseEntity<ApiResponse<?>> deleteProductFromMyWishList(
+            @PathVariable("productId") Long productId, @AuthenticationPrincipal Jwt jwt) {
+        Long accountId = jwt.getClaim("accountId"); // get account_id from JWT
+
+        wishListService.delete(accountId, productId);
+        var apiResponse = new ApiResponse<>(true, null, null);
+        return ResponseEntity.noContent().build();
     }
 }
