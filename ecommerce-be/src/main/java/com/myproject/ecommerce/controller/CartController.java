@@ -1,9 +1,8 @@
 package com.myproject.ecommerce.controller;
 
-import com.myproject.ecommerce.dto.request.CartRequest;
+import com.myproject.ecommerce.dto.request.AddToCartRequest;
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.dto.response.CartItemResponse;
-import com.myproject.ecommerce.dto.response.CartResponse;
 import com.myproject.ecommerce.service.CartService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -19,21 +18,34 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
     private final CartService cartService;
 
-    @PostMapping("")
-    public ResponseEntity<CartResponse> createCart(@RequestBody CartRequest cartRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+    @PostMapping("/me/item")
+    public ResponseEntity<ApiResponse<?>> addItemToCart(
+            @RequestBody AddToCartRequest addToCartRequest, @AuthenticationPrincipal Jwt jwt) {
+
+        Long accountId = jwt.getClaim("accountId"); // get account_id from JWT
+        cartService.addItemToCart(accountId, addToCartRequest);
+
+        var apiResponse = new ApiResponse<>(true, "Đã thêm sản phẩm vào giỏ hàng !", null);
+        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
 
-    @GetMapping("")
+    @GetMapping("/me/items")
     public ResponseEntity<ApiResponse<List<CartItemResponse>>> getCartItems(@AuthenticationPrincipal Jwt jwt) {
 
         Long accountId = jwt.getClaim("accountId"); // get account_id from JWT
+
         var apiResponse = new ApiResponse<>(true, null, cartService.getCartItems(accountId));
         return ResponseEntity.ok(apiResponse);
     }
 
-    @DeleteMapping("/api/carts/{id}")
-    public String deleteCart(@PathVariable Long id) {
-        return ("Deleted cart with id + " + id + " ! ");
+    @DeleteMapping("/me/items/{productId}")
+    public ResponseEntity<ApiResponse<?>> deleteItemFromCart(
+            @AuthenticationPrincipal Jwt jwt, @PathVariable Long productId) {
+
+        Long accountId = jwt.getClaim("accountId");
+        cartService.deleteItemFromCart(accountId, productId);
+
+        var apiResponse = new ApiResponse<>(true, null, null);
+        return ResponseEntity.noContent().build();
     }
 }

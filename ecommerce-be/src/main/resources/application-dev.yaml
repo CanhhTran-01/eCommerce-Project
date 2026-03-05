@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/ecommerce_dev?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/ecommerce?useSSL=false&serverTimezone=UTC
     username: root
     password: canhtran2005
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -10,6 +10,8 @@ spring:
       host: localhost
       port: 6379
       timeout: 60000
+      repositories:
+        enabled: false  # turn off redis auto-config
 
   mail:
     host: smtp.gmail.com

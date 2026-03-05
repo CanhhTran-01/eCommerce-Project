@@ -1,5 +1,7 @@
 package com.myproject.ecommerce.entity;
 
+import com.myproject.ecommerce.enums.PaymentMethod;
+import com.myproject.ecommerce.enums.PaymentStatus;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -7,9 +9,9 @@ import lombok.*;
 
 @Entity
 @Table(name = "payment")
-@Data
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Payment {
@@ -17,17 +19,19 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "amount")
-    private BigDecimal amount;
-
-    @Column(name = "method")
-    private String method;
-
-    @Column(name = "status")
-    private String status;
-
-    @Column(name = "transaction_code")
+    @Column(name = "transaction_code", unique = true)
     private String trasactionCode;
+
+    @Column(name = "total_payment")
+    private BigDecimal totalPayment;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "method", nullable = false)
+    private PaymentMethod paymentMethod;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private PaymentStatus paymentStatus;
 
     @Column(name = "paid_at")
     private LocalDateTime paidAt;
@@ -35,7 +39,12 @@ public class Payment {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
     @OneToOne
-    @JoinColumn(name = "order_id", unique = true)
+    @JoinColumn(name = "order_id", unique = true, nullable = false)
     private Order order;
 }

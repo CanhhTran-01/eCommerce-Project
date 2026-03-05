@@ -32,7 +32,8 @@ public enum ErrorCode {
     OTP_NOT_VERIFIED(1021, "OTP doesn't verify", HttpStatus.BAD_REQUEST),
     EMAIL_NOT_EXISTS(1022, "email doesn't exist !", HttpStatus.BAD_REQUEST),
     CATEGORY_NOT_FOUND(1023, "category doesn't exist", HttpStatus.BAD_REQUEST),
-    PRODUCT_IMAGES_EMPTY(1024, "image list is empty!", HttpStatus.BAD_REQUEST);
+    PRODUCT_IMAGES_EMPTY(1024, "image list is empty!", HttpStatus.BAD_REQUEST),
+    CART_ITEM_NOT_FOUND(1025, "cart item doesn't exist!", HttpStatus.BAD_REQUEST);
 
     private final int code; // future use
     private final String message;

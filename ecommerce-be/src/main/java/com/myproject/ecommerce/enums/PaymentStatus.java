@@ -2,5 +2,8 @@ package com.myproject.ecommerce.enums;
 
 public enum PaymentStatus {
     PAID,
-    UNPAID
+    UNPAID,
+    FAILED,
+    REFUND,
+    REJECT
 }

@@ -3,16 +3,18 @@ package com.myproject.ecommerce.entity;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "cart_item")
-@Data
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartItem {
+public class CartItemMySql {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,11 +22,8 @@ public class CartItem {
     @Column(name = "product_id")
     private Long productId;
 
-    @Column(name = "quantity")
-    private Integer quantity;
-
-    @Column(name = "price_at_purchase")
-    private BigDecimal priceAtPurchase;
+    @Column(name = "price_at_add")
+    private BigDecimal priceAtAdd;
 
     @Column(name = "added_at")
     private LocalDateTime addedAt;

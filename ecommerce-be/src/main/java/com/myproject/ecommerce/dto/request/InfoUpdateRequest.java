@@ -3,11 +3,11 @@ package com.myproject.ecommerce.dto.request;
 import com.myproject.ecommerce.enums.Gender;
 import com.myproject.ecommerce.validator.DobConstraint;
 import java.time.LocalDate;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class InfoUpdateRequest {

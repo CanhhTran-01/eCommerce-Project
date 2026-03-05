@@ -1,7 +1,7 @@
 package com.myproject.ecommerce.entity;
 
 import com.myproject.ecommerce.enums.OrderStatus;
-import com.myproject.ecommerce.enums.PaymentStatus;
+import com.myproject.ecommerce.enums.ShippingMethod;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,9 +11,9 @@ import lombok.*;
 
 @Entity
 @Table(name = "orders")
-@Data
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order {
@@ -29,11 +29,8 @@ public class Order {
     private OrderStatus status;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "payment_status", nullable = false)
-    private PaymentStatus paymentStatus;
-
-    @Column(name = "shipping_method")
-    private String shippingMethod;
+    @Column(name = "shipping_method", nullable = false)
+    private ShippingMethod shippingMethod;
 
     @Column(name = "shipping_fee")
     private BigDecimal shippingFee;
@@ -78,7 +75,7 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItemList = new ArrayList<>();
 
     @OneToOne(mappedBy = "order")

@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "category")
-@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,10 +26,6 @@ public class Category {
     @Lob
     @Column(name = "category_image")
     private String categoryImage;
-
-    @Lob
-    @Column(name = "category_description")
-    private String categoryDescription;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

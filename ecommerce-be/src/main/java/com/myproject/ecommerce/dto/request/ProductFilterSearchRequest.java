@@ -2,10 +2,11 @@ package com.myproject.ecommerce.dto.request;
 
 import java.math.BigDecimal;
 import java.util.List;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductFilterSearchRequest {

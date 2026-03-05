@@ -2,11 +2,11 @@ package com.myproject.ecommerce.dto.response;
 
 import com.myproject.ecommerce.enums.OrderStatus;
 import java.math.BigDecimal;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderItemResponse {

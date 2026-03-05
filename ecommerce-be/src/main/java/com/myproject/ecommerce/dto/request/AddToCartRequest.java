@@ -1,6 +1,5 @@
 package com.myproject.ecommerce.dto.request;
 
-import com.myproject.ecommerce.enums.OtpType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,8 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class VerifyOtpRequest {
-    private String email;
-    private String otp;
-    private OtpType otpType;
+public class AddToCartRequest {
+    private Long productId;
 }

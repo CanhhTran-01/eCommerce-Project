@@ -1,6 +1,6 @@
 package com.myproject.ecommerce.mapper;
 
-import com.myproject.ecommerce.dto.request.OrderRequest;
+import com.myproject.ecommerce.dto.request.CheckoutRequest;
 import com.myproject.ecommerce.dto.response.OrderDetailResponse;
 import com.myproject.ecommerce.dto.response.OrderItemResponse;
 import com.myproject.ecommerce.entity.Order;
@@ -10,11 +10,11 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
-    Order toEntity(OrderRequest orderRequest);
+    Order toEntity(CheckoutRequest checkOutRequest);
 
     OrderDetailResponse toDetailResponse(Order order);
 
     OrderItemResponse toItemResponse(OrderItem orderItem);
 
-    void update(@MappingTarget Order order, OrderRequest orderRequest);
+    void update(@MappingTarget Order order, CheckoutRequest checkOutRequest);
 }

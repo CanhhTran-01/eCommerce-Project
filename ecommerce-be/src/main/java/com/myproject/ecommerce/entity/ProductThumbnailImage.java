@@ -5,7 +5,6 @@ import lombok.*;
 
 @Entity
 @Table(name = "pro_thumbnail_images")
-@Data
 @Getter
 @Setter
 @Builder

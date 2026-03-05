@@ -5,11 +5,13 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "cart")
-@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -47,5 +49,5 @@ public class Cart {
     private User user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartItem> cartItemList = new ArrayList<>();
+    private List<CartItemMySql> cartItemMySqlList = new ArrayList<>();
 }

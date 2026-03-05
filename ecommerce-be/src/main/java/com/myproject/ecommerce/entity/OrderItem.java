@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import lombok.*;
 
-@Data
 @Entity
 @Table(name = "order_item")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderItem {
@@ -27,15 +27,10 @@ public class OrderItem {
     private String imageUrl;
 
     @Column(name = "price")
-    private BigDecimal price;
+    private BigDecimal unitPrice;
 
     @Column(name = "total_price")
     private BigDecimal totalPrice;
-
-    @PrePersist
-    public void prePersist() {
-        this.totalPrice = price.multiply(BigDecimal.valueOf(quantity));
-    }
 
     @ManyToOne
     @JoinColumn(name = "order_id")

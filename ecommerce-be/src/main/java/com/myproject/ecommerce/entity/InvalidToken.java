@@ -9,7 +9,6 @@ import lombok.*;
 
 @Entity
 @Table(name = "invalid_token")
-@Data
 @Getter
 @Setter
 @Builder
