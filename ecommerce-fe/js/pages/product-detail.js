@@ -1,7 +1,7 @@
 import { fetchProductDetail, fetchProductGallery, fetchRelatedProducts } from "../api/product-api.js";
 import { formatVND, formatDateTime } from "../utils/format.js";
 import { fetchProductReviews } from "../api/product-api.js";
-import { addProductToWishList, isWishListed } from "../api/wishlist-api.js";
+import { addProductToWishList, isWishListed, deleteProductFromWishList } from "../api/wishlist-api.js";
 import { renderProductCard } from "../components/simple-product.js";
 import { checkToken } from "../api/check-token.js";
 import { loadCartData } from "../components/cart.js";
@@ -14,6 +14,7 @@ const productStatus = document.getElementById('productStatus');
 const productInfo = document.getElementById('productInfo');
 const productDesc = document.getElementById('description');
 const addToWishListBtn = document.getElementById('addToWishlistBtn');
+const deleteFromWishlistBtn = document.getElementById('deleteFromWishlistBtn');
 const addToCartBtn = document.getElementById('addToCartBtn');
 const viewCartBtn = document.getElementById('viewCartBtn');
 const relatedProducts = document.getElementById('relatedProducts');
@@ -90,6 +91,7 @@ async function handleProductDetail() {
         const isLoggedIn = checkToken();
         if (isLoggedIn && check.data) {
             addToWishListBtn.classList.add('d-none');
+            deleteFromWishlistBtn.classList.remove('d-none');
         }
 
         productDesc.innerHTML = `
@@ -193,14 +195,6 @@ document.querySelectorAll('.thumbnail-img').forEach((img, index) => {
 });
 
 
-addToWishListBtn.addEventListener('click', async (e) => {
-    e.preventDefault();
-    await addProductToWishList(productId);
-    alert('Đã thêm sản phẩm vào yêu thích');
-    document.getElementById('addToWishlistBtn').classList.add('d-none');
-});
-
-
 addToCartBtn.addEventListener('click', async (e) => {
     try {
         const response = await addItemToCartRedis(productId);
@@ -217,3 +211,25 @@ addToCartBtn.addEventListener('click', async (e) => {
 });
 
 
+addToWishListBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    await addProductToWishList(productId);
+    alert('Đã thêm sản phẩm vào yêu thích');
+
+    addToWishListBtn.classList.add('d-none');
+    deleteFromWishlistBtn.classList.remove('d-none');
+});
+
+deleteFromWishlistBtn.addEventListener('click', async (e) => {
+    try {
+        await deleteProductFromWishList(productId);
+        alert('Xóa thành công.')
+
+        addToWishListBtn.classList.remove('d-none');
+        deleteFromWishlistBtn.classList.add('d-none');
+
+    } catch (error){
+        console.log(error);
+        alert(error.message);
+    }
+});

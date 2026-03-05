@@ -15,6 +15,94 @@
 
 <body>
 
+    <!-- Navbar -->
+    <nav class="navbar navbar-top">
+        <div class="container-fluid navbar-container">
+            <!-- Logo -->
+            <a class="navbar-logo" href="./index.html">
+                <i class="fas fa-shopping-bag"></i>
+                <span>eCommerce</span>
+            </a>
+
+            <!-- Search Bar -->
+            <div class="search-box-wrapper d-none d-lg-block">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Tìm kiếm theo tên, thương hiệu, mã sản phẩm..."
+                        id="searchTextInput">
+                    <button class="search-btn" id="searchTextBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="navbar-actions">
+                <div class="action-item">
+                    <button class="btn-action" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge-count" id="cartCount">0</span>
+                    </button>
+                </div>
+
+                <div class="action-item dropdown">
+                    <button class="btn-action dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fas fa-user"></i>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" id="infoLink"><i class="fas fa-user"></i> Profile</a></li>
+                        <li><a class="dropdown-item" id="myAccountLink"><i class="fas fa-gear"></i> My account</a></li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li><a class="dropdown-item text-danger" id="loginLink"><i class="fas fa-sign-in-alt"></i>
+                                Login</a>
+                        </li>
+                        <li><a class="dropdown-item text-danger d-none" id="logoutLinkInNavbar"><i
+                                    class="fas fa-sign-out-alt"></i>
+                                Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Mobile Search Toggle -->
+            <button class="btn-mobile-search d-lg-none">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Cart Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Giỏ hàng</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="cartContent" class="cart-content">
+                <div class="d-flex justify-content-center align-items-center d-none" id="waittingLoadCart">
+                    <div class="spinner-border m-2"></div>Loading...
+                </div>
+                <p id="noCartData" class="text-muted text-center d-none">Không có dữ liệu.</p>
+
+                <!-- Cart Item 1 -->
+                <div id="cart-items">
+                    <!-- Cart items will be inserted here -->
+                </div>
+
+                <!-- checkout button -->
+                <div id="totalPriceBlock" class="d-flex justify-content-between align-items-center mb-2 d-none">
+                    <strong>Tổng tiền:</strong>
+                    <span class="text-danger" id="cart-total"></span>
+                </div>
+                <button id="checkoutBtn" class="btn btn-primary w-100 d-none">Đặt mua</button>
+            </div>
+        </div>
+    </div>
+
     <div class="container page-account">
 
         <div class="account-layout">
@@ -37,7 +125,7 @@
                 </nav>
             </aside>
 
-            <main class="account-main bg-light py-4">
+            <main class="account-main bg-light">
                 <div class="container">
                     <section class="card border-0 shadow-sm wishlist-section">
 

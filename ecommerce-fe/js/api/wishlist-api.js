@@ -15,3 +15,10 @@ export async function isWishListed(productId) {
     return httpClient(`/users/me/wish-list/${productId}/exists`);
 }
 
+export async function deleteProductFromWishList(productId) {
+    return httpClient(`/users/me/wish-list/${productId}`, {
+        method: 'DELETE',
+    });
+}
+
+
