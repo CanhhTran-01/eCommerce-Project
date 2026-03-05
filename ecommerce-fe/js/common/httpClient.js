@@ -34,5 +34,6 @@ export async function httpClient(url, options = {}) {
         throw new Error(message);
     }
 
-    return response.json();
+    const text = await response.text();  // fix bug for method DELETE
+    return text ? JSON.parse(text) : null;
 }

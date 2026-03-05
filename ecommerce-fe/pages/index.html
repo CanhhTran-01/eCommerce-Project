@@ -82,7 +82,11 @@
         </div>
         <div class="offcanvas-body">
             <div id="cartContent" class="cart-content">
-                <p id="noCartData" class="text-muted text-center">Không có dữ liệu.</p>
+                <div class="d-flex justify-content-center align-items-center d-none" id="waittingLoadCart">
+                    <div class="spinner-border m-2"></div>Loading...
+                </div>
+                <p id="noCartData" class="text-muted text-center d-none">Không có dữ liệu.</p>
+
                 <!-- Cart Item 1 -->
                 <div id="cart-items">
                     <!-- Cart items will be inserted here -->
@@ -173,15 +177,15 @@
             <h3 class="section-title-simple">Tìm kiếm hàng đầu</h3>
             <div class="categories-grid">
                 <div class="category-card">
-                    <img src="./assets/images/category/thiet-bi-dien-tu.jpg" alt="Electronics">
+                    <img src="" alt="Electronics">
                     <span class="category-name">Thiết bị điện tử</span>
                 </div>
                 <div class="category-card">
-                    <img src="./assets/images/category/the-thao.jpg" alt="the-thao">
+                    <img src="" alt="the-thao">
                     <span class="category-name">Thể thao</span>
                 </div>
                 <div class="category-card">
-                    <img src="./assets/images/category/phu-kien.jpg" alt="phu-kien">
+                    <img src="" alt="phu-kien">
                     <span class="category-name">Phụ kiện</span>
                 </div>
             </div>
@@ -201,7 +205,7 @@
                 <!-- product cards -->
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="../assets/images/product9.jpg" alt="Product">
+                        <img src="" alt="Product">
                         <button class="wishlist-btn">
                             <i class="far fa-heart"></i>
                         </button>
@@ -209,7 +213,6 @@
                     <div class="product-info">
                         <h6 class="product-name">Premium Phone Case</h6>
                         <div class="product-rating">
-                            <span class="stars">★★★★★</span>
                             <span class="review-count">(450)</span>
                         </div>
                         <div class="product-price">
@@ -218,222 +221,74 @@
                         <button class="add-to-cart-btn">Add to Cart</button>
                     </div>
                 </div>
-
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="../assets/images/product10.jpg" alt="Product">
+                        <img src="" alt="Product">
                         <button class="wishlist-btn">
                             <i class="far fa-heart"></i>
                         </button>
                     </div>
                     <div class="product-info">
-                        <h6 class="product-name">Laptop Stand</h6>
+                        <h6 class="product-name">Premium Phone Case</h6>
                         <div class="product-rating">
-                            <span class="stars">★★★★☆</span>
-                            <span class="review-count">(234)</span>
+                            <span class="review-count">(450)</span>
                         </div>
                         <div class="product-price">
-                            <span class="current-price">$34.99</span>
+                            <span class="current-price">$19.99</span>
                         </div>
                         <button class="add-to-cart-btn">Add to Cart</button>
                     </div>
                 </div>
-
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="../assets/images/product11.jpg" alt="Product">
+                        <img src="" alt="Product">
                         <button class="wishlist-btn">
                             <i class="far fa-heart"></i>
                         </button>
                     </div>
                     <div class="product-info">
-                        <h6 class="product-name">Mechanical Keyboard</h6>
+                        <h6 class="product-name">Premium Phone Case</h6>
                         <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                            <span class="review-count">(589)</span>
+                            <span class="review-count">(450)</span>
                         </div>
                         <div class="product-price">
-                            <span class="current-price">$79.99</span>
+                            <span class="current-price">$19.99</span>
                         </div>
                         <button class="add-to-cart-btn">Add to Cart</button>
                     </div>
                 </div>
-
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="../assets/images/product12.jpg" alt="Product">
+                        <img src="" alt="Product">
                         <button class="wishlist-btn">
                             <i class="far fa-heart"></i>
                         </button>
                     </div>
                     <div class="product-info">
-                        <h6 class="product-name">USB Hub 7 Port</h6>
+                        <h6 class="product-name">Premium Phone Case</h6>
                         <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                            <span class="review-count">(321)</span>
+                            <span class="review-count">(450)</span>
                         </div>
                         <div class="product-price">
-                            <span class="current-price">$29.99</span>
+                            <span class="current-price">$19.99</span>
                         </div>
                         <button class="add-to-cart-btn">Add to Cart</button>
                     </div>
                 </div>
-
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="../assets/images/product13.jpg" alt="Product">
+                        <img src="" alt="Product">
                         <button class="wishlist-btn">
                             <i class="far fa-heart"></i>
                         </button>
                     </div>
                     <div class="product-info">
-                        <h6 class="product-name">Webcam HD 1080p</h6>
+                        <h6 class="product-name">Premium Phone Case</h6>
                         <div class="product-rating">
-                            <span class="stars">★★★★☆</span>
-                            <span class="review-count">(412)</span>
+                            <span class="review-count">(450)</span>
                         </div>
                         <div class="product-price">
-                            <span class="current-price">$49.99</span>
-                        </div>
-                        <button class="add-to-cart-btn">Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="../assets/images/product14.jpg" alt="Product">
-                        <button class="wishlist-btn">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <h6 class="product-name">RGB Gaming Mouse</h6>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                            <span class="review-count">(678)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$44.99</span>
-                        </div>
-                        <button class="add-to-cart-btn">Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="../assets/images/product15.jpg" alt="Product">
-                        <button class="wishlist-btn">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <h6 class="product-name">Phone Charger 65W</h6>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                            <span class="review-count">(834)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$24.99</span>
-                        </div>
-                        <button class="add-to-cart-btn">Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="../assets/images/product16.jpg" alt="Product">
-                        <button class="wishlist-btn">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <h6 class="product-name">Storage SSD 1TB</h6>
-                        <div class="product-rating">
-                            <span class="stars">★★★★☆</span>
-                            <span class="review-count">(523)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$99.99</span>
-                        </div>
-                        <button class="add-to-cart-btn">Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="../assets/images/product16.jpg" alt="Product">
-                        <button class="wishlist-btn">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <h6 class="product-name">Storage SSD 1TB</h6>
-                        <div class="product-rating">
-                            <span class="stars">★★★★☆</span>
-                            <span class="review-count">(523)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$99.99</span>
-                        </div>
-                        <button class="add-to-cart-btn">Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="../assets/images/product16.jpg" alt="Product">
-                        <button class="wishlist-btn">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <h6 class="product-name">Storage SSD 1TB</h6>
-                        <div class="product-rating">
-                            <span class="stars">★★★★☆</span>
-                            <span class="review-count">(523)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$99.99</span>
-                        </div>
-                        <button class="add-to-cart-btn">Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="../assets/images/product16.jpg" alt="Product">
-                        <button class="wishlist-btn">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <h6 class="product-name">Storage SSD 1TB</h6>
-                        <div class="product-rating">
-                            <span class="stars">★★★★☆</span>
-                            <span class="review-count">(523)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$99.99</span>
-                        </div>
-                        <button class="add-to-cart-btn">Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="../assets/images/product16.jpg" alt="Product">
-                        <button class="wishlist-btn">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <h6 class="product-name">Storage SSD 1TB</h6>
-                        <div class="product-rating">
-                            <span class="stars">★★★★☆</span>
-                            <span class="review-count">(523)</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$99.99</span>
+                            <span class="current-price">$19.99</span>
                         </div>
                         <button class="add-to-cart-btn">Add to Cart</button>
                     </div>

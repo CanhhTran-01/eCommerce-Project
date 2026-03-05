@@ -4,6 +4,8 @@ import { fetchProductReviews } from "../api/product-api.js";
 import { addProductToWishList, isWishListed } from "../api/wishlist-api.js";
 import { renderProductCard } from "../components/simple-product.js";
 import { checkToken } from "../api/check-token.js";
+import { loadCartData } from "../components/cart.js";
+import { addItemToCartRedis } from "../api/cart-api.js";
 
 const productId = Number(new URLSearchParams(window.location.search).get('productId'));
 const productName = document.getElementById('productName');
@@ -13,7 +15,7 @@ const productInfo = document.getElementById('productInfo');
 const productDesc = document.getElementById('description');
 const addToWishListBtn = document.getElementById('addToWishlistBtn');
 const addToCartBtn = document.getElementById('addToCartBtn');
-const deleteFromCartBtn = document.getElementById('deleteFromCartBtn');
+const viewCartBtn = document.getElementById('viewCartBtn');
 const relatedProducts = document.getElementById('relatedProducts');
 const thumbnailGallery = document.getElementById('thumbnailGallery');
 const defaultProductImage = "https://res.cloudinary.com/djw4qdufh/image/upload/v1772030872/avatar/cfcdd9b4-9850-4775-ac05-c87523b29439_no_image_product.png";
@@ -25,10 +27,10 @@ handleProductDetail();
 handleRelatedProducts();
 
 
-async function handleThumbnailGallery(){
+async function handleThumbnailGallery() {
     try {
         const response = await fetchProductGallery(productId);
-        
+
         thumbnailGallery.innerHTML = response.data.slice(0, 4).map(item => `
                 <div class="col-3">
                     <img class="thumbnail-img rounded border cursor-pointer"
@@ -39,7 +41,7 @@ async function handleThumbnailGallery(){
             `).join('');
 
 
-    } catch (error){
+    } catch (error) {
         console.log(error);
         productGallery.innerHTML = `<div class="text-danger"><strong>${error.message}</strong></div>`;
     }
@@ -50,7 +52,7 @@ async function handleProductDetail() {
     try {
         const response = await fetchProductDetail(productId);
 
-        mainImage.src = response.data.mainImageUrl ?? defaultProductImage; 
+        mainImage.src = response.data.mainImageUrl ?? defaultProductImage;
         productName.innerText = response.data.productName || '...';
 
 
@@ -86,7 +88,7 @@ async function handleProductDetail() {
 
         const check = await isWishListed(productId);
         const isLoggedIn = checkToken();
-        if (isLoggedIn && check.data){
+        if (isLoggedIn && check.data) {
             addToWishListBtn.classList.add('d-none');
         }
 
@@ -143,11 +145,11 @@ document.getElementById('reviews-tab').addEventListener('click', async (event) =
 });
 
 
-async function  handleRelatedProducts() {
+async function handleRelatedProducts() {
     try {
         const response = await fetchRelatedProducts(productId);
 
-        if (!response.data || response.data.length == 0){
+        if (!response.data || response.data.length == 0) {
             relatedProducts.innerHTML = `<div class="text-danger"><strong>Không có sản phẩm.</strong></div>`;
             return;
         }
@@ -156,23 +158,62 @@ async function  handleRelatedProducts() {
     } catch (error) {
         console.log(error);
         relatedProducts.innerHTML = `<div class="text-danger"><strong>Không thể tải lên sản phẩm.</strong></div>`;
-    } 
+    }
 }
 
 
-addToWishListBtn.addEventListener('click', (e) => {
+// Quantity buttons
+document.getElementById('decreaseBtn').addEventListener('click', function () {
+    let quantity = parseInt(document.getElementById('quantityInput').value);
+    if (quantity > 1) {
+        document.getElementById('quantityInput').value = quantity - 1;
+    }
+});
+document.getElementById('increaseBtn').addEventListener('click', function () {
+    let quantity = parseInt(document.getElementById('quantityInput').value);
+    if (quantity < 10) {
+        document.getElementById('quantityInput').value = quantity + 1;
+    }
+});
+
+
+// Thumbnail image click
+document.querySelectorAll('.thumbnail-img').forEach(img => {
+    img.addEventListener('click', function () {
+        document.getElementById('mainImage').src = this.dataset.image;
+    });
+});
+
+// Hanle click product image event
+document.querySelectorAll('.thumbnail-img').forEach((img, index) => {
+    img.addEventListener('click', () => {
+        const carousel = new bootstrap.Carousel('#imageCarousel');
+        carousel.to(index);
+    });
+});
+
+
+addToWishListBtn.addEventListener('click', async (e) => {
     e.preventDefault();
-    addProductToWishList(productId);
+    await addProductToWishList(productId);
     alert('Đã thêm sản phẩm vào yêu thích');
     document.getElementById('addToWishlistBtn').classList.add('d-none');
 });
 
 
-addToCartBtn.addEventListener('click', (e) => { 
-    e.preventDefault();
+addToCartBtn.addEventListener('click', async (e) => {
+    try {
+        const response = await addItemToCartRedis(productId);
+        loadCartData();
+        alert(response.message);
+
+    } catch (error) {
+        console.error(error);
+        alert(error.message);
+    }
 
     addToCartBtn.classList.add('d-none');
-    deleteFromCartBtn.classList.remove('d-none');
+    viewCartBtn.classList.remove('d-none');
 });
 
 

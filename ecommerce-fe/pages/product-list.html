@@ -49,8 +49,7 @@
 
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" id="infoLink"><i class="fas fa-user"></i> Profile</a></li>
-                        <li><a class="dropdown-item" id="myOrdersLink"><i class="fas fa-box"></i> My Orders</a></li>
-                        <li><a class="dropdown-item" id="wishListLink"><i class="fas fa-heart"></i> Wishlist</a></li>
+                        <li><a class="dropdown-item" id="myAccountLink"><i class="fas fa-gear"></i> My account</a></li>
 
                         <li>
                             <hr class="dropdown-divider">
@@ -82,22 +81,22 @@
         </div>
         <div class="offcanvas-body">
             <div id="cartContent" class="cart-content">
-
-                <p class="text-muted text-center">Không có dữ liệu.</p>
+                <div class="d-flex justify-content-center align-items-center d-none" id="waittingLoadCart">
+                    <div class="spinner-border m-2"></div>Loading...
+                </div>
+                <p id="noCartData" class="text-muted text-center d-none">Không có dữ liệu.</p>
 
                 <!-- Cart Item 1 -->
                 <div id="cart-items">
                     <!-- Cart items will be inserted here -->
                 </div>
 
-                <hr>
-
-                <div class="d-flex justify-content-between align-items-center mb-2">
+                <!-- checkout button -->
+                <div id="totalPriceBlock" class="d-flex justify-content-between align-items-center mb-2 d-none">
                     <strong>Tổng tiền:</strong>
-                    <span id="cart-total">0 ₫</span>
+                    <span class="text-danger" id="cart-total"></span>
                 </div>
-
-                <button class="btn btn-primary w-100">Đặt mua</button>
+                <button id="checkoutBtn" class="btn btn-primary w-100 d-none">Đặt mua</button>
             </div>
         </div>
     </div>

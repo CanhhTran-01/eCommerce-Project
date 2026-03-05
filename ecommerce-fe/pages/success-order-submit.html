@@ -43,22 +43,22 @@
                         <div class="text-start mt-4 mb-4">
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Mã đơn hàng</span>
-                                <strong>#ORD123456</strong>
+                                <strong id="orderCode"></strong>
                             </div>
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Tổng thanh toán</span>
-                                <strong class="text-danger">230.000₫</strong>
+                                <strong class="text-danger" id="totalCheckout"></strong>
                             </div>
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Phương thức thanh toán</span>
-                                <strong>Thanh toán khi nhận hàng</strong>
+                                <strong id="paymentMethod"></strong>
                             </div>
 
                             <div class="d-flex justify-content-between">
                                 <span>Phương thức vận chuyển</span>
-                                <strong>STANDARD</strong>
+                                <strong id="shippingMethod"></strong>
                             </div>
                         </div>
 
@@ -80,6 +80,9 @@
 
     </div>
 
+    
+    <!-- Script -->
+    <script type="module" src="../js/pages/success-order-submit.js"></script>
 </body>
 
 </html>
