@@ -56,7 +56,7 @@ public class AccountController {
     }
 
     @PostMapping("")
-    public ResponseEntity<ApiResponse<Void>> registerNewAccount(@RequestBody @Valid RegisterRequest registerRequest) {
+    public ResponseEntity<ApiResponse<Void>> registerNewAccount(@Valid @RequestBody RegisterRequest registerRequest) {
 
         accountService.createAccount(registerRequest);
         var apiResponse =
@@ -95,7 +95,7 @@ public class AccountController {
 
     @PutMapping("/reset-password")
     public ResponseEntity<ApiResponse<Void>> resetAccountPassword(
-            @AuthenticationPrincipal Jwt jwt, @RequestBody ChangePasswordRequest request) {
+            @AuthenticationPrincipal Jwt jwt, @Valid @RequestBody ChangePasswordRequest request) {
 
         Long accountId = jwt.getClaim("accountId"); // get account_id from JWT
         accountService.changeAccountPass(accountId, request);

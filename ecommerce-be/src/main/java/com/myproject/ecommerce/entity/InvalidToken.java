@@ -1,9 +1,8 @@
 package com.myproject.ecommerce.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.Date;
+import lombok.*;
 
 @Entity
 @Table(name = "invalid_token")

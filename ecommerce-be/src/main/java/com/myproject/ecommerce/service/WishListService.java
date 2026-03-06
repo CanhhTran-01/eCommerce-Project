@@ -2,8 +2,8 @@ package com.myproject.ecommerce.service;
 
 import com.myproject.ecommerce.entity.Product;
 import com.myproject.ecommerce.entity.User;
-import com.myproject.ecommerce.enums.ErrorCode;
 import com.myproject.ecommerce.exception.BaseException;
+import com.myproject.ecommerce.exception.ErrorCode;
 import com.myproject.ecommerce.repository.ProductRepository;
 import com.myproject.ecommerce.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

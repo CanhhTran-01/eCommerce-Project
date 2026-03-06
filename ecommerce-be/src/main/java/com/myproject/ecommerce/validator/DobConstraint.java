@@ -12,9 +12,9 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 @Constraint(validatedBy = {DobValidator.class})
 public @interface DobConstraint {
-    String message() default "Invalid dob";
+    String message() default "NO_MESSAGE_IN_VALIDATION"; // notify the mandatory message for validated field data
 
-    int min();
+    int minOld();
 
     Class<?>[] groups() default {};
 

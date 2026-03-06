@@ -8,14 +8,14 @@ import com.myproject.ecommerce.dto.response.UserInfoResponse;
 import com.myproject.ecommerce.service.ProductService;
 import com.myproject.ecommerce.service.UserService;
 import com.myproject.ecommerce.service.WishListService;
+import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -32,7 +32,7 @@ public class UserController {
 
     @PutMapping("/{userId}")
     public ResponseEntity<ApiResponse<UserInfoResponse>> updateInfo(
-            @PathVariable("userId") Long id, @RequestBody InfoUpdateRequest infoUpdateRequest) {
+            @PathVariable("userId") Long id, @Valid @RequestBody InfoUpdateRequest infoUpdateRequest) {
 
         var apiResponse = new ApiResponse<>(true, null, userService.updateUserInfo(id, infoUpdateRequest));
         return ResponseEntity.ok(apiResponse);

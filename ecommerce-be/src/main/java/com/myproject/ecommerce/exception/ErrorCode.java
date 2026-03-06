@@ -1,4 +1,4 @@
-package com.myproject.ecommerce.enums;
+package com.myproject.ecommerce.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatusCode;
 @AllArgsConstructor
 public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(9999, "uncategorized error!", HttpStatus.INTERNAL_SERVER_ERROR),
+    NO_MESSAGE_IN_VALIDATION(
+            9998, "you need to insert messsage for validated field in this request ?", HttpStatus.EXPECTATION_FAILED),
     USERNAME_EXISTED(1001, "username existed!", HttpStatus.BAD_REQUEST),
     USERNAME_INVALID(1002, "username invalid!", HttpStatus.BAD_REQUEST),
     PASSWORD_INVALID(1003, "password invalid!", HttpStatus.BAD_REQUEST),
@@ -33,7 +35,13 @@ public enum ErrorCode {
     EMAIL_NOT_EXISTS(1022, "email doesn't exist !", HttpStatus.BAD_REQUEST),
     CATEGORY_NOT_FOUND(1023, "category doesn't exist", HttpStatus.BAD_REQUEST),
     PRODUCT_IMAGES_EMPTY(1024, "image list is empty!", HttpStatus.BAD_REQUEST),
-    CART_ITEM_NOT_FOUND(1025, "cart item doesn't exist!", HttpStatus.BAD_REQUEST);
+    CART_ITEM_NOT_FOUND(1025, "cart item doesn't exist!", HttpStatus.BAD_REQUEST),
+    DATE_OF_BIRTH_INVALID(1026, "you need to have at least 10 years old!", HttpStatus.BAD_REQUEST),
+    NO_RATING(1027, "rating mustn't be empty !", HttpStatus.BAD_REQUEST),
+    INVALID_RATING_DATA(1028, "rating is only from 1-5 value!", HttpStatus.BAD_REQUEST),
+    NO_TITLE_DATA(1029, "title mustn't be empty !", HttpStatus.BAD_REQUEST),
+    NO_COMMENT_DATA(1030, "comment mustn't be empty !", HttpStatus.BAD_REQUEST),
+    PHONE_NUMBER_INVALID(1031, "phone number is invalid !", HttpStatus.BAD_REQUEST);
 
     private final int code; // future use
     private final String message;

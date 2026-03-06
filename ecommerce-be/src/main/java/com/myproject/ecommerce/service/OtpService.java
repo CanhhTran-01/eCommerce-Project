@@ -2,9 +2,9 @@ package com.myproject.ecommerce.service;
 
 import com.myproject.ecommerce.dto.request.GenerateOtpRequest;
 import com.myproject.ecommerce.dto.request.VerifyOtpRequest;
-import com.myproject.ecommerce.enums.ErrorCode;
 import com.myproject.ecommerce.enums.OtpType;
 import com.myproject.ecommerce.exception.BaseException;
+import com.myproject.ecommerce.exception.ErrorCode;
 import java.time.Duration;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;

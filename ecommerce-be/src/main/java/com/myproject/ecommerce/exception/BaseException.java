@@ -1,6 +1,5 @@
 package com.myproject.ecommerce.exception;
 
-import com.myproject.ecommerce.enums.ErrorCode;
 import lombok.Getter;
 import lombok.Setter;
 

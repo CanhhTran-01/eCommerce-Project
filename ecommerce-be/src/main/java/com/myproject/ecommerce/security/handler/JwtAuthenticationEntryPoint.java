@@ -2,7 +2,7 @@ package com.myproject.ecommerce.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myproject.ecommerce.dto.response.ApiResponse;
-import com.myproject.ecommerce.enums.ErrorCode;
+import com.myproject.ecommerce.exception.ErrorCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

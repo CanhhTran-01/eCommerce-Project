@@ -2,8 +2,6 @@ package com.myproject.ecommerce.entity;
 
 import com.myproject.ecommerce.enums.Gender;
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import lombok.*;
 
 @Entity
 @Table(name = "user")
