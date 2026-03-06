@@ -13,6 +13,7 @@ const avtHTML = document.getElementById('avatar');
 const avatarInput = document.getElementById("avatarInput");
 const uploadBtn = document.getElementById("uploadBtn");
 const avatarImg = document.getElementById("avatarImg");
+const defaultAvtImage = "https://res.cloudinary.com/djw4qdufh/image/upload/v1771559891/avatar/2412713c-547d-45a7-94f9-397d8bee400b_default-avatar.webp";
 
 // call functions
 handleProfile();
@@ -23,7 +24,7 @@ async function handleProfile() {
         sessionStorage.setItem('user_info', JSON.stringify(response));
 
         // display nick name and avt
-        avtHTML.innerHTML = `<img src="${response.data.avatarUrl}" alt="profile-avatar">`;
+        avtHTML.innerHTML = `<img src="${response.data.avatarUrl ?? defaultAvtImage}" alt="profile-avatar">`;
         nickNameHTML.innerHTML = `<h5>${response.data.nickName}</h5>` || '...';
         avatarImg.src = response.data.avatarUrl;
 
@@ -223,7 +224,6 @@ document.getElementById('logoutLinkInProfile').addEventListener('click', (event)
     event.preventDefault();
     handleLogout();
 });
-
 
 document.addEventListener("DOMContentLoaded", function () {
 

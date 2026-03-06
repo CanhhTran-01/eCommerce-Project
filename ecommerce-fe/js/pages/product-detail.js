@@ -33,18 +33,34 @@ async function handleThumbnailGallery() {
         const response = await fetchProductGallery(productId);
 
         thumbnailGallery.innerHTML = response.data.slice(0, 4).map(item => `
-                <div class="col-3">
-                    <img class="thumbnail-img rounded border cursor-pointer"
-                        src="${item.imageUrl}"
-                        data-image="${item.imageUrl}" alt="thumbnail-image"
-                        style="width:100%; height:80px; object-fit:cover;">
-                </div>
-            `).join('');
+            <div class="col-3">
+                <img class="thumbnail-img rounded border cursor-pointer"
+                    src="${item.imageUrl ?? defaultProductImage}"
+                    data-image="${item.imageUrl ?? defaultProductImage}"
+                    alt="thumbnail-image"
+                    style="width:100%; height:80px; object-fit:cover;">
+            </div>
+        `).join('');
 
+        const thumbnails = document.querySelectorAll('.thumbnail-img');
+        thumbnails.forEach((img, index) => {
+
+            img.addEventListener('click', () => {
+
+                // change main image
+                document.getElementById('mainImage').src = img.dataset.image;
+
+                // move carousel
+                const carousel = new bootstrap.Carousel('#imageCarousel');
+                carousel.to(index);
+            });
+
+        });
 
     } catch (error) {
         console.log(error);
-        productGallery.innerHTML = `<div class="text-danger"><strong>${error.message}</strong></div>`;
+        productGallery.innerHTML =
+            `<div class="text-danger"><strong>${error.message}</strong></div>`;
     }
 }
 
@@ -72,7 +88,6 @@ async function handleProductDetail() {
                     ${priceHTML}
                     ${discountBadgeHTML}
                 `
-
 
         const stockBadgeHTML = (response.data.stockQuantity > 0)
             ? `<span class="badge bg-success">Còn hàng</span><br>
@@ -163,22 +178,6 @@ async function handleRelatedProducts() {
     }
 }
 
-
-// Quantity buttons
-document.getElementById('decreaseBtn').addEventListener('click', function () {
-    let quantity = parseInt(document.getElementById('quantityInput').value);
-    if (quantity > 1) {
-        document.getElementById('quantityInput').value = quantity - 1;
-    }
-});
-document.getElementById('increaseBtn').addEventListener('click', function () {
-    let quantity = parseInt(document.getElementById('quantityInput').value);
-    if (quantity < 10) {
-        document.getElementById('quantityInput').value = quantity + 1;
-    }
-});
-
-
 // Thumbnail image click
 document.querySelectorAll('.thumbnail-img').forEach(img => {
     img.addEventListener('click', function () {
@@ -228,7 +227,7 @@ deleteFromWishlistBtn.addEventListener('click', async (e) => {
         addToWishListBtn.classList.remove('d-none');
         deleteFromWishlistBtn.classList.add('d-none');
 
-    } catch (error){
+    } catch (error) {
         console.log(error);
         alert(error.message);
     }
