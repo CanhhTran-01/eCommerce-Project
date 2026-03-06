@@ -1,5 +1,7 @@
 const BASE_URL = 'http://localhost:8080/eCommerce/api';
 
+let isHandlingUnauthorized = false; // a flag to fix bug repetitive alert()
+
 export async function httpClient(url, options = {}) {
     const token = localStorage.getItem('access_token');
 
@@ -12,17 +14,24 @@ export async function httpClient(url, options = {}) {
         }
     });
 
+    // handle session timeout
     if (response.status === 401) {
 
-        alert('Hết phiên đăng nhập !');
-        localStorage.removeItem('access_token'); // fix bug lặp vô hạn alert
+        if (!isHandlingUnauthorized) {
+            isHandlingUnauthorized = true;
 
-        window.location.href = window.location.origin + "/ecommerce-fe/pages/index.html";
+            alert('Hết phiên đăng nhập!');
+            localStorage.removeItem('access_token');
+
+            window.location.href = window.location.origin + "/ecommerce-fe/pages/index.html";
+        }
+
         throw new Error('Unauthorized');
     }
 
+    // handle error
     if (!response.ok) {
-        let message = 'Request failed !';
+        let message = 'Request failed!';
 
         try {
             const err = await response.json();
@@ -34,6 +43,6 @@ export async function httpClient(url, options = {}) {
         throw new Error(message);
     }
 
-    const text = await response.text();  // fix bug for method DELETE
+    const text = await response.text(); // handle DELETE method, empty body
     return text ? JSON.parse(text) : null;
 }
