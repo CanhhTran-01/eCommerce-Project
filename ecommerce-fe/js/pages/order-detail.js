@@ -7,11 +7,13 @@ const orderId = Number(new URLSearchParams(window.location.search).get('orderId'
 const orderDetailTitle = document.getElementById('orderDetailTitle');
 const shippingInfo = document.getElementById('shippingInfo');
 const orderProgress = document.getElementById('orderProgress');
-const orderItems = document.getElementById('orderItems');
+
 const totalAmount = document.getElementById('totalAmount');
 const shippingFee = document.getElementById('shippingFee');
-const paymentMethod = document.getElementById('paymentMethod');
+const shippingMethod = document.getElementById('shippingMethod');
 const finalAmount = document.getElementById('finalAmount');
+
+const orderItems = document.getElementById('orderItems');
 const repurchaseItemsHTML = document.getElementById('repurchaseItems');
 
 
@@ -24,6 +26,8 @@ async function handleOrderDetailPage() {
         const response = await fetchOrderDetail(orderId);
         sessionStorage.setItem('order_detail', 
             JSON.stringify(response.data));
+
+        console.log(response);
 
         orderDetailTitle.innerHTML = `
                     <div>
@@ -56,7 +60,7 @@ async function handleOrderDetailPage() {
 
         totalAmount.innerText = formatVND(response.data.totalAmount);
         shippingFee.innerText = formatVND(response.data.shippingFee);
-        paymentMethod.innerText = response.data.shippingMethod;
+        shippingMethod.innerText = response.data.shippingMethod;
         finalAmount.innerHTML = formatVND(response.data.finalAmount);
 
     } catch (error) {

@@ -38,7 +38,7 @@
             <!-- Right Actions -->
             <div class="navbar-actions">
                 <div class="action-item">
-                    <button class="btn-action" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                    <button class="btn-action" id="cartBtn" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="badge-count" id="cartCount">0</span>
                     </button>
@@ -119,7 +119,7 @@
                     <a href="../pages/profile.html">Tổng quan</a>
                     <a href="../pages/my-orders.html">Đơn hàng của tôi</a>
                     <a href="../pages/wishlist.html" class="active">Danh sách yêu thích</a>
-                    <a href="#"> Đăng kí dịch vụ eCommerce</a>
+                    <a href="../pages/my-account.html"> Tài khoản của tôi </a>
                     <a href="../pages/index.html">Về trang chủ</a>
                     <a id="logoutLinkInProfile"> Đăng xuất </a>
                 </nav>
@@ -148,6 +148,8 @@
 
     <!-- Scripts -->
     <script src="../js/common/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../js/components/navbar.js"></script>
+    <script type="module" src="../js/components/cart.js"></script>
     <script type="module" src="../js/pages/wish-list.js"></script>
 </body>
 

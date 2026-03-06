@@ -4,6 +4,7 @@ import { deleteItemFromCartRedis, loadCartDataFromRedis } from "../api/cart-api.
 
 const waittingLoadCart = document.getElementById('waittingLoadCart');
 const noCartData = document.getElementById('noCartData');
+const cartBtn = document.getElementById('cartBtn');
 const cartCount = document.getElementById('cartCount');
 const cartItemsContainer = document.getElementById('cart-items');
 const cartTotal = document.getElementById('cart-total');
@@ -85,6 +86,10 @@ function renderCart() {
 
     cartTotal.innerHTML = `<strong>${formatVND(total)}</strong>`;
 }
+
+cartBtn.addEventListener('click', (e) => {
+    loadCartData();
+});
 
 cartItemsContainer.addEventListener('click', async (e) => {
 

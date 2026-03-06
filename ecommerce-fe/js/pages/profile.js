@@ -17,7 +17,6 @@ const avatarImg = document.getElementById("avatarImg");
 // call functions
 handleProfile();
 
-
 async function handleProfile() {
     try {
         const response = await fetchProfile();

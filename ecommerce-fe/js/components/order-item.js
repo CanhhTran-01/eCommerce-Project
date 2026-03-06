@@ -1,7 +1,7 @@
 import { formatVND } from "../utils/format.js";
 import { renderStatusBadgeHTML } from "../utils/status-badge.js";
 
-export function renderOrderItem(data, container){
+export function renderOrderItem(data, container) {
     if (!data || data.length === 0) {
         container.innerHTML = '<p class="text-danger"><strong>Không có dữ liệu.</strong></p>';
         return;
@@ -33,16 +33,21 @@ export function renderOrderItem(data, container){
 
                     <!-- action -->
                     <div class="col-md-2 text-md-end mt-2 mt-md-0">
-                        <button id="orderDetailBtn" class="btn btn-outline-danger btn-sm">Chi tiết đơn</button>
+                        <button class="orderDetailBtn btn btn-outline-danger btn-sm">Chi tiết đơn</button>
                     </div>
 
                 </div>
             </div>
     `).join('');
 
-    document.getElementById('orderDetailBtn').addEventListener('click', (event) => {
-        event.preventDefault();
-        const target = event.target.closest('.list-group-item');
+    
+    document.querySelectorAll('.orderDetailBtn').forEach(btn => {
+        btn.addEventListener('click', (event) => {
+
+            event.preventDefault();
+
+            const target = event.target.closest('.list-group-item');
+
             if (target) {
                 const orderId = target.dataset.orderId;
                 if (orderId) {
@@ -50,5 +55,7 @@ export function renderOrderItem(data, container){
                         `${window.location.origin}/ecommerce-fe/pages/order-detail.html?orderId=${orderId}`;
                 }
             }
+        });
     });
+
 }
