@@ -10,6 +10,8 @@ spring:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
       timeout: ${REDIS_TIMEOUT}
+      repositories:
+        enabled: false  # turn off redis auto-config
 
   mail:
     host: smtp.gmail.com
