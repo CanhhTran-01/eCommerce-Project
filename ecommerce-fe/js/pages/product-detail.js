@@ -97,9 +97,9 @@ async function handleProductDetail() {
 
         productInfo.innerHTML = `
                     <li class="mb-2"> ${response.data.shortDescription || '...'} </li>
-                    <li class="mb-2"><strong>Brand:</strong> ${response.data.brand || '...'}</li>
-                    <li class="mb-2"><strong>Color:</strong> ${response.data.color || 'Ngẫu nhiên'}</li>
-                    <li class="mb-2"><strong>Made in:</strong> ${response.data.madeIn || 'Không rõ'}</li>                   
+                    <li class="mb-2"><strong>Thương hiệu:</strong> ${response.data.brand || '...'}</li>
+                    <li class="mb-2"><strong>Màu sắc:</strong> ${response.data.color || 'Ngẫu nhiên'}</li>
+                    <li class="mb-2"><strong>Xuất xứ:</strong> ${response.data.madeIn || 'Không rõ'}</li>                   
                 `
 
         const check = await isWishListed(productId);

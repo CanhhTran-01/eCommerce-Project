@@ -93,16 +93,6 @@ async function handleProfile() {
                         </div>
                     </div>
 
-                    <div class="row mb-3 align-items-center">
-                        <div class="col-auto">
-                            <i class="fas fa-user-tag text-primary" style="width: 20px;"></i>
-                        </div>
-                        <div class="col"> 
-                            <strong>Vai trò:</strong>
-                            <span class="badge bg-primary ms-1">${response.data.role || 'USER'} </span>
-                        </div>
-                    </div>
-
                     <div class="profile-actions">
                         <button id="editProfileBtn" class="btn-edit-profile"> Cập nhật </button>
                     </div>
