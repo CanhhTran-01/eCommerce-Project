@@ -2,21 +2,36 @@ package com.myproject.ecommerce.exception;
 
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import java.util.Objects;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.TransientObjectException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     // handle general exception ( error first appear )
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<?>> handlingRuntimeException(Exception exception) {
 
-        System.out.println(exception.getMessage());
+        log.error("uncategorized exception: ", exception);
+
         ErrorCode errorCode = ErrorCode.UNCATEGORIZED_EXCEPTION;
+
+        ApiResponse<?> apiResponse = new ApiResponse<>(false, errorCode.getMessage(), null);
+
+        return ResponseEntity.status(errorCode.getStatusCode()).body(apiResponse);
+    }
+
+    // handle security exception with method layer
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiResponse<?>> handlingSecurityException(AccessDeniedException exception) {
+
+        ErrorCode errorCode = ErrorCode.ACCESS_DENIED;
 
         ApiResponse<?> apiResponse = new ApiResponse<>(false, errorCode.getMessage(), null);
 

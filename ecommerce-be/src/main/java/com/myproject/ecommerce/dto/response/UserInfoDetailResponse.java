@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserInfoResponse {
+public class UserInfoDetailResponse {
     private Long id;
     private String fullName;
     private String nickName;

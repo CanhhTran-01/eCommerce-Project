@@ -3,7 +3,7 @@ package com.myproject.ecommerce.controller;
 import com.myproject.ecommerce.dto.request.*;
 import com.myproject.ecommerce.dto.response.AccountInfoResponse;
 import com.myproject.ecommerce.dto.response.ApiResponse;
-import com.myproject.ecommerce.dto.response.UserInfoResponse;
+import com.myproject.ecommerce.dto.response.UserInfoDetailResponse;
 import com.myproject.ecommerce.service.AccountService;
 import com.myproject.ecommerce.service.UserService;
 import jakarta.validation.Valid;
@@ -66,11 +66,11 @@ public class AccountController {
     }
 
     @GetMapping("/me/info")
-    public ResponseEntity<ApiResponse<UserInfoResponse>> getUserInfo(@AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<ApiResponse<UserInfoDetailResponse>> getUserInfo(@AuthenticationPrincipal Jwt jwt) {
 
         Long accountId = jwt.getClaim("accountId"); // get account_id from JWT
 
-        ApiResponse<UserInfoResponse> apiResponse = new ApiResponse<>(true, null, userService.getInfo(accountId));
+        ApiResponse<UserInfoDetailResponse> apiResponse = new ApiResponse<>(true, null, userService.getInfo(accountId));
 
         return ResponseEntity.ok(apiResponse);
     }

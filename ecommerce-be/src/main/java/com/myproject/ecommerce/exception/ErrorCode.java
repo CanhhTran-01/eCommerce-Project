@@ -11,6 +11,7 @@ public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(9999, "uncategorized error!", HttpStatus.INTERNAL_SERVER_ERROR),
     NO_MESSAGE_IN_VALIDATION(
             9998, "you need to insert messsage for validated field in this request ?", HttpStatus.EXPECTATION_FAILED),
+    ACCESS_DENIED(9997, "no permission !", HttpStatus.BAD_REQUEST),
     USERNAME_EXISTED(1001, "username existed!", HttpStatus.BAD_REQUEST),
     USERNAME_INVALID(1002, "username invalid!", HttpStatus.BAD_REQUEST),
     PASSWORD_INVALID(1003, "password invalid!", HttpStatus.BAD_REQUEST),

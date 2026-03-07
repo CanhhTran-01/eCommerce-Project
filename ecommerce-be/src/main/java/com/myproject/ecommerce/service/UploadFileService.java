@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +28,8 @@ public class UploadFileService {
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
 
-    // upload avatar for profile
+    // upload avatar for profile (only user)
+    @PreAuthorize("hasRole('USER')")
     public String uploadAvatarImage(Long accountId, MultipartFile file) {
 
         String originalFileName = file.getOriginalFilename();
@@ -59,7 +61,8 @@ public class UploadFileService {
         }
     }
 
-    // upload image for category
+    // upload image for category (only seller)
+    @PreAuthorize("hasRole('SELLER')")
     public String uploadCategoryImage(Long categoryId, MultipartFile file) {
 
         String originalFileName = file.getOriginalFilename();
@@ -90,7 +93,8 @@ public class UploadFileService {
         }
     }
 
-    // upload images for category
+    // upload images for category (only seller)
+    @PreAuthorize("hasRole('SELLER')")
     public void uploadProductImages(Long productId, List<MultipartFile> files) {
         Product product =
                 productRepository.findById(productId).orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));

@@ -4,7 +4,8 @@ import com.myproject.ecommerce.dto.request.InfoUpdateRequest;
 import com.myproject.ecommerce.dto.request.WishListRequest;
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.dto.response.ProductSummaryResponse;
-import com.myproject.ecommerce.dto.response.UserInfoResponse;
+import com.myproject.ecommerce.dto.response.UserInfoDetailResponse;
+import com.myproject.ecommerce.dto.response.UserInfoSummaryResponse;
 import com.myproject.ecommerce.service.ProductService;
 import com.myproject.ecommerce.service.UserService;
 import com.myproject.ecommerce.service.WishListService;
@@ -25,13 +26,15 @@ public class UserController {
     private final ProductService productService;
     private final WishListService wishListService;
 
-    @PostMapping("")
-    public ResponseEntity<UserInfoResponse> createUser(@RequestBody InfoUpdateRequest infoUpdateRequest) {
-        return ResponseEntity.ok(userService.createUser(infoUpdateRequest));
+    @GetMapping("/list")
+    public ResponseEntity<ApiResponse<List<UserInfoSummaryResponse>>> getAllUsers() {
+
+        var apiResponse = new ApiResponse<>(true, null, userService.getAllUsers());
+        return ResponseEntity.ok(apiResponse);
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<ApiResponse<UserInfoResponse>> updateInfo(
+    public ResponseEntity<ApiResponse<UserInfoDetailResponse>> updateInfo(
             @PathVariable("userId") Long id, @Valid @RequestBody InfoUpdateRequest infoUpdateRequest) {
 
         var apiResponse = new ApiResponse<>(true, null, userService.updateUserInfo(id, infoUpdateRequest));

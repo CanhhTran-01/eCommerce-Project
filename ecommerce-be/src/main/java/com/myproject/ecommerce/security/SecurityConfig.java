@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -24,14 +25,15 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
     private final String[] PUBLIC_ENDPOINTS_POST = {
-        "/api/accounts",
         "/api/accounts/register/email/otp",
         "/api/accounts/forgot-pass/email/otp",
         "/api/accounts/email/verify",
+        "/api/accounts", // register
         "/api/accounts/forgot-password",
         "/api/auth/login",
         "/api/auth/introspect",
@@ -40,7 +42,7 @@ public class SecurityConfig {
     };
 
     private final String[] PUBLIC_ENDPOINTS_GET = {
-        "/api/products/**", "/api/product-gallery/**", "/api/categories/**", "/api/auth/social-login"
+        "/api/categories/**", "/api/products/**", "/api/product-gallery/**", "/api/auth/social-login"
     };
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -57,8 +59,12 @@ public class SecurityConfig {
                 .permitAll()
                 .requestMatchers(HttpMethod.GET, PUBLIC_ENDPOINTS_GET)
                 .permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/accounts")
-                .hasRole(Role.ADMIN.name())
+                .requestMatchers(HttpMethod.GET, "/api/accounts/me/info")
+                .hasRole(Role.USER.name()) // only user can get info account
+                .requestMatchers(HttpMethod.POST, "/api/reviews")
+                .hasRole(Role.USER.name()) // only user can create review for product
+                .requestMatchers("/api/upload/**")
+                .hasAnyRole(Role.USER.name(), Role.SELLER.name()) // only user and seller can upload image
                 .anyRequest()
                 .authenticated());
 

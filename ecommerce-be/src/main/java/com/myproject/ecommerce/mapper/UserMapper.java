@@ -1,7 +1,8 @@
 package com.myproject.ecommerce.mapper;
 
 import com.myproject.ecommerce.dto.request.InfoUpdateRequest;
-import com.myproject.ecommerce.dto.response.UserInfoResponse;
+import com.myproject.ecommerce.dto.response.UserInfoDetailResponse;
+import com.myproject.ecommerce.dto.response.UserInfoSummaryResponse;
 import com.myproject.ecommerce.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -10,7 +11,9 @@ import org.mapstruct.MappingTarget;
 public interface UserMapper {
     User toEntity(InfoUpdateRequest infoUpdateRequest);
 
-    UserInfoResponse toInfoResponse(User user);
+    UserInfoDetailResponse toInfoResponse(User user);
+
+    UserInfoSummaryResponse toSummaryResponse(User user);
 
     void updateUser(@MappingTarget User user, InfoUpdateRequest infoUpdateRequest);
 }
