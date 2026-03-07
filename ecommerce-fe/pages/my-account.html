@@ -36,6 +36,21 @@
                     <button class="search-btn" id="searchTextBtn">
                         <i class="fas fa-search"></i>
                     </button>
+
+                    <!-- Suggestion popup -->
+                    <div id="searchSuggestion" class="position-absolute bg-white border rounded shadow-sm d-none" style="top:100%; left:50%; transform:translateX(-50%);
+            width:33%; z-index:1050; max-height:400px; overflow:auto;">
+
+                        <!-- keyword -->
+                        <div id="suggestionKeywords"></div>
+
+                        <hr class="m-1">
+
+                        <!-- products -->
+                        <div id="suggestionProducts"></div>
+
+                    </div>
+
                 </div>
             </div>
 
@@ -55,7 +70,8 @@
 
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" id="infoLink"><i class="fas fa-user"></i> Hồ sơ</a></li>
-                        <li><a class="dropdown-item" id="myAccountLink"><i class="fas fa-gear"></i> Tài khoản của tôi</a></li>
+                        <li><a class="dropdown-item" id="myAccountLink"><i class="fas fa-gear"></i> Tài khoản của
+                                tôi</a></li>
 
                         <li>
                             <hr class="dropdown-divider">
@@ -185,7 +201,8 @@
                     <a href="https://github.com/CanhhTran-01" target="_blank" class="social-link">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://www.linkedin.com/in/c%E1%BA%A3nhh-tr%E1%BA%A7n-2570923b3/" target="_blank" class="social-link">
+                    <a href="https://www.linkedin.com/in/c%E1%BA%A3nhh-tr%E1%BA%A7n-2570923b3/" target="_blank"
+                        class="social-link">
                         <i class="fab fa-linkedin"></i>
                     </a>
                 </div>

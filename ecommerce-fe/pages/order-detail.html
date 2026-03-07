@@ -36,6 +36,21 @@
                     <button class="search-btn" id="searchTextBtn">
                         <i class="fas fa-search"></i>
                     </button>
+
+                    <!-- Suggestion popup -->
+                    <div id="searchSuggestion" class="position-absolute bg-white border rounded shadow-sm d-none" style="top:100%; left:50%; transform:translateX(-50%);
+            width:33%; z-index:1050; max-height:400px; overflow:auto;">
+
+                        <!-- keyword -->
+                        <div id="suggestionKeywords"></div>
+
+                        <hr class="m-1">
+
+                        <!-- products -->
+                        <div id="suggestionProducts"></div>
+
+                    </div>
+
                 </div>
             </div>
 

@@ -102,11 +102,24 @@ async function handleProductDetail() {
                     <li class="mb-2"><strong>Xuất xứ:</strong> ${response.data.madeIn || 'Không rõ'}</li>                   
                 `
 
-        const check = await isWishListed(productId);
-        const isLoggedIn = checkToken();
-        if (isLoggedIn && check.data) {
-            addToWishListBtn.classList.add('d-none');
-            deleteFromWishlistBtn.classList.remove('d-none');
+        const isLoggedIn = await checkToken();
+
+        if (!isLoggedIn) {
+
+            addToWishListBtn.classList.remove('d-none');
+            deleteFromWishlistBtn.classList.add('d-none');
+
+        } else {
+
+            const check = await isWishListed(productId);
+            if (check.data) {
+                addToWishListBtn.classList.add('d-none');
+                deleteFromWishlistBtn.classList.remove('d-none');
+            } else {
+                addToWishListBtn.classList.remove('d-none');
+                deleteFromWishlistBtn.classList.add('d-none');
+            }
+
         }
 
         productDesc.innerHTML = `
@@ -116,7 +129,7 @@ async function handleProductDetail() {
 
     } catch (error) {
         console.log(error);
-        alert('Không lấy được dữ liệu sản phẩm');
+        alert(error.message);
     }
 }
 
