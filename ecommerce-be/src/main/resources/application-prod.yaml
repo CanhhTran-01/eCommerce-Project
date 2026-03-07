@@ -9,7 +9,7 @@ spring:
     redis:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
-      timeout: ${REDIS_TIMEOUT}
+      timeout: 60000
       repositories:
         enabled: false  # turn off redis auto-config
 
@@ -40,7 +40,7 @@ spring:
               - email
           facebook:
             client-id: ${FACEBOOK_CLIENT_ID}
-            client-secret: ${FACEBOOK_CLIENT_ID}
+            client-secret: ${FACEBOOK_CLIENT_SECRET}
             scope:
               - public_profile
               - email
