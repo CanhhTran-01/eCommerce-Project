@@ -2,7 +2,9 @@ package com.myproject.ecommerce.service;
 
 import com.myproject.ecommerce.dto.request.ProductFilterSearchRequest;
 import com.myproject.ecommerce.dto.response.ProductDetailResponse;
+import com.myproject.ecommerce.dto.response.ProductSuggestionResponse;
 import com.myproject.ecommerce.dto.response.ProductSummaryResponse;
+import com.myproject.ecommerce.dto.response.SuggestionResponse;
 import com.myproject.ecommerce.entity.Product;
 import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.exception.ErrorCode;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final ProductSuggestionService productSuggestionService;
 
     // get product on sale list
     @Transactional(readOnly = true)
@@ -65,5 +68,23 @@ public class ProductService {
     // check wishlisted by user
     public boolean isWishListed(Long productId, Long accountId) {
         return productRepository.existsByIdAndWishedByAccountId(productId, accountId);
+    }
+
+    // get keyword and product suggestion
+    public SuggestionResponse getTextsAndProductsSuggestion(String text) {
+
+        // insert keywords for later searching by someone
+        productSuggestionService.insertTextForSuggestion(text);
+
+        // get keywords suggestion
+        List<String> texts = productSuggestionService.getSuggestionTexts(text);
+
+        // get products suggestion
+        List<ProductSuggestionResponse> data = productRepository.suggestByName(text);
+
+        return SuggestionResponse.builder()
+                .suggestionTexts(texts)
+                .productSuggestionResponses(data)
+                .build();
     }
 }

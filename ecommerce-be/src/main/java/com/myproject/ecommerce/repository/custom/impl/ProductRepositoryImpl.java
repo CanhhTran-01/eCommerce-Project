@@ -1,11 +1,14 @@
 package com.myproject.ecommerce.repository.custom.impl;
 
 import com.myproject.ecommerce.dto.request.ProductFilterSearchRequest;
+import com.myproject.ecommerce.dto.response.ProductSuggestionResponse;
 import com.myproject.ecommerce.dto.response.ProductSummaryResponse;
+import com.myproject.ecommerce.entity.OrderItem;
 import com.myproject.ecommerce.entity.Product;
 import com.myproject.ecommerce.entity.Review;
 import com.myproject.ecommerce.repository.custom.ProductRepositoryCustom;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,5 +103,40 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         }
 
         return entityManager.createQuery(cq).getResultList();
+    }
+
+    @Override
+    public List<ProductSuggestionResponse> suggestByName(String suggestText) {
+
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<ProductSuggestionResponse> cq = cb.createQuery(ProductSuggestionResponse.class);
+        Root<Product> product = cq.from(Product.class);
+
+        // INNER JOIN order_item
+        Join<Product, OrderItem> orderItemJoin = product.join("orderItemList");
+
+        // count order item corresponding product
+        Expression<Long> totalOrders = cb.count(orderItemJoin.get("id"));
+
+        cq.select(cb.construct(
+                ProductSuggestionResponse.class,
+                product.get("id"),
+                product.get("productName"),
+                product.get("mainImageUrl")));
+
+        // WHERE
+        Predicate namePredicate = cb.like(cb.lower(product.get("productName")), "%" + suggestText.toLowerCase() + "%");
+        cq.where(namePredicate);
+
+        // GROUP BY
+        cq.groupBy(product.get("id"), product.get("productName"), product.get("mainImageUrl"));
+
+        // ORDER BY
+        cq.orderBy(cb.desc(totalOrders));
+
+        TypedQuery<ProductSuggestionResponse> query = entityManager.createQuery(cq);
+        query.setMaxResults(3); // LIMIT 3 product
+
+        return query.getResultList();
     }
 }

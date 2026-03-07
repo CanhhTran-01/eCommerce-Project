@@ -1,10 +1,7 @@
 package com.myproject.ecommerce.controller;
 
 import com.myproject.ecommerce.dto.request.ProductFilterSearchRequest;
-import com.myproject.ecommerce.dto.response.ApiResponse;
-import com.myproject.ecommerce.dto.response.ProductDetailResponse;
-import com.myproject.ecommerce.dto.response.ProductSummaryResponse;
-import com.myproject.ecommerce.dto.response.ReviewResponse;
+import com.myproject.ecommerce.dto.response.*;
 import com.myproject.ecommerce.service.ProductService;
 import com.myproject.ecommerce.service.ReviewService;
 import java.util.List;
@@ -53,6 +50,14 @@ public class ProductController {
             ProductFilterSearchRequest request) {
 
         var apiResponse = new ApiResponse<>(true, null, productService.getFilterSearchProduct(request));
+        return ResponseEntity.ok(apiResponse);
+    }
+
+    @GetMapping("/suggestion")
+    public ResponseEntity<ApiResponse<SuggestionResponse>> suggestProductAndText(
+            @RequestParam("keyword") String keyword) {
+
+        var apiResponse = new ApiResponse<>(true, null, productService.getTextsAndProductsSuggestion(keyword));
         return ResponseEntity.ok(apiResponse);
     }
 }
