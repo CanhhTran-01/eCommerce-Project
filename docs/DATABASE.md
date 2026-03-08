@@ -1,46 +1,57 @@
 ### Tables
-account
+
+```
+accounts
 users
 account_roles
-category
-product
+categories
+products
 pro_thumbnail_images
 cart
-cart_item
-order
-order_item
+cart_items
+orders
+order_items
 payment
-review
+reviews
 wishlist
-invalid_token
+invalid_tokens
 
+```
 ---
 
 ### Relationships
-account (1) ─── (1) users
 
-account (1) ─── (n) account_roles
+```
+accounts    (1) ─── (1)  users
 
-category (1) ─── (n) product
+accounts    (1) ─── (n)  account_roles
 
-product (1) ─── (n) pro_thumbnail_images
+categories  (1) ─── (n)  products
 
-users (1) ─── (n) cart  
-cart (1) ─── (n) cart_item
+products    (1) ─── (n)  pro_thumbnail_images
 
-users (1) ─── (n) order
-order (1) ─── (n) order_item
-order_item (n) ─── (1) product
+users       (1) ─── (n)  cart  
 
-order (1) ─── (1) payment
+cart        (1) ─── (n)  cart_items
 
-users (1) ─── (n) review
-review (n) ─── (1) product
+users       (1) ─── (n)  orders
 
-users (n) ─── (n) product  (wishlist)
+orders      (1) ─── (n)  order_items
 
+order_items (n) ─── (1)  products
+
+orders      (1) ─── (1)  payment
+
+users       (1) ─── (n)  reviews
+
+reviews     (n) ─── (1)  products
+
+users       (n) ─── (n)  products  (wishlist)
+
+```
 
 ### Note
-A user can have multiple carts to preserve cart history
-and track abandoned carts. Only one cart should have status = ACTIVE. (planned for future development)
-
+```
+A user can have multiple carts to preserve cart history and track abandoned carts.
+Only one cart should have status = ACTIVE. (planned for future development)
+```

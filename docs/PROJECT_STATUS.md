@@ -1,13 +1,13 @@
 ## Phase 1
 
 ```
-Frontend (HTML + JS)
-        │
-        ▼
-Spring Boot API
-        │
- ┌──────┼────────┐
- ▼      ▼        ▼
-MySQL  Redis  Cloudinary
+         Frontend (HTML + JS)
+                │
+                ▼
+        Spring Boot API (Backend)
+                │
+         ┌──────┼────────┐
+         ▼      ▼        ▼
+       MySQL  Redis  Cloudinary
 
 ```
