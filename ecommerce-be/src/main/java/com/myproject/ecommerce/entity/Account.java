@@ -4,12 +4,13 @@ import com.myproject.ecommerce.enums.AccountStatus;
 import com.myproject.ecommerce.enums.AuthProvider;
 import com.myproject.ecommerce.enums.Role;
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Set;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.util.Set;
+
 @Entity
-@Table(name = "account")
+@Table(name = "accounts")
 @Getter
 @Setter
 @Builder

@@ -1,11 +1,12 @@
 package com.myproject.ecommerce.entity;
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity
-@Table(name = "order_item")
+@Table(name = "order_items")
 @Getter
 @Setter
 @Builder
@@ -26,7 +27,7 @@ public class OrderItem {
     @Column(name = "image_url")
     private String imageUrl;
 
-    @Column(name = "price")
+    @Column(name = "unit_price")
     private BigDecimal unitPrice;
 
     @Column(name = "total_price")
