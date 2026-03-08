@@ -8,15 +8,16 @@ import com.myproject.ecommerce.exception.ErrorCode;
 import com.myproject.ecommerce.repository.AccountRepository;
 import com.myproject.ecommerce.repository.CategoryRepository;
 import com.myproject.ecommerce.repository.ProductRepository;
-import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -149,12 +150,12 @@ public class UploadFileService {
 
         int index = originalName.lastIndexOf(".");
         if (index == -1) {
-            return new String[] {originalName, ""};
+            return new String[]{originalName, ""};
         }
 
         String name = originalName.substring(0, index);
         String ext = originalName.substring(index + 1);
 
-        return new String[] {name, ext};
+        return new String[]{name, ext};
     }
 }

@@ -168,8 +168,7 @@ async function handleProfile() {
                     window.location.href = window.location.origin + '/ecommerce-fe/pages/profile.html';
 
                 } catch (error) {
-                    console.log(error);
-                    alert('Có lỗi xảy ra');
+                    alert(error.message);
                     window.location.href = window.location.origin + '/ecommerce-fe/pages/profile.html';
                 }
 
