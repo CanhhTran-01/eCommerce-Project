@@ -18,12 +18,13 @@ import com.myproject.ecommerce.repository.OrderRepository;
 import com.myproject.ecommerce.repository.ProductRepository;
 import com.myproject.ecommerce.utils.CurrentProductPriceUtils;
 import com.myproject.ecommerce.utils.OrderCodeRandomUtils;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +46,9 @@ public class OrderService {
 
         OrderDetailResponse response = orderMapper.toDetailResponse(order);
 
-        List<OrderItemResponse> orderItemResponses = orderItemRepository.getOrderItemsforFeedback(order.getId());
+        List<OrderItemResponse> orderItemResponses =
+                orderItemRepository.getOrderItemsforOrderDetailDisplay(order.getId());
+        
         response.setOrderItemResponseList(orderItemResponses);
 
         return response;
