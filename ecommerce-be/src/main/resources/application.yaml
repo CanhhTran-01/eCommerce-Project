@@ -12,7 +12,7 @@ logging:
     org.hibernate.orm.connections.pooling: WARN
 
 jwt:
-  signerKey: ${SIGNERKEY}
+  signerKey: ${SIGNERKEY:mRZ7rF7uZJ2KQ0Z3V5y9BvJ9P3T8A4XWq6N5C8sYp2A=}
 
 app:
   oauth2:
