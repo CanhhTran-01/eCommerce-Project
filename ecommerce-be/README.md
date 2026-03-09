@@ -26,7 +26,6 @@ The project follows **Layered Architecture**.
 
 Controller → Service → Repository → Database
 
-
 Main layers:
 
 - **Controller** – handle incoming HTTP requests
@@ -38,6 +37,7 @@ Main layers:
 ---
 
 # Folder Structure
+
 ```
 src
 └── main
@@ -73,23 +73,27 @@ src
 # Main Features
 
 ### Authentication
+
 - Register / Login
 - Google login
 - Facebook login
 - JWT authentication
 
 ### User
+
 - Update profile
 - Change password
 - Forgot password using OTP (Redis)
 
 ### Product
+
 - Get products on sale
 - Get categories
 - Filter & search products
 - Product detail
 
 ### Cart
+
 Cart is stored in **Redis**.
 
 - Add item
@@ -97,15 +101,18 @@ Cart is stored in **Redis**.
 - View cart
 
 ### Order
+
 - Place order
 - Order history
 - Order detail
 
 ### Wishlist
+
 - Add to wishlist
 - Remove from wishlist
 
 ### Review
+
 - Add review
 - View product reviews
 
@@ -134,9 +141,91 @@ Requirements:
 - Redis
 
 Run:
+
 ```bash
   cd ecommerce-be
  ./mvnw spring-boot:run
+```
+
+---
+
+# Run Application with Docker
+
+The backend can also be run using Docker containers for MySQL, Redis, and the Spring Boot application.
+Make sure the backend image exists:
+
+```
+docker images
+```
+
+1. Create Docker Network
+
+```
+docker network create ecommerce-net
+```
+
+2. Run MySQL Container
+
+```
+docker run -d --name ecom-db-internal --network ecommerce-net -p 3306:3306 -e MYSQL_ROOT_PASSWORD=canhtran2005 mysql:8.0.36
+```
+
+```
+-- Connect to MySQL container
+docker exec -it ecom-db-internal mysql -u root -p
+
+-- then run
+CREATE DATABASE ecommerce_db_docker;
+```
+
+3. Run Redis Container
+
+```
+docker run -d --name ecom-redis-internal --network ecommerce-net -p 6379:6379 redis
+```
+
+4. Run Backend Container
+
+```
+docker run -d \
+--name ecom-be-internal \
+--network ecommerce-net \
+-p 8080:8080 \
+-e SPRING_PROFILES_ACTIVE=dev \
+-e SPRING_DATASOURCE_URL=jdbc:mysql://ecom-db-internal:3306/ecommerce_db_docker \
+-e SPRING_DATASOURCE_USERNAME=root \
+-e SPRING_DATASOURCE_PASSWORD=canhtran2005 \
+ecommerce-backend:1.0
+```
+
+---
+
+# Docker Architecture
+
+```
+Docker Network: ecommerce-net
+│
+├── MySQL Container
+│   name: ecom-db-internal
+│   port: 3306
+│
+├── Redis Container
+│   name: ecom-redis-internal
+│   port: 6379
+│
+└── Backend Container
+    name: ecom-be-internal
+    port: 8080
+```
+
+# Test Backend
+
+```
+-- All APIs are prefixed with:
+http://localhost:8080/eCommerce
+
+-- Open browser, enter url:
+http://localhost:8080/eCommerce/api/products
 ```
 
 
