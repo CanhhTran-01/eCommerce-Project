@@ -1,4 +1,4 @@
-## Phase 1
+## Phase 1 - Completed
 
 ```
          Frontend (HTML + JS)
