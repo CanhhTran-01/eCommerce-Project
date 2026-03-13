@@ -6,9 +6,11 @@ import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.dto.response.UserInfoDetailResponse;
 import com.myproject.ecommerce.service.AccountService;
 import com.myproject.ecommerce.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,12 +19,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/accounts")
-@Slf4j
 @RequiredArgsConstructor
+@Tag(name = "Account Controller")
 public class AccountController {
     private final AccountService accountService;
     private final UserService userService;
 
+    @Operation(summary = "send Register OTP", description = "Send OTP by email for register feature")
+    @SecurityRequirements
     @PostMapping("/register/email/otp")
     public ResponseEntity<ApiResponse<?>> sendOtpForSignUp(@RequestBody GenerateOtpRequest request) {
 
@@ -31,6 +35,8 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
 
+    @Operation(summary = "send Forgot Pass OTP")
+    @SecurityRequirements
     @PostMapping("/forgot-pass/email/otp")
     public ResponseEntity<ApiResponse<?>> sendOtpForForgotPass(@RequestBody GenerateOtpRequest request) {
 
@@ -39,6 +45,8 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
 
+    @Operation(summary = "send Change Pass OTP")
+    @SecurityRequirements
     @PostMapping("/update-pass/email/otp")
     public ResponseEntity<ApiResponse<?>> sendOtpForChangePass(@RequestBody GenerateOtpRequest request) {
 
@@ -47,6 +55,8 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
 
+    @Operation(summary = "verify OTP")
+    @SecurityRequirements
     @PostMapping("/email/verify")
     public ResponseEntity<ApiResponse<?>> verifyOtp(@RequestBody VerifyOtpRequest request) {
 
@@ -55,6 +65,8 @@ public class AccountController {
         return ResponseEntity.ok(apiResponse);
     }
 
+    @Operation(summary = "register new Account", description = "submit username + password after verifying OTP")
+    @SecurityRequirements
     @PostMapping("")
     public ResponseEntity<ApiResponse<Void>> registerNewAccount(@Valid @RequestBody RegisterRequest registerRequest) {
 
@@ -65,6 +77,7 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
 
+    @Operation(summary = "get User's Profile")
     @GetMapping("/me/info")
     public ResponseEntity<ApiResponse<UserInfoDetailResponse>> getUserInfo(@AuthenticationPrincipal Jwt jwt) {
 
@@ -75,6 +88,7 @@ public class AccountController {
         return ResponseEntity.ok(apiResponse);
     }
 
+    @Operation(summary = "send Account's Information")
     @GetMapping("/info")
     public ResponseEntity<ApiResponse<AccountInfoResponse>> getAccountInfo(@AuthenticationPrincipal Jwt jwt) {
 
@@ -85,6 +99,8 @@ public class AccountController {
         return ResponseEntity.ok(apiResponse);
     }
 
+    @Operation(summary = "require new Pass", description = "Submit username for reclaiming new password")
+    @SecurityRequirements
     @PostMapping("/forgot-password")
     public ResponseEntity<ApiResponse<?>> forgotAccountPassword(@RequestBody ForgotPasswordRequest request) {
 
@@ -93,6 +109,7 @@ public class AccountController {
         return ResponseEntity.ok(apiResponse);
     }
 
+    @Operation(summary = "Update new password")
     @PutMapping("/reset-password")
     public ResponseEntity<ApiResponse<Void>> resetAccountPassword(
             @AuthenticationPrincipal Jwt jwt, @Valid @RequestBody ChangePasswordRequest request) {

@@ -3,6 +3,8 @@ package com.myproject.ecommerce.controller;
 import com.myproject.ecommerce.dto.request.ReviewRequest;
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.service.ReviewService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/reviews")
 @RequiredArgsConstructor
+@Tag(name = "Review Controller")
 public class ReviewController {
     private final ReviewService reviewService;
 
+    @Operation(summary = "add new review")
     @PostMapping("")
     public ResponseEntity<ApiResponse<Void>> createReview(
             @Valid @RequestBody ReviewRequest reviewRequest, @AuthenticationPrincipal Jwt jwt) {

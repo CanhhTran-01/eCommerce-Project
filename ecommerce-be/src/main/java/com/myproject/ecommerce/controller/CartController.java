@@ -4,7 +4,8 @@ import com.myproject.ecommerce.dto.request.AddToCartRequest;
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.dto.response.CartItemResponse;
 import com.myproject.ecommerce.service.CartService;
-import java.util.List;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +13,16 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/cart")
 @RequiredArgsConstructor
+@Tag(name = "Cart Controller")
 public class CartController {
     private final CartService cartService;
 
+    @Operation(summary = "add item to cart")
     @PostMapping("/me/item")
     public ResponseEntity<ApiResponse<?>> addItemToCart(
             @RequestBody AddToCartRequest addToCartRequest, @AuthenticationPrincipal Jwt jwt) {
@@ -29,6 +34,7 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
 
+    @Operation(summary = "login")
     @GetMapping("/me/items")
     public ResponseEntity<ApiResponse<List<CartItemResponse>>> getCartItems(@AuthenticationPrincipal Jwt jwt) {
 
@@ -38,6 +44,7 @@ public class CartController {
         return ResponseEntity.ok(apiResponse);
     }
 
+    @Operation(summary = "delete item from cart")
     @DeleteMapping("/me/items/{productId}")
     public ResponseEntity<ApiResponse<?>> deleteItemFromCart(
             @AuthenticationPrincipal Jwt jwt, @PathVariable Long productId) {

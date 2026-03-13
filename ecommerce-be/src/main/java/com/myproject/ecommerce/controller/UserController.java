@@ -9,8 +9,9 @@ import com.myproject.ecommerce.dto.response.UserInfoSummaryResponse;
 import com.myproject.ecommerce.service.ProductService;
 import com.myproject.ecommerce.service.UserService;
 import com.myproject.ecommerce.service.WishListService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +19,18 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
+@Tag(name = "User Controller")
 public class UserController {
     private final UserService userService;
     private final ProductService productService;
     private final WishListService wishListService;
 
+    @Operation(summary = "get all users (only admin)")
     @GetMapping("/list")
     public ResponseEntity<ApiResponse<List<UserInfoSummaryResponse>>> getAllUsers() {
 
@@ -33,6 +38,7 @@ public class UserController {
         return ResponseEntity.ok(apiResponse);
     }
 
+    @Operation(summary = "update user profile")
     @PutMapping("/{userId}")
     public ResponseEntity<ApiResponse<UserInfoDetailResponse>> updateInfo(
             @PathVariable("userId") Long id, @Valid @RequestBody InfoUpdateRequest infoUpdateRequest) {
@@ -41,6 +47,7 @@ public class UserController {
         return ResponseEntity.ok(apiResponse);
     }
 
+    @Operation(summary = "get wishlist")
     @GetMapping("/me/wish-list")
     public ResponseEntity<ApiResponse<List<ProductSummaryResponse>>> getMyWishlist(@AuthenticationPrincipal Jwt jwt) {
 
@@ -49,6 +56,7 @@ public class UserController {
         return ResponseEntity.ok(apiResponse);
     }
 
+    @Operation(summary = "add product to wish list")
     @PostMapping("/me/wish-list")
     public ResponseEntity<ApiResponse<Void>> addProductToMyWishList(
             @AuthenticationPrincipal Jwt jwt, @RequestBody WishListRequest wishListRequest) {
@@ -61,6 +69,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
 
+    @Operation(summary = "check wishlisted")
     @GetMapping("/me/wish-list/{productId}/exists")
     public ResponseEntity<ApiResponse<?>> getWishListStatus(
             @PathVariable("productId") Long productId, @AuthenticationPrincipal Jwt jwt) {
@@ -70,6 +79,7 @@ public class UserController {
         return ResponseEntity.ok(apiResponse);
     }
 
+    @Operation(summary = "delete product from wishlist")
     @DeleteMapping("/me/wish-list/{productId}")
     public ResponseEntity<ApiResponse<?>> deleteProductFromMyWishList(
             @PathVariable("productId") Long productId, @AuthenticationPrincipal Jwt jwt) {
@@ -79,4 +89,5 @@ public class UserController {
         var apiResponse = new ApiResponse<>(true, null, null);
         return ResponseEntity.noContent().build();
     }
+    
 }

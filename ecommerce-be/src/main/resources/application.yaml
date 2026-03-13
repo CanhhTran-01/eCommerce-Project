@@ -18,3 +18,12 @@ app:
   oauth2:
     redirect:
       frontend-url: ${FRONTEND_URL:http://localhost:5500}
+
+open:
+  api:
+    title: eCommerce API
+    version: v1.0.0
+    description: API documentation for eCommerce project
+    server-url: http://localhost:8080/eCommerce
+    server-name: Server Test
+

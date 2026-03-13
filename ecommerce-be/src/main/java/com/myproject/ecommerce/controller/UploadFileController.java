@@ -2,7 +2,8 @@ package com.myproject.ecommerce.controller;
 
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.service.UploadFileService;
-import java.util.List;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +12,16 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/upload")
 @RequiredArgsConstructor
+@Tag(name = "Upload File Controller")
 public class UploadFileController {
     private final UploadFileService uploadFileService;
 
+    @Operation(summary = "upload avatar for profile")
     @PostMapping("/avatar-image")
     public ResponseEntity<ApiResponse<String>> uploadAvatarForProfile(
             @RequestParam("image") MultipartFile file, @AuthenticationPrincipal Jwt jwt) {
@@ -27,6 +32,7 @@ public class UploadFileController {
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
 
+    @Operation(summary = "upload image for categories")
     @PostMapping("/categories/{categoryId}/image")
     public ResponseEntity<ApiResponse<String>> uploadImageForCategory(
             @RequestParam("image") MultipartFile file, @PathVariable("categoryId") Long categoryId) {
@@ -36,6 +42,7 @@ public class UploadFileController {
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
 
+    @Operation(summary = "upload image for product")
     @PostMapping("/products/{productId}/images")
     public ResponseEntity<ApiResponse<?>> uploadImagesForProduct(
             @RequestParam("images") List<MultipartFile> files, @PathVariable("productId") Long productId) {
@@ -44,4 +51,5 @@ public class UploadFileController {
         var apiResponse = new ApiResponse<>(true, "Upload thành công !", null);
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
+    
 }

@@ -4,6 +4,8 @@ import com.myproject.ecommerce.dto.request.CheckoutRequest;
 import com.myproject.ecommerce.dto.response.ApiResponse;
 import com.myproject.ecommerce.dto.response.CheckoutResponse;
 import com.myproject.ecommerce.service.CheckoutService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/checkout")
 @RequiredArgsConstructor
+@Tag(name = "Checkout Controller")
 public class CheckoutController {
     private final CheckoutService checkoutService;
 
+    @Operation(summary = "create order")
     @PostMapping("")
     public ResponseEntity<ApiResponse<CheckoutResponse>> createOrder(
             @RequestBody CheckoutRequest checkoutRequest, @AuthenticationPrincipal Jwt jwt) {
