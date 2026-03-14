@@ -1,0 +1,61 @@
+# docker-compose.yaml
+version: '3.9'
+
+networks: # create visually internal network on local host
+  ecommerce-net:
+    driver: bridge
+
+services: # create containers
+  mysql:
+    image: mysql:8.0.36
+    container_name: ecom-db-internal
+    environment:
+      MYSQL_ROOT_PASSWORD: canhtran2005
+      MYSQL_DATABASE: ecommerce_db_docker
+    ports:
+      - "3306:3306"           # mapping port for using workbench
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pcanhtran2005" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - ecommerce-net
+
+  redis:
+    image: redis
+    container_name: ecom-redis-internal
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    networks:
+      - ecommerce-net         # no port mapping — internal only
+
+  backend:
+    image: ecommerce-backend:1.0
+    container_name: ecom-be-internal
+    ports:
+      - "8080:8080"          # only backend need to mapping port ( for communication with FE in local host)
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:mysql://ecom-db-internal:3306/ecommerce_db_docker
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: canhtran2005
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - ecommerce-net
+
+volumes:
+  mysql_data:
+  redis_data:
