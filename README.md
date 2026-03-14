@@ -6,6 +6,7 @@
 ![MySQL](https://img.shields.io/badge/MySQL-Database-blue)
 ![JWT](https://img.shields.io/badge/Auth-JWT-black)
 ![OAuth2](https://img.shields.io/badge/Auth-OAuth2-blue)
+![Docker](https://img.shields.io/badge/Docker-Container-blue)
 
 A simple **eCommerce web application** built with **Spring Boot** and **Vanilla JavaScript**.
 
