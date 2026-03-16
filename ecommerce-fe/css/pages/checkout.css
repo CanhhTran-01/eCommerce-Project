@@ -1,0 +1,269 @@
+/* ================================================================
+   CHECKOUT PAGE
+   ================================================================ */
+
+body.bg-light {
+  background: var(--gray-100) !important;
+  min-height: 100vh;
+}
+
+/* ── Page Header ───────────────────────────────────────────── */
+.container h3.fw-bold {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+/* ── Cards ─────────────────────────────────────────────────── */
+.checkout-page .card,
+.container .card {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+/* ── Receiver Info Section ─────────────────────────────────── */
+.card .card-body h6.fw-semibold {
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Form inputs */
+.card .form-control,
+.card textarea.form-control {
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background: var(--gray-50);
+  padding: 10px 14px;
+  transition: all var(--transition-base);
+  outline: none;
+  height: auto;
+  min-height: 42px;
+  resize: none;
+}
+
+.card .form-control:focus,
+.card textarea.form-control:focus {
+  background: var(--white);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-pale);
+}
+
+.card .form-control::placeholder,
+.card textarea.form-control::placeholder {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+/* ── Order Items ───────────────────────────────────────────── */
+#orderItemsContainer > div {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-color);
+  transition: background var(--transition-fast);
+}
+
+#orderItemsContainer > div:last-child {
+  border-bottom: none;
+}
+
+#orderItemsContainer img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+#orderItemsContainer .fw-semibold {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+#orderItemsContainer .text-muted {
+  font-size: 0.8rem;
+  color: var(--text-muted) !important;
+}
+
+#orderItemsContainer .text-danger {
+  color: var(--primary) !important;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* ── Right Summary Column ──────────────────────────────────── */
+.sticky-top.card {
+  top: calc(var(--navbar-h) + 16px) !important;
+  border-radius: var(--radius-lg);
+}
+
+/* Note textarea */
+#note {
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-family: var(--font-body);
+  padding: 10px 14px;
+  resize: none;
+  transition: all var(--transition-base);
+  background: var(--gray-50);
+}
+
+#note:focus {
+  background: var(--white);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-pale);
+  outline: none;
+}
+
+/* ── Shipping Options ──────────────────────────────────────── */
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: var(--gray-50);
+}
+
+.form-check:has(input:checked) {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.form-check:hover {
+  border-color: var(--border-hover);
+  background: var(--white);
+}
+
+.form-check-input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.form-check-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.form-check:has(input:checked) .form-check-label {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* ── Summary Totals ────────────────────────────────────────── */
+hr {
+  border-color: var(--border-color);
+  opacity: 1;
+  margin: 12px 0;
+}
+
+.d-flex.justify-content-between.mb-2 span {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.d-flex.justify-content-between.mb-2 strong {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.d-flex.justify-content-between.fs-5 span {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--primary) !important;
+}
+
+/* ── Payment Select ────────────────────────────────────────── */
+#paymentMethod {
+  height: 42px;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background: var(--gray-50);
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--transition-fast);
+  padding: 0 12px;
+}
+
+#paymentMethod:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-pale);
+  background: var(--white);
+}
+
+/* ── Submit Button ─────────────────────────────────────────── */
+#submitOrderBtn {
+  height: 48px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--primary);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  width: 100%;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+#submitOrderBtn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(238,77,43,.40);
+}
+
+#submitOrderBtn:active {
+  transform: translateY(0);
+}
+
+#btnSpinner {
+  width: 18px;
+  height: 18px;
+  border-width: 2px;
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 992px) {
+  .sticky-top.card {
+    position: static !important;
+  }
+}

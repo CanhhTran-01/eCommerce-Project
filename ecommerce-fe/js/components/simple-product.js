@@ -30,7 +30,7 @@ export function renderProductCard(data, container) {
                             class="product-name">${product.productName}</h6>
                         <div class="stars">     
                             <div class="stars-filled" style="width: ${(product.ratingAvg / 5) * 100}%"></div>                      
-                            <small style="font-size: 10px;" class="text-muted">(${product.ratingCount} lượt đánh giá)</small>
+                            <small style="font-size: 8px;" class="text-muted">(${product.ratingCount} lượt đánh giá)</small>
                         </div>
                         <div class="product-price">
                             ${priceHTML}

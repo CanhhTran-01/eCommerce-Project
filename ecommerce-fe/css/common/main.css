@@ -1,26 +1,29 @@
 
-/* Base & reset */
+/* ── Core ──────────────────────────────────────────────────── */
 @import url('./bootstrap.min.css');
 @import url('./base.css');
 
-
-/* Components */
+/* ── Components ────────────────────────────────────────────── */
+@import url('../components/navbar.css');
 @import url('../components/cart.css');
 @import url('../components/footer.css');
-@import url('../components/navbar.css');
 @import url('../components/product-card.css');
 @import url('../components/side-bar-profile.css');
 @import url('../components/star-rate.css');
+@import url('../components/banner.css');
 
-
-/* Pages */
-@import url('../pages/profile.css');
+/* ── Pages ─────────────────────────────────────────────────── */
 @import url('../pages/index.css');
 @import url('../pages/login.css');
 @import url('../pages/product-list.css');
-@import url('../pages/sale-product.css');
 @import url('../pages/product-detail.css');
-
-
-
-
+@import url('../pages/profile.css');
+@import url('../pages/sale-product.css');
+@import url('../pages/checkout.css');
+@import url('../pages/my-account.css');
+@import url('../pages/my-orders.css');
+@import url('../pages/order-detail.css');
+@import url('../pages/order-feedback.css');
+@import url('../pages/success-order-submit.css');
+@import url('../pages/utility-pages.css');
+@import url('../pages/wishlist.css');

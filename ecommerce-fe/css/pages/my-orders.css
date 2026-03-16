@@ -1,0 +1,115 @@
+/* ================================================================
+   MY ORDERS PAGE
+   ================================================================ */
+
+/* ── Orders Section Card ───────────────────────────────────── */
+.orders-section {
+  border-radius: var(--radius-lg) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: var(--shadow-sm) !important;
+  overflow: hidden;
+}
+
+.orders-section .card-header {
+  background: var(--gray-50) !important;
+  border-bottom: 1px solid var(--border-color);
+  padding: 16px 20px;
+}
+
+.orders-section .card-header .fas {
+  color: var(--primary) !important;
+}
+
+/* ── List Group ────────────────────────────────────────────── */
+#ordersList .list-group-item {
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  padding: 16px 20px;
+  background: var(--white);
+  transition: background var(--transition-fast);
+}
+
+#ordersList .list-group-item:last-child {
+  border-bottom: none;
+}
+
+#ordersList .list-group-item:hover {
+  background: var(--gray-50);
+}
+
+/* Product image */
+#ordersList img.img-thumbnail {
+  width: 70px !important;
+  height: 70px !important;
+  object-fit: cover;
+  border-radius: var(--radius-md) !important;
+  border: 1px solid var(--border-color) !important;
+  flex-shrink: 0;
+}
+
+/* Product name */
+#ordersList .fw-semibold {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+#ordersList small.text-muted {
+  font-size: 0.775rem;
+  color: var(--text-muted) !important;
+}
+
+/* Price */
+#ordersList .text-danger.fw-semibold {
+  color: var(--primary) !important;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* ── Status Badges ─────────────────────────────────────────── */
+.badge.bg-secondary { background: var(--gray-400) !important; }
+.badge.bg-info      { background: var(--info) !important; }
+.badge.bg-primary   { background: #2563eb !important; }
+.badge.bg-success   { background: var(--success) !important; }
+.badge.bg-danger    { background: var(--danger) !important; }
+.badge.bg-warning   { background: var(--warning) !important; color: var(--white) !important; }
+
+.badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.02em;
+}
+
+/* ── Detail Button ─────────────────────────────────────────── */
+.orderDetailBtn {
+  font-size: 0.775rem;
+  font-weight: 600;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--primary) !important;
+  color: var(--primary) !important;
+  background: transparent !important;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.orderDetailBtn:hover {
+  background: var(--primary) !important;
+  color: var(--white) !important;
+  box-shadow: var(--shadow-primary);
+}
+
+/* ── Empty State ───────────────────────────────────────────── */
+#ordersList p.text-danger {
+  padding: 32px 20px;
+  text-align: center;
+  color: var(--text-muted) !important;
+  font-weight: 400 !important;
+}

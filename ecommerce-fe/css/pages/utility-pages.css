@@ -1,0 +1,102 @@
+/* ================================================================
+   NOT READY FEATURE PAGE + SOCIAL LOGIN SUCCESS PAGE
+   Shared utility/state pages
+   ================================================================ */
+
+/* ── Full-page centering ───────────────────────────────────── */
+body.bg-light.d-flex.align-items-center.vh-100 {
+  background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%) !important;
+}
+
+/* ── Not-Ready Feature Card ────────────────────────────────── */
+.card.shadow.text-center {
+  border-radius: var(--radius-xl) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: var(--shadow-lg) !important;
+  overflow: hidden;
+  animation: fadeSlideUp 350ms cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.card.shadow.text-center .card-body.p-5 {
+  padding: 48px 40px !important;
+}
+
+.card.shadow.text-center .display-4.text-warning {
+  font-size: 3rem;
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.08); }
+}
+
+.card.shadow.text-center h3 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 16px;
+}
+
+.card.shadow.text-center p.text-muted {
+  font-size: 0.875rem;
+  color: var(--text-secondary) !important;
+  line-height: 1.7;
+}
+
+/* Back to home button */
+.card.shadow.text-center .btn-primary {
+  height: 46px;
+  padding: 0 28px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: var(--primary) !important;
+  color: var(--white) !important;
+  font-weight: 700;
+  font-size: 0.875rem;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.card.shadow.text-center .btn-primary:hover {
+  background: var(--primary-hover) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(238,77,43,.38);
+}
+
+/* ── Social Login Success ──────────────────────────────────── */
+.card.shadow-sm.p-4.text-center {
+  border-radius: var(--radius-xl) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: var(--shadow-lg) !important;
+  animation: fadeSlideUp 300ms ease;
+}
+
+.card.shadow-sm.p-4.text-center .spinner-border {
+  width: 36px;
+  height: 36px;
+  border-width: 3px;
+  color: var(--primary) !important;
+}
+
+.card.shadow-sm.p-4.text-center h5 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.card.shadow-sm.p-4.text-center p.text-muted {
+  font-size: 0.8125rem;
+  color: var(--text-muted) !important;
+}

@@ -1,22 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
+
+/* ── Design Tokens ─────────────────────────────────────────── */
 :root {
-    --primary-color: #ee4d2b;
-    --primary-light: #f05a3d;
-    --secondary-color: #f0f0f0;
-    --text-dark: #000;
-    --text-light: #666;
-    --text-muted: #999;
-    --border-color: #e8e8e8;
-    --white: #ffffff;
+  /* Brand */
+  --primary:          #ee4d2b;
+  --primary-hover:    #d94022;
+  --primary-light:    #fff3f0;
+  --primary-pale:     #ffeae5;
+
+  /* Neutral */
+  --white:            #ffffff;
+  --gray-50:          #fafafa;
+  --gray-100:         #f5f5f5;
+  --gray-150:         #efefef;
+  --gray-200:         #e8e8e8;
+  --gray-300:         #d1d1d1;
+  --gray-400:         #b0b0b0;
+  --gray-500:         #888888;
+  --gray-600:         #666666;
+  --gray-700:         #444444;
+  --gray-800:         #222222;
+  --gray-900:         #111111;
+
+  /* Semantic */
+  --text-primary:     var(--gray-900);
+  --text-secondary:   var(--gray-600);
+  --text-muted:       var(--gray-400);
+  --text-placeholder: var(--gray-300);
+  --border-color:     var(--gray-200);
+  --border-hover:     var(--gray-300);
+  --bg-body:          var(--gray-50);
+  --bg-card:          var(--white);
+  --bg-subtle:        var(--gray-100);
+
+  /* Status */
+  --success:          #16a34a;
+  --success-light:    #dcfce7;
+  --warning:          #d97706;
+  --warning-light:    #fef3c7;
+  --danger:           #dc2626;
+  --danger-light:     #fee2e2;
+  --info:             #2563eb;
+  --info-light:       #dbeafe;
+
+  /* Typography */
+  --font-body:        'DM Sans', 'Be Vietnam Pro', system-ui, sans-serif;
+  --font-heading:     'Be Vietnam Pro', 'DM Sans', system-ui, sans-serif;
+  --font-mono:        'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Sizing */
+  --radius-sm:        6px;
+  --radius-md:        10px;
+  --radius-lg:        14px;
+  --radius-xl:        20px;
+  --radius-full:      9999px;
+
+  /* Shadows */
+  --shadow-xs:        0 1px 2px rgba(0,0,0,.06);
+  --shadow-sm:        0 1px 4px rgba(0,0,0,.08), 0 0 0 1px rgba(0,0,0,.04);
+  --shadow-md:        0 4px 12px rgba(0,0,0,.10), 0 1px 3px rgba(0,0,0,.06);
+  --shadow-lg:        0 8px 24px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.08);
+  --shadow-xl:        0 20px 60px rgba(0,0,0,.16), 0 4px 16px rgba(0,0,0,.08);
+  --shadow-primary:   0 4px 16px rgba(238,77,43,.30);
+
+  /* Transitions */
+  --transition-fast:  150ms ease;
+  --transition-base:  220ms ease;
+  --transition-slow:  350ms cubic-bezier(.4,0,.2,1);
+
+  /* Layout */
+  --navbar-h:         64px;
+  --sidebar-w:        260px;
+  --content-max:      1280px;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ── CSS Reset ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  font-size: 16px;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-    color: var(--text-dark);
-    background-color: #fafafa;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--bg-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img, video, svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input, textarea, select {
+  font-family: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* ── Utility Classes ───────────────────────────────────────── */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.truncate-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.truncate-1 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Scrollbar Styling ─────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-400);
+}
+
+/* ── Focus Styles ──────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Selection ─────────────────────────────────────────────── */
+::selection {
+  background: var(--primary-pale);
+  color: var(--primary-hover);
 }

@@ -61,7 +61,7 @@ async function handleSaleProducts() {
         sessionStorage.setItem('sale_list', JSON.stringify(response));
 
         // render 6 products
-        renderProductCard(response.data.slice(0, 6), saleProductHomeView);
+        renderProductCard(response.data.slice(0, 5), saleProductHomeView);
 
         // show "View All" link if more than 6 products available
         if (response.data.length > 6) {

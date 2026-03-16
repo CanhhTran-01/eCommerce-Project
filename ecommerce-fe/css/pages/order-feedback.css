@@ -1,0 +1,175 @@
+/* ================================================================
+   ORDER FEEDBACK PAGE
+   ================================================================ */
+
+/* ── Header Card ───────────────────────────────────────────── */
+#feedbackTitle {
+  width: 100%;
+}
+
+#feedbackTitle .fw-semibold {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+#feedbackTitle .small.text-muted {
+  font-size: 0.8125rem;
+  color: var(--text-muted) !important;
+  margin-top: 3px;
+}
+
+/* ── Feedback Cards ────────────────────────────────────────── */
+#itemFeedback > div[data-product-id] {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-xs);
+  transition: box-shadow var(--transition-base);
+}
+
+#itemFeedback > div[data-product-id]:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+/* Product image + title row */
+#itemFeedback .d-flex.mb-3 img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+#itemFeedback h6 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* ── Star Rating ───────────────────────────────────────────── */
+.rating-stars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.rating-stars .star {
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: transform var(--transition-fast), color var(--transition-fast);
+  line-height: 1;
+}
+
+.rating-stars .star:hover {
+  transform: scale(1.2);
+}
+
+.rating-stars .bi-star-fill {
+  color: #fbbf24;
+}
+
+.rating-stars .bi-star {
+  color: var(--gray-300);
+}
+
+/* ── Form Fields ───────────────────────────────────────────── */
+.form-label.fw-semibold {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  display: block;
+}
+
+#itemFeedback .form-control {
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background: var(--gray-50);
+  padding: 10px 14px;
+  transition: all var(--transition-base);
+  outline: none;
+}
+
+#itemFeedback .form-control:focus {
+  background: var(--white);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-pale);
+}
+
+#itemFeedback .form-control::placeholder {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+#itemFeedback textarea.form-control {
+  resize: none;
+  min-height: 90px;
+}
+
+#itemFeedback .text-end.small.text-muted {
+  font-size: 0.72rem;
+  color: var(--text-muted) !important;
+  margin-top: 4px;
+}
+
+/* ── Send Feedback Button ──────────────────────────────────── */
+.send-feedback {
+  height: 44px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--primary) !important;
+  color: var(--white) !important;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  width: 100%;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.send-feedback:hover {
+  background: var(--primary-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(238,77,43,.38);
+}
+
+/* ── Success State ─────────────────────────────────────────── */
+#itemFeedback .text-success.fw-semibold {
+  color: var(--success) !important;
+  font-size: 0.875rem;
+  padding: 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Return Button ─────────────────────────────────────────── */
+#returnToIndexPageBtn {
+  height: 44px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all var(--transition-base);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

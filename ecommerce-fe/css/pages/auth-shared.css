@@ -1,0 +1,135 @@
+/* ================================================================
+   AUTH PAGES — Forgot Password / Register / Update Password
+   Shared background + card layout
+   ================================================================ */
+
+.bg-light {
+  min-height: 100vh;
+  background:
+    url("https://res.cloudinary.com/djw4qdufh/image/upload/v1772196632/avatar/d39280fc-4cbd-4414-9171-6751bc07be7e_security.webp")
+    center / cover no-repeat;
+  position: relative;
+}
+
+.bg-light::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,0,0,.50) 0%, rgba(0,0,0,.25) 100%);
+  z-index: 0;
+}
+
+/* ── Card Overrides ────────────────────────────────────────── */
+.bg-light .card {
+  position: relative;
+  z-index: 1;
+  background: rgba(255,255,255,.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,.8);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 24px 80px rgba(0,0,0,.28);
+  animation: authSlideUp 350ms cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes authSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.bg-light .card-body {
+  padding: 36px 32px;
+}
+
+/* Step Transitions */
+.step {
+  animation: stepFadeIn 250ms ease;
+}
+
+@keyframes stepFadeIn {
+  from { opacity: 0; transform: translateX(10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Brand Header */
+.bg-light .text-center .fw-bold.text-danger {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  color: var(--primary) !important;
+}
+
+/* Form Controls in Auth Pages */
+.bg-light .form-control {
+  height: 44px;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-family: var(--font-body);
+  background: var(--gray-50);
+  color: var(--text-primary);
+  padding: 0 14px;
+  transition: all var(--transition-base);
+  outline: none;
+}
+
+.bg-light .form-control:focus {
+  background: var(--white);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-pale);
+}
+
+/* Buttons */
+.bg-light .btn-danger {
+  height: 46px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--primary) !important;
+  color: var(--white) !important;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  box-shadow: var(--shadow-primary);
+  transition: all var(--transition-base);
+}
+
+.bg-light .btn-danger:hover {
+  background: var(--primary-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(238,77,43,.40);
+}
+
+/* OTP Input */
+.bg-light input[type="text"].text-center {
+  letter-spacing: 0.25em;
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Spinner Container */
+.bg-light .spinner-border {
+  color: var(--primary);
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+}
+
+/* Small notify text */
+#notifyOtpSending {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  min-height: 20px;
+}
+
+/* Back link */
+.bg-light .text-center.mt-3 a {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.bg-light .text-center.mt-3 a:hover {
+  text-decoration: underline;
+}

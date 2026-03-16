@@ -1,94 +1,151 @@
+/* ================================================================
+   SIDEBAR PROFILE — Account sidebar navigation
+   ================================================================ */
 
-/* Sidebar Profile */
 .account-sidebar {
-    background: var(--card-bg, #fff);
-    border-radius: 8px;
-    padding: 18px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: calc(var(--navbar-h) + 16px);
 }
 
+/* ── Profile Block ─────────────────────────────────────────── */
 .sidebar-profile {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border-color, #eee);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 28px 20px 20px;
+  background: linear-gradient(160deg, var(--primary-light) 0%, var(--white) 100%);
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.sidebar-profile .avatar {
+  position: relative;
 }
 
 .sidebar-profile .avatar img {
-    width: 220px; /* increased from 56px */
-    height: 220px; /* increased from 56px */
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #f2f2f2;
+  width: 84px;
+  height: 84px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  border: 3px solid var(--white);
+  box-shadow: var(--shadow-md);
+  display: block;
 }
 
-.sidebar-profile .name {
-    font-weight: 700;
-    font-size: 0.95rem;
+/* Online indicator dot */
+.sidebar-profile .avatar::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  background: var(--success);
+  border: 2px solid var(--white);
 }
 
-.sidebar-profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border-color, #eee);
+#nickName h5 {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
 }
 
+/* Edit Profile Button */
 .profile-actions {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .btn-edit-profile {
-    display: inline-block;
-    margin-top: 4px;
-    padding: 6px 8px; /* reduced padding */
-    font-size: 0.85rem; /* smaller text */
-    border-radius: 6px;
-    border: 1px solid var(--primary-color, #0d6efd);
-    background: transparent;
-    color: var(--primary-color, #0d6efd);
-    cursor: pointer;
-    transition: background-color 0.15s ease, color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  font-size: 0.775rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  letter-spacing: 0.01em;
 }
 
 .btn-edit-profile:hover {
-    background: rgba(13,110,253,0.08);
+  background: var(--primary);
+  color: var(--white);
+  box-shadow: var(--shadow-primary);
 }
 
-/* responsive adjustments if needed */
-@media (max-width: 576px) {
-    .btn-edit-profile {
-        padding: 7px 10px;
-        font-size: 0.88rem;
-    }
-}
-
-/* Sidebar nav */
+/* ── Sidebar Navigation ────────────────────────────────────── */
 .sidebar-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 2px;
 }
 
 .sidebar-nav a {
-    display: block;
-    padding: 10px 12px;
-    color: var(--text-muted, #555);
-    text-decoration: none;
-    border-radius: 6px;
-    font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  gap: 10px;
 }
 
-.sidebar-nav a.active,
 .sidebar-nav a:hover {
-    background: var(--primary-color, #0d6efd);
-    color: #fff;
+  background: var(--gray-100);
+  color: var(--text-primary);
+  padding-left: 18px;
+}
+
+.sidebar-nav a.active {
+  background: var(--primary-light);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.sidebar-nav a.active:hover {
+  background: var(--primary-pale);
+}
+
+/* Last item (logout) — danger color */
+.sidebar-nav a:last-child {
+  color: var(--danger);
+  margin-top: 4px;
+}
+
+.sidebar-nav a:last-child:hover {
+  background: var(--danger-light);
+  color: var(--danger);
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 992px) {
+  .account-sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar-profile .name {
+    display: none;
+  }
 }

@@ -1,0 +1,127 @@
+/* ================================================================
+   SUCCESS ORDER SUBMIT PAGE
+   ================================================================ */
+
+.container.py-5 {
+  max-width: 560px;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ── Success Card ──────────────────────────────────────────── */
+.card.shadow-sm.text-center {
+  border-radius: var(--radius-xl) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: var(--shadow-lg) !important;
+  overflow: hidden;
+  animation: successBounceIn 500ms cubic-bezier(.68,-.55,.265,1.55);
+}
+
+@keyframes successBounceIn {
+  0%   { opacity: 0; transform: scale(.85); }
+  60%  { transform: scale(1.03); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.card.shadow-sm.text-center .card-body {
+  padding: 40px 32px;
+}
+
+/* ── Success Icon ──────────────────────────────────────────── */
+.bg-success.bg-opacity-10 {
+  background: var(--success-light) !important;
+  width: 96px !important;
+  height: 96px !important;
+  border-radius: var(--radius-full) !important;
+  margin: 0 auto;
+  border: 4px solid #bbf7d0;
+}
+
+.bg-success.bg-opacity-10 .text-success {
+  color: var(--success) !important;
+  font-size: 2.25rem !important;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ── Heading ───────────────────────────────────────────────── */
+.text-success.fw-bold.mb-3 {
+  color: var(--success) !important;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.text-muted.mb-4 {
+  color: var(--text-muted) !important;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* ── Order Summary ─────────────────────────────────────────── */
+.text-start.mt-4.mb-4 > .d-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.875rem;
+}
+
+.text-start.mt-4.mb-4 > .d-flex:last-child {
+  border-bottom: none;
+}
+
+.text-start.mt-4.mb-4 span:first-child {
+  color: var(--text-secondary);
+}
+
+.text-start.mt-4.mb-4 strong {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.text-start.mt-4.mb-4 strong.text-danger,
+#totalCheckout {
+  color: var(--primary) !important;
+  font-size: 0.95rem;
+}
+
+/* ── Action Buttons ────────────────────────────────────────── */
+.d-grid.gap-2 .btn {
+  height: 46px;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all var(--transition-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.d-grid.gap-2 .btn-primary {
+  background: var(--primary) !important;
+  border: none;
+  box-shadow: var(--shadow-primary);
+  letter-spacing: 0.02em;
+}
+
+.d-grid.gap-2 .btn-primary:hover {
+  background: var(--primary-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(238,77,43,.38);
+}
+
+.d-grid.gap-2 .btn-outline-secondary {
+  border: 1.5px solid var(--border-color);
+  color: var(--text-secondary);
+  background: transparent;
+}
+
+.d-grid.gap-2 .btn-outline-secondary:hover {
+  background: var(--gray-100);
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}

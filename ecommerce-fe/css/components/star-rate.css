@@ -1,24 +1,49 @@
+/* ================================================================
+   STAR RATING — Reusable star component
+   ================================================================ */
+
 .stars {
-    position: relative;
-    display: inline-block;
-    font-size: 1.1rem;
-    line-height: 1;
+  position: relative;
+  display: inline-block;
+  font-size: 0.85rem;
+  line-height: 1;
+  letter-spacing: 1.5px;
+  vertical-align: middle;
 }
 
 .stars::before {
-    content: "★★★★★";
-    color: #ddd;   
+  content: "★★★★★";
+  color: var(--gray-200);
 }
 
 .stars-filled {
-    position: absolute;
-    top: 0;
-    left: 0;
-    white-space: nowrap;   
-    overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .stars-filled::before {
-    content: "★★★★★";
-    color: #ffc107;  
+  content: "★★★★★";
+  color: #fbbf24;
+}
+
+/* Interactive stars (order feedback page) */
+.rating-stars .star {
+  cursor: pointer;
+  transition: transform var(--transition-fast), color var(--transition-fast);
+  font-size: 1.5rem;
+}
+
+.rating-stars .star:hover {
+  transform: scale(1.15);
+}
+
+.rating-stars .bi-star-fill {
+  color: #fbbf24;
+}
+
+.rating-stars .bi-star {
+  color: var(--gray-300);
 }

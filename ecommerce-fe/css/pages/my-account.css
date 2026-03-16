@@ -1,0 +1,150 @@
+/* ================================================================
+   MY ACCOUNT PAGE
+   ================================================================ */
+
+/* ── Page Wrapper ──────────────────────────────────────────── */
+.bg-body-tertiary {
+  background: var(--gray-50) !important;
+  min-height: 100vh;
+}
+
+/* Widen the column — col-lg-5 is too narrow */
+.row.justify-content-center > .col-lg-5 {
+  flex: 0 0 auto;
+  width: min(520px, 100%);
+}
+
+/* ── Account Card ──────────────────────────────────────────── */
+.card.border-0.shadow-lg.rounded-4 {
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-lg) !important;
+  border: 1px solid var(--border-color) !important;
+  overflow: hidden;
+  animation: accountCardIn 350ms cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes accountCardIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Top Banner ────────────────────────────────────────────── */
+.bg-primary-subtle.text-center {
+  background: linear-gradient(150deg, #fff0ec 0%, #fff8f6 60%, #ffffff 100%) !important;
+  padding: 32px 28px 24px !important;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Avatar circle */
+.bg-primary-subtle .bg-white.rounded-circle {
+  width: 72px !important;
+  height: 72px !important;
+  border-radius: var(--radius-full) !important;
+  box-shadow: 0 4px 16px rgba(238,77,43,.15), 0 0 0 4px white !important;
+  border: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Icon inside avatar */
+.bg-primary-subtle .fa-solid.fa-user {
+  color: var(--primary) !important;
+  font-size: 1.6rem !important;
+}
+
+.bg-primary-subtle h5 {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 14px;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.bg-primary-subtle small.text-muted {
+  font-size: 0.8rem;
+  color: var(--text-muted) !important;
+  line-height: 1.5;
+}
+
+/* ── Card Body ─────────────────────────────────────────────── */
+.card.border-0.shadow-lg .card-body.p-4 {
+  padding: 4px 0 0 !important;
+}
+
+/* ── Info Rows — fix the broken layout ─────────────────────── */
+.card.border-0.shadow-lg .d-flex.justify-content-between.align-items-center.py-2 {
+  display: grid !important;
+  grid-template-columns: 140px 1fr !important;
+  align-items: start !important;
+  gap: 8px;
+  padding: 14px 24px !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  margin: 0 !important;
+}
+
+/* Remove border from last info row (before the button grid) */
+.card.border-0.shadow-lg .d-flex.justify-content-between.align-items-center.py-2:last-of-type {
+  border-bottom: none !important;
+}
+
+/* Label (left column) */
+.card.border-0.shadow-lg .d-flex.justify-content-between.align-items-center.py-2 .text-muted {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-muted) !important;
+  white-space: nowrap;
+}
+
+/* Value (right column) */
+.card.border-0.shadow-lg .d-flex.justify-content-between.align-items-center.py-2 .fw-semibold {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  word-break: break-all;   /* fix long email overflow */
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+/* Dividers between rows */
+.card.border-0.shadow-lg hr.my-2 {
+  display: none; /* rows already have border-bottom, no need for extra <hr> */
+}
+
+/* ── Change Password Button ────────────────────────────────── */
+.card.border-0.shadow-lg .d-grid.mt-4 {
+  padding: 16px 24px 24px;
+  border-top: 1px solid var(--border-color);
+  margin-top: 0 !important;
+}
+
+.card.border-0.shadow-lg .d-grid .btn-primary {
+  height: 48px;
+  border-radius: var(--radius-md) !important;
+  border: none !important;
+  background: var(--primary) !important;
+  color: var(--white) !important;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-primary);
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.card.border-0.shadow-lg .d-grid .btn-primary:hover {
+  background: var(--primary-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(238,77,43,.38);
+}
+
+.card.border-0.shadow-lg .d-grid .btn-primary .fa-key {
+  font-size: 0.875rem;
+}

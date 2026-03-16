@@ -1,137 +1,229 @@
+/* ================================================================
+   PROFILE & ACCOUNT PAGES
+   ================================================================ */
 
-/* Account Info Page Styles */
+/* ── Page Layout ───────────────────────────────────────────── */
 .page-account {
-    padding: 32px 16px;
-    max-width: 1200px;
-    margin: 0 auto;
+  padding: 28px 16px 48px;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .account-layout {
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    gap: 24px;
-    align-items: start;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+  align-items: start;
 }
 
-/* Main */
+/* ── Section Cards ─────────────────────────────────────────── */
 .account-main .section {
-    margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .card {
-    background: var(--card-bg, #fff);
-    padding: 18px;
-    border-radius: 8px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
 }
 
-.profile-box .row {
-    display: flex;
-    gap: 12px;
-    align-items: center;
+/* ── Profile Info Box ──────────────────────────────────────── */
+.profile-box {
+  font-size: 0.875rem;
 }
 
-.profile-box div {
-    margin-bottom: 8px;
+.user-info-section .row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-color);
 }
 
-/* Accordion */
+.user-info-section .row:last-child {
+  border-bottom: none;
+}
+
+/* ── Accordion (Account Info) ──────────────────────────────── */
 #accountAccordion {
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
 }
 
 #accountAccordion .card {
-    border: 1px solid #e8e8e8;
-    border-radius: 0;
-    margin-bottom: 0;
-    box-shadow: none;
-    background: #fff;
-}
-
-#accountAccordion .card:first-child {
-    border-radius: 12px 12px 0 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--white);
+  border-bottom: 1px solid var(--border-color);
 }
 
 #accountAccordion .card:last-child {
-    border-radius: 0 0 12px 12px;
-    border-bottom: 1px solid #e8e8e8;
+  border-bottom: none;
 }
 
 #accountAccordion .card-header {
-    padding: 0;
-    background: transparent;
-    border: none;
+  padding: 0;
+  background: transparent;
+  border: none;
 }
 
 #accountAccordion .card-header .btn {
-    display: block;
-    width: 100%;
-    text-align: left;
-    padding: 16px 20px;
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: #333;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  width: 100%;
+  text-align: left;
+  padding: 16px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  align-items: center;
+  gap: 12px;
+  transition: all var(--transition-fast);
+  text-decoration: none;
 }
 
 #accountAccordion .card-header .btn:hover {
-    background: #f8f9fa;
-    color: #667eea;
+  background: var(--gray-50);
+  color: var(--primary);
 }
 
 #accountAccordion .card-header .btn i {
-    color: #667eea;
-    font-size: 1.1rem;
+  color: var(--primary);
+  font-size: 1rem;
+  width: 18px;
+  flex-shrink: 0;
 }
 
+/* Chevron indicator */
 #accountAccordion .card-header .btn::after {
-    content: '';
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    margin-left: auto;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='%23667eea' stroke='%23667eea' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 8l3 3 3-3'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-size: contain;
-    transition: transform 0.3s ease;
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-left: auto;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ee4d2b' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: transform var(--transition-base);
 }
 
 #accountAccordion .card-header .btn.collapsed::after {
-    transform: rotate(-90deg);
+  transform: rotate(-90deg);
 }
 
 #accountAccordion .card-body {
-    padding: 20px;
-    border-top: 1px solid #e8e8e8;
-    background: #fff;
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  background: var(--white);
 }
 
-#accountAccordion .card-body:first-child {
-    border-top: none;
+/* ── Edit Profile Form ─────────────────────────────────────── */
+#editProfileForm .form-control,
+#editProfileForm .form-select {
+  height: 42px;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  padding: 0 12px;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  font-family: var(--font-body);
 }
 
+#editProfileForm .form-control:focus,
+#editProfileForm .form-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-pale);
+  outline: none;
+}
 
-/* Responsive */
+/* ── Avatar Section ────────────────────────────────────────── */
+#collapseAvatarDisplay .rounded-circle {
+  border: 4px solid var(--white);
+  box-shadow: var(--shadow-md);
+}
+
+#uploadBtn {
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+
+/* ── Orders List ───────────────────────────────────────────── */
+.orders-section .card-header {
+  padding: 16px 20px;
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.list-group-item {
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  padding: 16px 20px;
+  transition: background var(--transition-fast);
+}
+
+.list-group-item:hover {
+  background: var(--gray-50);
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+/* ── Wishlist Grid ─────────────────────────────────────────── */
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.wishlist-section .card-header {
+  padding: 16px 20px;
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* ── Points Badge ──────────────────────────────────────────── */
+.badge.bg-warning {
+  background: linear-gradient(135deg, #fbbf24, #d97706) !important;
+  color: var(--white) !important;
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
 @media (max-width: 992px) {
-    .account-layout {
-        grid-template-columns: 1fr;
-    }
-    .wishlist-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .account-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .wishlist-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 576px) {
-    .wishlist-grid {
-        grid-template-columns: 1fr;
-    }
-    .sidebar-profile .name { display: none; }
+  .wishlist-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-account {
+    padding: 16px;
+  }
 }

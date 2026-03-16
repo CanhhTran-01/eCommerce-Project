@@ -1,0 +1,79 @@
+/* ================================================================
+   WISHLIST PAGE
+   ================================================================ */
+
+/* ── Wishlist Section ──────────────────────────────────────── */
+.wishlist-section {
+  border-radius: var(--radius-lg) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: var(--shadow-sm) !important;
+  overflow: hidden;
+}
+
+.wishlist-section .card-header {
+  background: var(--gray-50) !important;
+  border-bottom: 1px solid var(--border-color);
+  padding: 16px 20px;
+}
+
+.wishlist-section .card-header .fa-heart {
+  color: var(--primary) !important;
+}
+
+/* ── Product Grid — neutralise Bootstrap row, use CSS grid ─── */
+/*
+ * The HTML has id="wishList" with Bootstrap classes row/row-cols-*.
+ * renderProductCard() injects .product-card directly (no .col wrapper),
+ * so Bootstrap's row system breaks the layout.
+ * We fully reset the row behaviour and use a plain CSS grid instead.
+ */
+#wishList {
+  /* reset Bootstrap row margins */
+  margin-right: 0  !important;
+  margin-left:  0  !important;
+  margin-top:   0  !important;
+
+  /* switch to CSS grid */
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)) !important;
+  gap: 14px !important;
+  padding: 16px !important;
+
+  /* kill flex so children don't get flex sizing */
+  flex-wrap: unset !important;
+}
+
+/* Every direct child (product-card) must ignore Bootstrap's col widths */
+#wishList > * {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: none !important;
+  padding-right: 0 !important;
+  padding-left:  0 !important;
+  margin-top:    0 !important;
+}
+
+/* ── Empty / Error state ───────────────────────────────────── */
+#wishList p.text-danger {
+  grid-column: 1 / -1;        /* span full width of the grid */
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-muted) !important;
+  font-weight: 400 !important;
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  #wishList {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #wishList {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    padding: 10px !important;
+  }
+}
