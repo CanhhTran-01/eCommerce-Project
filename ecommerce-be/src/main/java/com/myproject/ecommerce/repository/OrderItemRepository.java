@@ -2,12 +2,11 @@ package com.myproject.ecommerce.repository;
 
 import com.myproject.ecommerce.dto.response.OrderItemResponse;
 import com.myproject.ecommerce.entity.OrderItem;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
@@ -65,7 +64,6 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
                     WHERE oi.order.id = :orderId AND oi.order.status = 'COMPLETED'
                     """)
     List<OrderItemResponse> getOrderItemsforFeedback(@Param("orderId") Long orderId);
-
 
     // get order item for order detail display with productId not null
     @Query(

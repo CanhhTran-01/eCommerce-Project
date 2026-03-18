@@ -17,7 +17,7 @@ public enum ErrorCode {
     PASSWORD_INVALID(1003, "password invalid!", HttpStatus.BAD_REQUEST),
     EMAIL_INVALID(1004, "email invalid!", HttpStatus.BAD_REQUEST),
     ACCOUNT_NOT_FOUND(1005, "account not found!", HttpStatus.NOT_FOUND),
-    UNAUTHENTICATED(1006, "unauthenticated!", HttpStatus.UNAUTHORIZED),
+    UNAUTHENTICATED(1006, "password incorrect!", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1007, "you have no permission with this page!", HttpStatus.FORBIDDEN),
     USER_NOT_FOUND(1008, "user not found!", HttpStatus.NOT_FOUND),
     PRODUCT_NOT_FOUND(1009, "product not found!", HttpStatus.NOT_FOUND),
@@ -42,7 +42,10 @@ public enum ErrorCode {
     INVALID_RATING_DATA(1028, "rating is only from 1-5 value!", HttpStatus.BAD_REQUEST),
     NO_TITLE_DATA(1029, "title mustn't be empty !", HttpStatus.BAD_REQUEST),
     NO_COMMENT_DATA(1030, "comment mustn't be empty !", HttpStatus.BAD_REQUEST),
-    PHONE_NUMBER_INVALID(1031, "phone number is invalid !", HttpStatus.BAD_REQUEST);
+    PHONE_NUMBER_INVALID(1031, "phone number is invalid !", HttpStatus.BAD_REQUEST),
+    NOT_FOUND_IN_WISHLIST(1032, "your wishlist doeasn't contain this product!", HttpStatus.BAD_REQUEST),
+    EMAIL_NOT_FOUND(1033, "this email doesn't exist !", HttpStatus.BAD_REQUEST),
+    NOT_LOCAL_ACCOUNT(1034, "this account is not local !", HttpStatus.BAD_REQUEST);
 
     private final int code; // future use
     private final String message;

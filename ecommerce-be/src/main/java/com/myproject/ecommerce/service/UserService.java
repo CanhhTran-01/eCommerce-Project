@@ -39,6 +39,7 @@ public class UserService {
     }
 
     // get user info from account
+    @Transactional(readOnly = true)
     public UserInfoDetailResponse getInfo(Long accountId) {
         User user = userRepository
                 .findByAccountId(accountId)
@@ -49,6 +50,7 @@ public class UserService {
 
     // update user info
     public UserInfoDetailResponse updateUserInfo(Long id, InfoUpdateRequest infoUpdateRequest) {
+
         User user = userRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
 
         userMapper.updateUser(user, infoUpdateRequest);

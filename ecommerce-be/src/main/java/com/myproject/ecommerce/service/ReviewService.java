@@ -48,6 +48,11 @@ public class ReviewService {
     // get reviews by product
     @Transactional(readOnly = true)
     public List<ReviewResponse> getProductReviews(Long productId) {
+
+        if (!productRepository.existsById(productId)) {
+            throw new BaseException(ErrorCode.PRODUCT_NOT_FOUND);
+        }
+
         return reviewRepository.findReviewsByProductId(productId);
     }
 }

@@ -53,10 +53,10 @@ public class OtpService {
         }
 
         if (!savedOtp.equals(request.getOtp())) {
-            throw new BaseException(ErrorCode.OTP_INVALID); // false otp
+            throw new BaseException(ErrorCode.OTP_INVALID); // otp incorrect
         }
 
-        stringRedisTemplate.delete(key); // avoid reusing
+        stringRedisTemplate.delete(key); // avoid reusing old key
 
         // create verified flag
         String verifiedKey = buildVerifiedKey(request.getEmail(), request.getOtpType());

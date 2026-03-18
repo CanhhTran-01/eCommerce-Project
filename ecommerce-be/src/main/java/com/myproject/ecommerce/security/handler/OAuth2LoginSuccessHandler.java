@@ -7,7 +7,7 @@ import com.myproject.ecommerce.enums.AuthProvider;
 import com.myproject.ecommerce.enums.Gender;
 import com.myproject.ecommerce.enums.Role;
 import com.myproject.ecommerce.repository.AccountRepository;
-import com.myproject.ecommerce.service.JwtService;
+import com.myproject.ecommerce.security.jwt.JwtService;
 import com.myproject.ecommerce.utils.NickNameRandomUtils;
 import com.myproject.ecommerce.utils.UserCodeRandomUtils;
 import jakarta.servlet.http.HttpServletRequest;

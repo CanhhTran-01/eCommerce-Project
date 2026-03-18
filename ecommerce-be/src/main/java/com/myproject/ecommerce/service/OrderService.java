@@ -18,13 +18,12 @@ import com.myproject.ecommerce.repository.OrderRepository;
 import com.myproject.ecommerce.repository.ProductRepository;
 import com.myproject.ecommerce.utils.CurrentProductPriceUtils;
 import com.myproject.ecommerce.utils.OrderCodeRandomUtils;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +39,10 @@ public class OrderService {
     @Transactional(readOnly = true)
     public OrderDetailResponse getOrderDetail(Long accountId, Long orderId) {
 
+        if (!accountRepository.existsById(accountId)) {
+            throw new BaseException(ErrorCode.ACCOUNT_NOT_FOUND);
+        }
+
         Order order = orderRepository
                 .findOrderByIdAndAccountId(accountId, orderId)
                 .orElseThrow(() -> new BaseException(ErrorCode.ORDER_NOT_FOUND));
@@ -48,7 +51,7 @@ public class OrderService {
 
         List<OrderItemResponse> orderItemResponses =
                 orderItemRepository.getOrderItemsforOrderDetailDisplay(order.getId());
-        
+
         response.setOrderItemResponseList(orderItemResponses);
 
         return response;

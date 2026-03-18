@@ -1,4 +1,4 @@
-package com.myproject.ecommerce.service;
+package com.myproject.ecommerce.security.jwt;
 
 import com.myproject.ecommerce.entity.Account;
 import com.myproject.ecommerce.exception.BaseException;
@@ -25,6 +25,7 @@ public class JwtService {
     @Value("${jwt.signerKey}")
     private String signerKey;
 
+    // generate token
     public String generateToken(Account account) {
         // header
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS256);
@@ -68,6 +69,7 @@ public class JwtService {
         return signedJWT.getJWTClaimsSet();
     }
 
+    // build roles scope
     private String buildScope(Account account) {
         return account.getAccountRoles().stream().map(Enum::name).collect(Collectors.joining(" "));
     }

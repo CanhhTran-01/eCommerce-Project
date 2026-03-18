@@ -12,14 +12,13 @@ import com.myproject.ecommerce.service.WishListService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -73,9 +72,11 @@ public class UserController {
     @GetMapping("/me/wish-list/{productId}/exists")
     public ResponseEntity<ApiResponse<?>> getWishListStatus(
             @PathVariable("productId") Long productId, @AuthenticationPrincipal Jwt jwt) {
-        Long accountId = jwt.getClaim("accountId"); // get account_id from JWT
 
-        var apiResponse = new ApiResponse<>(true, null, productService.isWishListed(productId, accountId));
+        Long accountId = jwt.getClaim("accountId"); // get account_id from JWT
+        productService.isWishListed(productId, accountId);
+
+        var apiResponse = new ApiResponse<>(true, null, true);
         return ResponseEntity.ok(apiResponse);
     }
 
@@ -89,5 +90,4 @@ public class UserController {
         var apiResponse = new ApiResponse<>(true, null, null);
         return ResponseEntity.noContent().build();
     }
-    
 }

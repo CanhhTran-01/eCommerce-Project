@@ -6,11 +6,9 @@ import com.myproject.ecommerce.entity.Order;
 import com.myproject.ecommerce.entity.Payment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class CheckoutService {
     private final OrderService orderService;
     private final PaymentService paymentService;
@@ -30,5 +28,7 @@ public class CheckoutService {
                 .shippingMethod(order.getShippingMethod())
                 .build();
     }
+
     // ONLINE checkout ( later implements)
+
 }

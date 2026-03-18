@@ -66,8 +66,12 @@ public class ProductService {
     }
 
     // check wishlisted by user
-    public boolean isWishListed(Long productId, Long accountId) {
-        return productRepository.existsByIdAndWishedByAccountId(productId, accountId);
+    @Transactional(readOnly = true)
+    public void isWishListed(Long productId, Long accountId) {
+        boolean check = productRepository.existsByIdAndWishedByAccountId(productId, accountId);
+        if (!check) {
+            throw new BaseException(ErrorCode.NOT_FOUND_IN_WISHLIST);
+        }
     }
 
     // get keyword and product suggestion

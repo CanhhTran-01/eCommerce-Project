@@ -40,7 +40,7 @@ public class AccountController {
     @PostMapping("/forgot-pass/email/otp")
     public ResponseEntity<ApiResponse<?>> sendOtpForForgotPass(@RequestBody GenerateOtpRequest request) {
 
-        accountService.sendForgotAndPassOtp(request);
+        accountService.sendForgotPassOtp(request);
         var apiResponse = new ApiResponse<>(true, "OTP đã được gửi đi, " + "vui lòng kiểm tra email của bạn", null);
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
@@ -50,7 +50,7 @@ public class AccountController {
     @PostMapping("/update-pass/email/otp")
     public ResponseEntity<ApiResponse<?>> sendOtpForChangePass(@RequestBody GenerateOtpRequest request) {
 
-        accountService.sendForgotAndPassOtp(request);
+        accountService.sendForgotPassOtp(request);
         var apiResponse = new ApiResponse<>(true, "OTP đã được gửi đi, " + "vui lòng kiểm tra email của bạn", null);
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }

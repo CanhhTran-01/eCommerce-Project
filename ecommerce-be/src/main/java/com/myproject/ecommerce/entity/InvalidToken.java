@@ -1,9 +1,8 @@
 package com.myproject.ecommerce.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.Date;
+import lombok.*;
 
 @Entity
 @Table(name = "invalid_tokens")
@@ -16,7 +15,7 @@ public class InvalidToken {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    
+
     @Column(name = "expiry_time")
     private Date expiryTime;
 }

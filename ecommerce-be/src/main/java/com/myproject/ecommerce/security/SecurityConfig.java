@@ -14,8 +14,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
@@ -45,9 +43,7 @@ public class SecurityConfig {
             "/api/categories/**", "/api/products/**", "/api/product-gallery/**", "/api/auth/social-login"
     };
 
-    private final String[] SWAGGER_ENDPOINTS = {
-            "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**"
-    };
+    private final String[] SWAGGER_ENDPOINTS = {"/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**"};
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
@@ -69,7 +65,8 @@ public class SecurityConfig {
                 .hasRole(Role.USER.name()) // only user can create review for product
                 .requestMatchers("/api/upload/**")
                 .hasAnyRole(Role.USER.name(), Role.SELLER.name()) // only user and seller can upload image
-                .requestMatchers(SWAGGER_ENDPOINTS).permitAll()
+                .requestMatchers(SWAGGER_ENDPOINTS)
+                .permitAll()
                 .anyRequest()
                 .authenticated());
 
@@ -97,11 +94,6 @@ public class SecurityConfig {
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
 
         return jwtAuthenticationConverter;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
     }
 
     @Bean

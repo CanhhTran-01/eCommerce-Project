@@ -14,13 +14,14 @@ import com.myproject.ecommerce.mapper.AccountMapper;
 import com.myproject.ecommerce.repository.AccountRepository;
 import com.myproject.ecommerce.utils.NickNameRandomUtils;
 import com.myproject.ecommerce.utils.UserCodeRandomUtils;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -33,15 +34,10 @@ public class AccountService {
     private final MailService mailService;
 
     public void sendRegisterOtp(GenerateOtpRequest request) {
-        // check email
-        if (accountRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new BaseException(ErrorCode.EMAIL_EXISTED);
-        }
-
         otpService.generateOtp(request);
     }
 
-    public void sendForgotAndPassOtp(GenerateOtpRequest request) {
+    public void sendForgotPassOtp(GenerateOtpRequest request) {
         // check email
         if (accountRepository.findByEmail(request.getEmail()).isEmpty()) {
             throw new BaseException(ErrorCode.EMAIL_NOT_EXISTS);
@@ -61,28 +57,39 @@ public class AccountService {
             throw new BaseException(ErrorCode.USERNAME_EXISTED);
         }
 
-        // MapStruct convert DTO -> Entity
-        Account account = accountMapper.toEntity(registerRequest);
+        // handle two case when email existed: local account and oAuth2 account
+        // if local account of email request doesn't exist, merge oAuth2 account with local account that is registered
+        if (accountRepository.existsByEmail(registerRequest.getEmail())) {
+            Account account = accountRepository.findByEmail(registerRequest.getEmail())
+                    .orElseThrow(() -> new BaseException(ErrorCode.EMAIL_NOT_FOUND));
 
-        // set password
-        account.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+            if (account.getAuthProvider().equals(AuthProvider.LOCAL)) {
+                throw new BaseException(ErrorCode.EMAIL_EXISTED); // local account of email in request existed
+            }
 
-        // set roles
-        Set<Role> accountRoles = new HashSet<>();
-        accountRoles.add(Role.USER); // setting default role when account is created
-        account.setAccountRoles(accountRoles);
+            account.setUsername(registerRequest.getUsername());
+            account.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+            return;   // @Transactional support auto commit;
+        }
 
-        // set Status
-        account.setAccountStatus(AccountStatus.ACTIVE);
+        // roles
+        Set<Role> roles = new HashSet<>();
+        roles.add(Role.USER); // setting role when account is created
 
-        // set Provider
-        account.setAuthProvider(AuthProvider.LOCAL);
+        // default user (created user info automatically)
+        User user = User.builder()
+                .gender(Gender.HIDE)
+                .nickName(NickNameRandomUtils.generateDefaultNickName())
+                .userCode(UserCodeRandomUtils.generateUserCode())
+                .build();
 
-        // set default user (created user automatically)
-        User user = new User();
-        user.setGender(Gender.HIDE);
-        user.setNickName(NickNameRandomUtils.generateDefaultNickName());
-        user.setUserCode(UserCodeRandomUtils.generateUserCode());
+        Account account = Account.builder()
+                .username(registerRequest.getUsername())
+                .password(passwordEncoder.encode(registerRequest.getPassword()))
+                .accountRoles(roles)
+                .accountStatus(AccountStatus.ACTIVE)
+                .authProvider(AuthProvider.LOCAL)
+                .build();
 
         account.setUser(user);
         user.setAccount(account);
@@ -96,6 +103,10 @@ public class AccountService {
         Account account = accountRepository
                 .findByUsername(request.getUsername())
                 .orElseThrow(() -> new BaseException(ErrorCode.USERNAME_NOT_FOUND));
+
+        if (!account.getAuthProvider().equals(AuthProvider.LOCAL)) {
+            throw new BaseException(ErrorCode.NOT_LOCAL_ACCOUNT);
+        }
 
         // check OTP flag for verifying
         otpService.ensureOtpVerified(request.getEmail(), request.getOtpType());
@@ -113,6 +124,10 @@ public class AccountService {
         Account account =
                 accountRepository.findById(accountId).orElseThrow(() -> new BaseException(ErrorCode.ACCOUNT_NOT_FOUND));
 
+        if (!account.getAuthProvider().equals(AuthProvider.LOCAL)) {
+            throw new BaseException(ErrorCode.NOT_LOCAL_ACCOUNT);
+        }
+
         // check old password
         if (!passwordEncoder.matches(request.getOldPassword(), account.getPassword())) {
             throw new BaseException(ErrorCode.OLD_PASSWORD_INCORRECT);
@@ -121,9 +136,9 @@ public class AccountService {
         // check OTP flag for verifying
         otpService.ensureOtpVerified(account.getEmail(), request.getOtpType());
 
-        otpService.clearVerify(account.getEmail(), request.getOtpType()); // verify sucessfully
-
         account.setPassword(passwordEncoder.encode(request.getNewPassword()));
+
+        otpService.clearVerify(account.getEmail(), request.getOtpType()); // verify sucessfully
     }
 
     // get account info
