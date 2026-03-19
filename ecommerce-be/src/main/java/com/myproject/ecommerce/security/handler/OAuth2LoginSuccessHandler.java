@@ -7,7 +7,7 @@ import com.myproject.ecommerce.enums.AuthProvider;
 import com.myproject.ecommerce.enums.Gender;
 import com.myproject.ecommerce.enums.Role;
 import com.myproject.ecommerce.repository.AccountRepository;
-import com.myproject.ecommerce.security.jwt.JwtService;
+import com.myproject.ecommerce.security.jwt.JwtHandler;
 import com.myproject.ecommerce.utils.NickNameRandomUtils;
 import com.myproject.ecommerce.utils.UserCodeRandomUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     private final AccountRepository accountRepository;
-    private final JwtService jwtService;
+    private final JwtHandler jwtHandler;
 
     @Value("${app.oauth2.redirect.frontend-url}")
     private String frontendUrl;
@@ -77,7 +77,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
             return accountRepository.save(newAcc);
         });
 
-        String token = jwtService.generateToken(account);
+        String token = jwtHandler.generateToken(account);
 
         String redirectUrl = frontendUrl
                 + "/ecommerce-fe/pages/social-login-success.html?token="

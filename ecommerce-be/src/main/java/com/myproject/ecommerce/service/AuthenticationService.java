@@ -12,22 +12,31 @@ import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.exception.ErrorCode;
 import com.myproject.ecommerce.repository.AccountRepository;
 import com.myproject.ecommerce.repository.InvalidatedTokenRepository;
-import com.myproject.ecommerce.security.jwt.JwtService;
+import com.myproject.ecommerce.security.jwt.JwtHandler;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.JWTClaimsSet;
-import java.text.ParseException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final AccountRepository accountRepository;
-    private final JwtService jwtService;
+    private final JwtHandler jwtHandler;
     private final PasswordEncoder passwordEncoder;
     private final InvalidatedTokenRepository invalidatedTokenRepository;
+
+    @Value("${jwt.refreshable-duration}")
+    private long REFRESHABLE_DURATION;
 
     // login
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
@@ -48,7 +57,7 @@ public class AuthenticationService {
         }
 
         // get token
-        String token = jwtService.generateToken(account);
+        String token = jwtHandler.generateToken(account);
 
         return AuthenticationResponse.builder().token(token).authenticated(true).build();
     }
@@ -56,7 +65,7 @@ public class AuthenticationService {
     // introspect token
     public IntrospectResponse introspect(IntrospectRequest introspectRequest) throws ParseException, JOSEException {
 
-        JWTClaimsSet jwtClaimsSet = jwtService.verifyToken(introspectRequest.getToken());
+        JWTClaimsSet jwtClaimsSet = jwtHandler.verifyToken(introspectRequest.getToken(), false);
 
         // exist      (repo return true)  -> isValid = false
         // not exist  (repo return false) -> isValid = true
@@ -65,44 +74,65 @@ public class AuthenticationService {
         return IntrospectResponse.builder().valid(isValid).build();
     }
 
-    // refresh token
+    // refresh token rotation : pattern 1 token for both access + refresh
     @Transactional
     public AuthenticationResponse refreshToken(RefreshTokenRequest request) throws ParseException, JOSEException {
 
-        // verify
-        var jwtClaimsSet = jwtService.verifyToken(request.getToken());
+        // verify token first
+        var jwtClaimsSet = jwtHandler.verifyToken(request.getToken(), true);
 
-        var jti = jwtClaimsSet.getJWTID();
-        if (invalidatedTokenRepository.existsById(jti)) {
+        // check invalid token
+        if (invalidatedTokenRepository.existsById(jwtClaimsSet.getJWTID())) {
             throw new BaseException(ErrorCode.UNAUTHENTICATED);
         }
-        var expiryTime = jwtClaimsSet.getExpirationTime();
 
-        // logout
-        InvalidToken invalidToken =
-                InvalidToken.builder().id(jti).expiryTime(expiryTime).build();
+        // make old token invalidated
+        // expiry time = issueTime + REFRESHABLE_DURATION, avoid accidentally deleting the token.
+        var expiryTime = new Date(jwtClaimsSet
+                .getIssueTime()
+                .toInstant()
+                .plus(REFRESHABLE_DURATION, ChronoUnit.SECONDS)
+                .toEpochMilli());
+
+        InvalidToken invalidToken = InvalidToken.builder()
+                .id(jwtClaimsSet.getJWTID())
+                .expiryTime(expiryTime)
+                .build();
+
         invalidatedTokenRepository.save(invalidToken);
 
         // generate new token
-        var username = jwtClaimsSet.getSubject();
+        var username = jwtClaimsSet.getSubject(); // get username from token
         Account account = accountRepository
                 .findByUsername(username)
                 .orElseThrow(() -> new BaseException(ErrorCode.UNAUTHENTICATED));
-        String token = jwtService.generateToken(account);
+        String token = jwtHandler.generateToken(account);
 
         return AuthenticationResponse.builder().token(token).authenticated(true).build();
     }
 
     // logout
     public void logout(LogoutRequest logoutRequest) throws ParseException, JOSEException {
+        try {
+            JWTClaimsSet jwtClaimsSet = jwtHandler.verifyToken(logoutRequest.getToken(), true);
 
-        JWTClaimsSet jwtClaimsSet = jwtService.verifyToken(logoutRequest.getToken());
+            // expiry time = issueTime + REFRESHABLE_DURATION, avoid accidentally deleting the token.
+            var expiryTime = new Date(jwtClaimsSet
+                    .getIssueTime()
+                    .toInstant()
+                    .plus(REFRESHABLE_DURATION, ChronoUnit.SECONDS)
+                    .toEpochMilli());
 
-        InvalidToken invalidToken = InvalidToken.builder()
-                .id(jwtClaimsSet.getJWTID())
-                .expiryTime(jwtClaimsSet.getExpirationTime())
-                .build();
+            InvalidToken invalidToken = InvalidToken.builder()
+                    .id(jwtClaimsSet.getJWTID())
+                    .expiryTime(expiryTime)
+                    .build();
 
-        invalidatedTokenRepository.save(invalidToken);
+            invalidatedTokenRepository.save(invalidToken);
+
+        } catch (BaseException exception) {
+            // hanler case logout with expired token
+            log.info("This token already expired !");
+        }
     }
 }

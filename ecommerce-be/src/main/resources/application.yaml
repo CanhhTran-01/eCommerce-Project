@@ -13,6 +13,8 @@ logging:
 
 jwt:
   signerKey: ${SIGNERKEY:mRZ7rF7uZJ2KQ0Z3V5y9BvJ9P3T8A4XWq6N5C8sYp2A=}
+  valid-duration: 900 # in seconds
+  refreshable-duration: 604800 # in seconds
 
 app:
   oauth2:

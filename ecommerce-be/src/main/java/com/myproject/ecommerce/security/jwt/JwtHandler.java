@@ -20,10 +20,16 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class JwtService {
+public class JwtHandler {
 
     @Value("${jwt.signerKey}")
     private String signerKey;
+
+    @Value("${jwt.valid-duration}")
+    private long VALID_DURATION;
+
+    @Value("${jwt.refreshable-duration}")
+    private long REFRESHABLE_DURATION;
 
     // generate token
     public String generateToken(Account account) {
@@ -35,7 +41,8 @@ public class JwtService {
                 .subject(account.getUsername())
                 .issuer("auth-service")
                 .issueTime(new Date())
-                .expirationTime(new Date(Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()))
+                .expirationTime(new Date(
+                        Instant.now().plus(VALID_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
                 .jwtID(UUID.randomUUID().toString())
                 .claim("accountId", account.getId())
                 .claim("scope", buildScope(account))
@@ -56,15 +63,23 @@ public class JwtService {
     }
 
     // check token
-    public JWTClaimsSet verifyToken(String token) throws ParseException, JOSEException {
+    public JWTClaimsSet verifyToken(String token, boolean isRefresh) throws ParseException, JOSEException {
 
         JWSVerifier verifier = new MACVerifier(signerKey.getBytes());
         SignedJWT signedJWT = SignedJWT.parse(token);
 
-        var verified = signedJWT.verify(verifier);
-        Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+        var verified = signedJWT.verify(verifier); // check signature
 
-        if (!(verified && expiryTime.after(new Date()))) throw new BaseException(ErrorCode.UNAUTHORIZED);
+        Date expiryTime = (isRefresh) // refresh or not ?
+                ? new Date(signedJWT
+                        .getJWTClaimsSet()
+                        .getIssueTime()
+                        .toInstant()
+                        .plus(REFRESHABLE_DURATION, ChronoUnit.SECONDS)
+                        .toEpochMilli())
+                : signedJWT.getJWTClaimsSet().getExpirationTime();
+
+        if (!(verified && expiryTime.after(new Date()))) throw new BaseException(ErrorCode.UNAUTHENTICATED);
 
         return signedJWT.getJWTClaimsSet();
     }
