@@ -4,10 +4,9 @@ import com.myproject.ecommerce.enums.AccountStatus;
 import com.myproject.ecommerce.enums.AuthProvider;
 import com.myproject.ecommerce.enums.Role;
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.time.LocalDateTime;
 import java.util.Set;
+import lombok.*;
 
 @Entity
 @Table(name = "accounts")

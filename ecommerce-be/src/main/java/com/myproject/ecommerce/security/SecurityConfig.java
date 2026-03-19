@@ -28,19 +28,19 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfig {
 
     private final String[] PUBLIC_ENDPOINTS_POST = {
-            "/api/accounts/register/email/otp",
-            "/api/accounts/forgot-pass/email/otp",
-            "/api/accounts/email/verify",
-            "/api/accounts", // register
-            "/api/accounts/forgot-password",
-            "/api/auth/login",
-            "/api/auth/introspect",
-            "/api/auth/refresh",
-            "/api/auth/logout"
+        "/api/accounts/register/email/otp",
+        "/api/accounts/forgot-pass/email/otp",
+        "/api/accounts/email/verify",
+        "/api/accounts", // register
+        "/api/accounts/forgot-password",
+        "/api/auth/login",
+        "/api/auth/introspect",
+        "/api/auth/refresh",
+        "/api/auth/logout"
     };
 
     private final String[] PUBLIC_ENDPOINTS_GET = {
-            "/api/categories/**", "/api/products/**", "/api/product-gallery/**", "/api/auth/social-login"
+        "/api/categories/**", "/api/products/**", "/api/product-gallery/**", "/api/auth/social-login"
     };
 
     private final String[] SWAGGER_ENDPOINTS = {"/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**"};
@@ -77,7 +77,7 @@ public class SecurityConfig {
                                 jwt.decoder(jwtDecoderCustom).jwtAuthenticationConverter(jwtAuthenticationConverter()))
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint) // 401 Unauthorized Handling
                         .accessDeniedHandler(jwtAccessDeniedHandler) // 403 Forbidden Handling
-        );
+                );
 
         httpSecurity.oauth2Login(oauth -> oauth.successHandler(oAuth2LoginSuccessHandler));
 

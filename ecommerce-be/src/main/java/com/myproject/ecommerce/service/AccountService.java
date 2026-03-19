@@ -14,14 +14,13 @@ import com.myproject.ecommerce.mapper.AccountMapper;
 import com.myproject.ecommerce.repository.AccountRepository;
 import com.myproject.ecommerce.utils.NickNameRandomUtils;
 import com.myproject.ecommerce.utils.UserCodeRandomUtils;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -60,7 +59,8 @@ public class AccountService {
         // handle two case when email existed: local account and oAuth2 account
         // if local account of email request doesn't exist, merge oAuth2 account with local account that is registered
         if (accountRepository.existsByEmail(registerRequest.getEmail())) {
-            Account account = accountRepository.findByEmail(registerRequest.getEmail())
+            Account account = accountRepository
+                    .findByEmail(registerRequest.getEmail())
                     .orElseThrow(() -> new BaseException(ErrorCode.EMAIL_NOT_FOUND));
 
             if (account.getAuthProvider().equals(AuthProvider.LOCAL)) {
@@ -69,7 +69,7 @@ public class AccountService {
 
             account.setUsername(registerRequest.getUsername());
             account.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-            return;   // @Transactional support auto commit;
+            return; // @Transactional support auto commit;
         }
 
         // roles
