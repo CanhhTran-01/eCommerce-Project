@@ -1,4 +1,4 @@
-package com.myproject.ecommerce.controller;
+package com.myproject.ecommerce.integration;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.myproject.ecommerce.controller.ProductController;
 import com.myproject.ecommerce.service.ProductService;
 import com.myproject.ecommerce.service.ReviewService;
 import java.util.List;

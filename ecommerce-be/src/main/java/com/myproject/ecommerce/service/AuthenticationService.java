@@ -15,16 +15,15 @@ import com.myproject.ecommerce.repository.InvalidatedTokenRepository;
 import com.myproject.ecommerce.security.jwt.JwtHandler;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.JWTClaimsSet;
+import java.text.ParseException;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.text.ParseException;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
 @Slf4j
 @Service
