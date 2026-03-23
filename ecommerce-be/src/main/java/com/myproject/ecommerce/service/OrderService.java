@@ -97,6 +97,8 @@ public class OrderService {
                     .build();
             orderItems.add(orderItem); // insert into list
 
+            decreaseStock(product, itemRequest.getQuantity()); // reduce stock quantity of this product
+
             totalAmount = totalAmount.add(orderItem.getTotalPrice()); // total amount for order
 
             orderItem.setOrder(order); // owning side need to set for creating FK
@@ -110,5 +112,12 @@ public class OrderService {
 
         // save order
         return orderRepository.save(order);
+    }
+
+    public void decreaseStock(Product product, Integer itemQuantity) {
+        if (product.getStockQuantity() == null || product.getStockQuantity() <= 0) {
+            throw new BaseException(ErrorCode.OUT_OF_STOCK);
+        }
+        product.setStockQuantity(product.getStockQuantity() - itemQuantity);
     }
 }

@@ -1,5 +1,11 @@
 package com.myproject.ecommerce.unit;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.*;
+
 import com.myproject.ecommerce.dto.request.RegisterRequest;
 import com.myproject.ecommerce.entity.Account;
 import com.myproject.ecommerce.enums.AuthProvider;
@@ -11,20 +17,13 @@ import com.myproject.ecommerce.repository.AccountRepository;
 import com.myproject.ecommerce.service.AccountService;
 import com.myproject.ecommerce.service.MailService;
 import com.myproject.ecommerce.service.OtpService;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AccountServiceTest {
@@ -139,5 +138,4 @@ public class AccountServiceTest {
 
         verify(accountRepository, never()).save(any());
     }
-
 }

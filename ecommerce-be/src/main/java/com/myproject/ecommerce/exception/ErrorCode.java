@@ -45,7 +45,8 @@ public enum ErrorCode {
     PHONE_NUMBER_INVALID(1031, "phone number is invalid !", HttpStatus.BAD_REQUEST),
     NOT_FOUND_IN_WISHLIST(1032, "your wishlist doeasn't contain this product!", HttpStatus.BAD_REQUEST),
     EMAIL_NOT_FOUND(1033, "this email doesn't exist !", HttpStatus.BAD_REQUEST),
-    NOT_LOCAL_ACCOUNT(1034, "this account is not local !", HttpStatus.BAD_REQUEST);
+    NOT_LOCAL_ACCOUNT(1034, "this account is not local !", HttpStatus.BAD_REQUEST),
+    OUT_OF_STOCK(1035, "there's at least one product that is out of stock!", HttpStatus.BAD_REQUEST);
 
     private final int code; // future use
     private final String message;

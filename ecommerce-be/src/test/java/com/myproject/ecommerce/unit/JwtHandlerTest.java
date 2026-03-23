@@ -1,20 +1,19 @@
 package com.myproject.ecommerce.unit;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.myproject.ecommerce.entity.Account;
 import com.myproject.ecommerce.enums.Role;
 import com.myproject.ecommerce.exception.BaseException;
 import com.myproject.ecommerce.security.jwt.JwtHandler;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.JWTClaimsSet;
+import java.text.ParseException;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-
-import java.text.ParseException;
-import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class JwtHandlerTest {
 
@@ -52,7 +51,7 @@ public class JwtHandlerTest {
         ReflectionTestUtils.setField(jwtHandler, "VALID_DURATION", 0L);
 
         String token = jwtHandler.generateToken(buidAccount());
-        
+
         assertThrows(BaseException.class, () -> jwtHandler.verifyToken(token, false));
     }
 
