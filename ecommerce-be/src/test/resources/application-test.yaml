@@ -11,13 +11,15 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: false
 
-  # Turn off Redis
+  # Turn off
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
       - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+      - org.springframework.boot.autoconfigure.mail.MailSenderAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration
 
-  # turn off OAuth2
   security:
     oauth2:
       client:
@@ -30,13 +32,17 @@ spring:
             client-secret: test
 
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: levitran1102005@gmail.com
-    password: sizzoboqjvapiytk
+    host: localhost
+    port: 1025
+    username: test
+    password: test
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
+
+logging:
+  level:
+    org.hibernate.orm.connections.pooling: WARN
 
 jwt:
   signerKey: mRZ7rF7uZJ2KQ0Z3V5y9BvJ9P3T8A4XWq6N5C8sYp2A=

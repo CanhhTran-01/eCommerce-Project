@@ -15,15 +15,16 @@ import com.myproject.ecommerce.repository.InvalidatedTokenRepository;
 import com.myproject.ecommerce.security.jwt.JwtHandler;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.JWTClaimsSet;
-import java.text.ParseException;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.text.ParseException;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 @Slf4j
 @Service
@@ -40,15 +41,10 @@ public class AuthenticationService {
     // login
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
 
-        // check account exists
+        // check username
         Account account = accountRepository
                 .findByUsername(authenticationRequest.getUsername())
-                .orElseThrow(() -> new BaseException(ErrorCode.ACCOUNT_NOT_FOUND));
-
-        // check username
-        if (!account.getUsername().equals(authenticationRequest.getUsername())) {
-            throw new BaseException(ErrorCode.USERNAME_INVALID);
-        }
+                .orElseThrow(() -> new BaseException(ErrorCode.USERNAME_INVALID));
 
         // check password
         if (!passwordEncoder.matches(authenticationRequest.getPassword(), account.getPassword())) {
