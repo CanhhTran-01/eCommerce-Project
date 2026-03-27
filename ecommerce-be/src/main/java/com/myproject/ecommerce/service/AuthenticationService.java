@@ -15,21 +15,23 @@ import com.myproject.ecommerce.repository.InvalidatedTokenRepository;
 import com.myproject.ecommerce.security.jwt.JwtHandler;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.JWTClaimsSet;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.text.ParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
+    private final StringRedisTemplate stringRedisTemplate;
     private final AccountRepository accountRepository;
     private final JwtHandler jwtHandler;
     private final PasswordEncoder passwordEncoder;
@@ -41,6 +43,14 @@ public class AuthenticationService {
     // login
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
 
+        // rate limiting login by locking account
+        String attemptKey = "login_attempt:" + authenticationRequest.getUsername();
+        String lockKey = "login_lock:" + authenticationRequest.getUsername();
+
+        if (stringRedisTemplate.hasKey(lockKey)) {
+            throw new BaseException(ErrorCode.ACCOUNT_TEMPORARILY_LOCKED);
+        }
+
         // check username
         Account account = accountRepository
                 .findByUsername(authenticationRequest.getUsername())
@@ -48,10 +58,29 @@ public class AuthenticationService {
 
         // check password
         if (!passwordEncoder.matches(authenticationRequest.getPassword(), account.getPassword())) {
+            Long attempts = stringRedisTemplate.opsForValue().increment(attemptKey);
+
+            if (attempts != null && attempts == 1) {
+                stringRedisTemplate.expire(attemptKey, 1, TimeUnit.HOURS);
+            }
+
+            if (attempts != null && attempts >= 5) {
+                stringRedisTemplate.delete(attemptKey);
+                stringRedisTemplate
+                        .opsForValue()
+                        .set(lockKey, "true", 15, TimeUnit.MINUTES); // auto unlock after 15 minutes
+
+                throw new BaseException(ErrorCode.ACCOUNT_TEMPORARILY_LOCKED);
+            }
+
             throw new BaseException(ErrorCode.PASSWORD_INVALID);
         }
 
-        // get token
+        // correct → clear
+        stringRedisTemplate.delete(attemptKey);
+        stringRedisTemplate.delete(lockKey);
+
+        // generate token
         String token = jwtHandler.generateToken(account);
 
         return AuthenticationResponse.builder().token(token).authenticated(true).build();
@@ -126,7 +155,7 @@ public class AuthenticationService {
             invalidatedTokenRepository.save(invalidToken);
 
         } catch (BaseException exception) {
-            // hanler case logout with expired token
+            // handler case logout with expired token
             log.info("This token already expired !");
         }
     }

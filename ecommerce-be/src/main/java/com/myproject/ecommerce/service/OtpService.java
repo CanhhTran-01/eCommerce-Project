@@ -24,18 +24,29 @@ public class OtpService {
 
     // generate and send OTP
     public void generateOtp(GenerateOtpRequest request) {
-        // gen otp
-        String otp = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
+
+        // rate limiting (max 5 click/h)
+        String rateLimitKey = buildRateLimitKey(request.getEmail(), request.getOtpType());
+        Long requestCount = stringRedisTemplate.opsForValue().increment(rateLimitKey);
+
+        if (requestCount != null && requestCount == 1) {
+            stringRedisTemplate.expire(rateLimitKey, 1, TimeUnit.HOURS);
+        }
+
+        if (requestCount != null && requestCount > 5) {
+            throw new BaseException(ErrorCode.TOO_MANY_REQUESTS);
+        }
 
         // redis key
         String key = buildKey(request.getEmail(), request.getOtpType());
 
-        // fix user spam
+        // deduplication check (waiting after 2 minutes)
         if (stringRedisTemplate.opsForValue().get(key) != null) {
             throw new BaseException(ErrorCode.OTP_ALREADY_SENT);
         }
 
-        // save redis
+        // gen OTP & Save in Redis
+        String otp = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
         stringRedisTemplate.opsForValue().set(key, otp, OTP_TTL, TimeUnit.SECONDS);
 
         // send email
@@ -44,19 +55,35 @@ public class OtpService {
 
     // verify OTP
     public void verifyOtp(VerifyOtpRequest request) {
+
         // get key for checking
         String key = buildKey(request.getEmail(), request.getOtpType());
+        String attemptKey = buildAttemptKey(request.getEmail(), request.getOtpType());
         String savedOtp = stringRedisTemplate.opsForValue().get(key);
 
         if (savedOtp == null) {
             throw new BaseException(ErrorCode.OTP_EXPIRED); // expired or not found
         }
 
+        // incorrect
         if (!savedOtp.equals(request.getOtp())) {
+            Long requestCount = stringRedisTemplate.opsForValue().increment(attemptKey);
+
+            if (requestCount != null && requestCount == 1) {
+                stringRedisTemplate.expire(attemptKey, OTP_TTL, TimeUnit.SECONDS); // TTL = OTP TTL
+            }
+
+            if (requestCount != null && requestCount > 3) {
+                stringRedisTemplate.delete(key);
+                throw new BaseException(ErrorCode.EXCEED_INPUT_LIMIT);
+            }
+
             throw new BaseException(ErrorCode.OTP_INVALID); // otp incorrect
         }
 
+        // correct
         stringRedisTemplate.delete(key); // avoid reusing old key
+        stringRedisTemplate.delete(attemptKey);
 
         // create verified flag
         String verifiedKey = buildVerifiedKey(request.getEmail(), request.getOtpType());
@@ -83,5 +110,13 @@ public class OtpService {
 
     private String buildVerifiedKey(String email, OtpType type) {
         return "otp:verified:" + type.name().toLowerCase() + ":" + email; // otp:verified:{type}:{email}
+    }
+
+    private String buildRateLimitKey(String email, OtpType type) {
+        return "otp_rate:" + type.name().toLowerCase() + ":" + email;
+    }
+
+    private String buildAttemptKey(String email, OtpType type) {
+        return "otp_attempt:" + type.name().toLowerCase() + ":" + email;
     }
 }

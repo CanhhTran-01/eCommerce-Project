@@ -1,11 +1,16 @@
 package com.myproject.ecommerce.integration;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myproject.ecommerce.dto.request.AuthenticationRequest;
 import com.myproject.ecommerce.entity.Account;
 import com.myproject.ecommerce.enums.Role;
 import com.myproject.ecommerce.repository.AccountRepository;
 import com.myproject.ecommerce.security.handler.OAuth2LoginSuccessHandler;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +26,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Set;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -77,12 +76,14 @@ public class AuthenticationControllerIT {
                 .password("testPass")
                 .build();
 
-        mockMvc.perform(post("/api/auth/login")          // mock login request
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))  // convert Java object -> json string
-                .andExpect(status().isOk())         // expect status 200 OK
+        mockMvc.perform(
+                        post("/api/auth/login") // mock login request
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        objectMapper.writeValueAsString(request))) // convert Java object -> json string
+                .andExpect(status().isOk()) // expect status 200 OK
                 .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.data.token").isNotEmpty())     // expect token
+                .andExpect(jsonPath("$.data.token").isNotEmpty()) // expect token
                 .andExpect(jsonPath("$.data.authenticated").value(true));
     }
 

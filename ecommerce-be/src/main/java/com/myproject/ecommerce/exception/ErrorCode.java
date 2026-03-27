@@ -46,7 +46,10 @@ public enum ErrorCode {
     NOT_FOUND_IN_WISHLIST(1032, "your wishlist doeasn't contain this product!", HttpStatus.BAD_REQUEST),
     EMAIL_NOT_FOUND(1033, "this email doesn't exist !", HttpStatus.BAD_REQUEST),
     NOT_LOCAL_ACCOUNT(1034, "this account is not local !", HttpStatus.BAD_REQUEST),
-    OUT_OF_STOCK(1035, "there's at least one product that is out of stock!", HttpStatus.BAD_REQUEST);
+    OUT_OF_STOCK(1035, "there's at least one product that is out of stock!", HttpStatus.BAD_REQUEST),
+    TOO_MANY_REQUESTS(1036, "too many OTP request !", HttpStatus.TOO_MANY_REQUESTS),
+    EXCEED_INPUT_LIMIT(1037, "Exceed the number of incorrect entries.", HttpStatus.NOT_ACCEPTABLE),
+    ACCOUNT_TEMPORARILY_LOCKED(1038, "account has been temporarily locked", HttpStatus.LOCKED);
 
     private final int code; // future use
     private final String message;

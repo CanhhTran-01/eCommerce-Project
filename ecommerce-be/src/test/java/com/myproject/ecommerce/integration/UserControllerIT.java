@@ -1,5 +1,10 @@
 package com.myproject.ecommerce.integration;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myproject.ecommerce.dto.request.AuthenticationRequest;
 import com.myproject.ecommerce.entity.Account;
@@ -11,6 +16,7 @@ import com.myproject.ecommerce.repository.AccountRepository;
 import com.myproject.ecommerce.repository.UserRepository;
 import com.myproject.ecommerce.security.handler.OAuth2LoginSuccessHandler;
 import jakarta.transaction.Transactional;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +31,6 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.Set;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -78,12 +77,10 @@ public class UserControllerIT {
     @BeforeEach
     void setup() throws Exception {
         // create ADMIN user
-        User adminUser = User.builder()
-                .gender(Gender.HIDE).build();
+        User adminUser = User.builder().gender(Gender.HIDE).build();
 
         // create Normal user
-        User normalUser = User.builder()
-                .gender(Gender.HIDE).build();
+        User normalUser = User.builder().gender(Gender.HIDE).build();
 
         // Setup ADMIN account
         Account adminAccount = Account.builder()
@@ -127,16 +124,12 @@ public class UserControllerIT {
                 .getResponse()
                 .getContentAsString();
 
-        return objectMapper.readTree(response)
-                .path("data")
-                .path("token")
-                .asText();
+        return objectMapper.readTree(response).path("data").path("token").asText();
     }
 
     @Test
     void getAllUsers_withAminRole_shouldReturnList() throws Exception {
-        mockMvc.perform(get("/api/users/list")
-                        .header("Authorization", "Bearer " + adminToken))
+        mockMvc.perform(get("/api/users/list").header("Authorization", "Bearer " + adminToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.data").isArray())
@@ -145,14 +138,12 @@ public class UserControllerIT {
 
     @Test
     void getAllUsers_withUserRole_shouldReturn403() throws Exception {
-        mockMvc.perform(get("/api/users/list")
-                        .header("Authorization", "Bearer " + userToken))
+        mockMvc.perform(get("/api/users/list").header("Authorization", "Bearer " + userToken))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     void getAllUsers_withoutToken_shouldReturn401() throws Exception {
-        mockMvc.perform(get("/api/users/list"))
-                .andExpect(status().isUnauthorized());
+        mockMvc.perform(get("/api/users/list")).andExpect(status().isUnauthorized());
     }
 }
