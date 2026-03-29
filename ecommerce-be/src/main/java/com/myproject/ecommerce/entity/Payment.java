@@ -3,9 +3,10 @@ package com.myproject.ecommerce.entity;
 import com.myproject.ecommerce.enums.PaymentMethod;
 import com.myproject.ecommerce.enums.PaymentStatus;
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import lombok.*;
 
 @Entity
 @Table(name = "payment")
@@ -44,7 +45,7 @@ public class Payment {
         this.createdAt = LocalDateTime.now();
     }
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", unique = true, nullable = false)
     private Order order;
 }

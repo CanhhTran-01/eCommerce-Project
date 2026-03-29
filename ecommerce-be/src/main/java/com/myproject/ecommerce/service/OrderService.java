@@ -21,6 +21,8 @@ import com.myproject.ecommerce.utils.OrderCodeRandomUtils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,16 +77,24 @@ public class OrderService {
                 .user(account.getUser())
                 .build();
 
+        // batch fetch all product - 1 query
+        List<Long> productIds = checkoutRequest.getItemRequestList().stream()
+                .map(OrderItemRequest::getProductId)
+                .toList();
+        Map<Long, Product> productMap =
+                productRepository.findAllById(productIds).stream().collect(Collectors.toMap(Product::getId, p -> p));
+
         // handle order items
         List<OrderItem> orderItems = new ArrayList<>();
         BigDecimal totalAmount = BigDecimal.valueOf(0);
 
         for (OrderItemRequest itemRequest : checkoutRequest.getItemRequestList()) {
 
-            // find product to create order itemRequest
-            Product product = productRepository
-                    .findById(itemRequest.getProductId())
-                    .orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));
+            // get product to create order itemRequest
+            Product product = productMap.get(itemRequest.getProductId());
+            if (product == null) {
+                throw new BaseException(ErrorCode.PRODUCT_NOT_FOUND);
+            }
 
             OrderItem orderItem = OrderItem.builder()
                     .productName(product.getProductName())

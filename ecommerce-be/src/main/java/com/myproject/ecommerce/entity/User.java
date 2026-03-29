@@ -2,6 +2,8 @@ package com.myproject.ecommerce.entity;
 
 import com.myproject.ecommerce.enums.Gender;
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,7 +11,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import lombok.*;
 
 @Entity
 @Table(name = "users")
@@ -71,11 +72,11 @@ public class User {
         this.updatedAt = LocalDateTime.now();
     }
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Account account;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cart> cartList = new ArrayList<>();
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Cart cart;
 
     @OneToMany(mappedBy = "user")
     private List<Order> orderList = new ArrayList<>();

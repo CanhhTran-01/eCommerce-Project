@@ -103,6 +103,8 @@ public class UploadFileService {
             throw new BaseException(ErrorCode.PRODUCT_IMAGES_EMPTY);
         }
 
+        List<ProductThumbnailImage> thumbnailList = product.getProductThumbnailImageList();
+
         for (MultipartFile file : files) {
             String originalFileName = file.getOriginalFilename();
             if (originalFileName == null || originalFileName.isBlank()) {
@@ -126,7 +128,7 @@ public class UploadFileService {
                         .build();
 
                 // update product image
-                product.getProductThumbnailImageList().add(image);
+                thumbnailList.add(image);
 
             } catch (IOException e) {
                 log.error("Upload image failed", e);

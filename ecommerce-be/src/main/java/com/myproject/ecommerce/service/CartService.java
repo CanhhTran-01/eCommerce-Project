@@ -11,10 +11,10 @@ import com.myproject.ecommerce.repository.AccountRepository;
 import com.myproject.ecommerce.repository.ProductRepository;
 import com.myproject.ecommerce.utils.CurrentProductPriceUtils;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -73,6 +73,7 @@ public class CartService {
 
     // get cart items
     public List<CartItemResponse> getCartItems(Long accountId) {
+
         Account account =
                 accountRepository.findById(accountId).orElseThrow(() -> new BaseException(ErrorCode.ACCOUNT_NOT_FOUND));
 
@@ -86,29 +87,36 @@ public class CartService {
             return Collections.emptyList();
         }
 
-        List<CartItemResponse> data = new ArrayList<>();
+        // collect all productIds
+        List<Long> productIds = cartItemRedisEntries.values().stream()
+                .map(value -> ((CartItemRedis) value).getProductId())
+                .toList();
 
-        for (Object value : cartItemRedisEntries.values()) {
+        // get all products by productIds
+        Map<Long, Product> productMap =
+                productRepository.findAllById(productIds).stream().collect(Collectors.toMap(Product::getId, p -> p));
 
-            CartItemRedis cartItemRedis = (CartItemRedis) value;
+        return cartItemRedisEntries.values().stream()
+                .map(value -> {
+                    CartItemRedis cartItemRedis = (CartItemRedis) value;
 
-            Product product = productRepository
-                    .findById(cartItemRedis.getProductId())
-                    .orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));
+                    Product product = productMap.get(cartItemRedis.getProductId());
 
-            CartItemResponse response = CartItemResponse.builder()
-                    .productId(product.getId())
-                    .mainImageUrl(product.getMainImageUrl())
-                    .productName(product.getProductName())
-                    .quantity(1)
-                    .price(CurrentProductPriceUtils.getCurrentPrice(product.getPrice(), product.getDiscountPrice()))
-                    .checked(false)
-                    .build();
+                    if (product == null) {
+                        throw new BaseException(ErrorCode.PRODUCT_NOT_FOUND);
+                    }
 
-            data.add(response);
-        }
-
-        return data;
+                    return CartItemResponse.builder()
+                            .productId(product.getId())
+                            .mainImageUrl(product.getMainImageUrl())
+                            .productName(product.getProductName())
+                            .quantity(1)
+                            .price(CurrentProductPriceUtils.getCurrentPrice(
+                                    product.getPrice(), product.getDiscountPrice()))
+                            .checked(false)
+                            .build();
+                })
+                .toList();
     }
 
     private String buildCartKey(Long userId) {

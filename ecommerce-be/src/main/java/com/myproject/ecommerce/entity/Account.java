@@ -4,9 +4,10 @@ import com.myproject.ecommerce.enums.AccountStatus;
 import com.myproject.ecommerce.enums.AuthProvider;
 import com.myproject.ecommerce.enums.Role;
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
 import java.util.Set;
-import lombok.*;
 
 @Entity
 @Table(name = "accounts")
@@ -63,7 +64,7 @@ public class Account {
         this.updatedAt = LocalDateTime.now();
     }
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", unique = true)
     private User user;
 }

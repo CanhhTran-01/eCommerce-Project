@@ -3,11 +3,12 @@ package com.myproject.ecommerce.entity;
 import com.myproject.ecommerce.enums.OrderStatus;
 import com.myproject.ecommerce.enums.ShippingMethod;
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.*;
 
 @Entity
 @Table(name = "orders")
@@ -71,7 +72,7 @@ public class Order {
         this.updatedAt = LocalDateTime.now();
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

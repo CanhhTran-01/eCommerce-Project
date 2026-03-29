@@ -1,8 +1,9 @@
 package com.myproject.ecommerce.entity;
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
 import lombok.*;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "order_items")
@@ -32,11 +33,11 @@ public class OrderItem {
     @Column(name = "total_price")
     private BigDecimal totalPrice;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 }
