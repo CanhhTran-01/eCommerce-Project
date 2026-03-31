@@ -20,7 +20,7 @@ async function handleMyOrder(){
 
     } catch (error){
         console.log(error);
-        ordersList.innerHTML = '<p class="text-danger"><strong>Không thể tải lên dữ liệu.</strong></p>';
+        ordersList.innerHTML = `<p class="text-danger"><strong>${error.message}</strong></p>`;
     }
 }
 

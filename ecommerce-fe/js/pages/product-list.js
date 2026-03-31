@@ -45,7 +45,7 @@ async function handleProductList() {
 
     } catch (error) {
         console.error('Error loading products by category:', error);
-        productViewList.innerHTML = '<p class="text-danger"><strong>Không thể tải sản phẩm cho danh mục này.</strong></p>';
+        productViewList.innerHTML = `<p class="text-danger"><strong>${error.message}</strong></p>`;
     }
 }
 

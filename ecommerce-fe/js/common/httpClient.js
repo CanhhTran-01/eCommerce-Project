@@ -1,6 +1,6 @@
 const BASE_URL = 'http://localhost:8080/eCommerce/api';
 
-let isHandlingUnauthorized = false; // a flag to fix bug repetitive alert()
+let expiredSession = false; // a flag to fix bug repetitive alert()
 
 export async function httpClient(url, options = {}) {
     const token = localStorage.getItem('access_token');
@@ -17,8 +17,8 @@ export async function httpClient(url, options = {}) {
     // handle session timeout
     if (response.status === 401) {
 
-        if (!isHandlingUnauthorized) {
-            isHandlingUnauthorized = true;
+        if (!expiredSession) {
+            expiredSession = true;
 
             alert('Hết phiên đăng nhập!');
             localStorage.removeItem('access_token');

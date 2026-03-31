@@ -114,7 +114,7 @@ function handleOrderFeedbackPage() {
 
         } catch (error) {
             console.error(error);
-            alert("Có lỗi xảy ra !");
+            alert(error.message);
         }
 
     });

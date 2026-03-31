@@ -24,7 +24,7 @@ async function handleWishListView(){
 
     } catch (error) {
         console.log(error);
-        wishList.innerHTML = '<p class="text-danger"><strong>Không thể tải lên dữ liệu.</strong></p>';
+        wishList.innerHTML = `<p class="text-danger"><strong>${error.message}.</strong></p>`;
     }
 }
 

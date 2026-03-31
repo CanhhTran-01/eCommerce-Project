@@ -187,7 +187,7 @@ async function handleRelatedProducts() {
 
     } catch (error) {
         console.log(error);
-        relatedProducts.innerHTML = `<div class="text-danger"><strong>Không thể tải lên sản phẩm.</strong></div>`;
+        relatedProducts.innerHTML = `<div class="text-danger"><strong>${error.message}</strong></div>`;
     }
 }
 

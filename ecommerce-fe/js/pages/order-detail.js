@@ -65,7 +65,7 @@ async function handleOrderDetailPage() {
 
     } catch (error) {
         console.log(error);
-        alert('Có lỗi xảy ra - không thể load đơn hàng');
+        alert(error.message);
     }
 }
 

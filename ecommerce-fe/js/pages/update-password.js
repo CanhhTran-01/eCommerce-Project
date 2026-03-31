@@ -63,6 +63,7 @@ async function handleRequireOtp() {
     }
 }
 
+
 async function handleVerifyOtp() {
     const otp = otpInput.value.trim();
     
@@ -84,6 +85,7 @@ async function handleVerifyOtp() {
         waittingProcessOtp.classList.add('d-none');
     }
 }
+
 
 async function handleChangePassword() {
     const oldPassword = oldPasswordInput.value.trim();

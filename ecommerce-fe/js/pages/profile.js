@@ -184,7 +184,7 @@ async function handleProfile() {
         });
 
     } catch (error) {
-        profileBox.innerHTML = `<p class="text-danger">Không thể tải thông tin người dùng...</p>`;
+        profileBox.innerHTML = `<p class="text-danger">${error.message}...</p>`;
         console.error('Error loading user info:', error);
     }
 
@@ -203,7 +203,7 @@ document.getElementById('purchaseHistoryLink').addEventListener('click', async (
 
     } catch (error) {
         console.log(error);
-        purchaseHistory.innerHTML = '<p class="text-danger"><strong>Không thể tải lên dữ liệu.</strong></p>';
+        purchaseHistory.innerHTML = `<p class="text-danger"><strong>${error.message}.</strong></p>`;
     }
 });
 

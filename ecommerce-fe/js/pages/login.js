@@ -19,7 +19,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
     } catch (loginError) {
         console.error(loginError);
-        passwordError.innerText = 'Invalid username or password.';
+        passwordError.innerText = loginError.message;
         passwordError.classList.remove('d-none');
     }
 });

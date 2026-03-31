@@ -46,7 +46,7 @@ async function handleCategoryMenu() {
 
     } catch (error) {
         console.error('Error generating category links:', error);
-        categoryHomeView.innerHTML = `<div class="text-danger"><strong>Không thể tải lên danh mục.</strong></div>`;
+        categoryHomeView.innerHTML = `<div class="text-danger"><strong>${error.message}</strong></div>`;
     }
 }
 
@@ -76,7 +76,7 @@ async function handleSaleProducts() {
 
     } catch (error) {
         console.error('Error fetching sale products:', error);
-        saleProductHomeView.innerHTML = `<div class="text-danger"><strong>Không thể tải lên sản phẩm.</strong></div>`;
+        saleProductHomeView.innerHTML = `<div class="text-danger"><strong>${error.message}</strong></div>`;
     }
 }
 
