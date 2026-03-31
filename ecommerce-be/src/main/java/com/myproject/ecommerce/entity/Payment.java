@@ -3,10 +3,9 @@ package com.myproject.ecommerce.entity;
 import com.myproject.ecommerce.enums.PaymentMethod;
 import com.myproject.ecommerce.enums.PaymentStatus;
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import lombok.*;
 
 @Entity
 @Table(name = "payment")

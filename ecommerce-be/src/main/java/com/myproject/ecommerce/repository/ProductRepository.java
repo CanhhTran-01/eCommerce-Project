@@ -3,8 +3,10 @@ package com.myproject.ecommerce.repository;
 import com.myproject.ecommerce.dto.response.ProductSummaryResponse;
 import com.myproject.ecommerce.entity.Product;
 import com.myproject.ecommerce.repository.custom.ProductRepositoryCustom;
+import jakarta.persistence.LockModeType;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -69,4 +71,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
     List<ProductSummaryResponse> getProductsByCategoryId(Long categoryId);
 
     boolean existsByIdAndWishedByAccountId(Long productId, Long accountId);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT p FROM Product p WHERE p.id IN :ids")
+    List<Product> findAllByIdWithLock(@Param("ids") List<Long> ids);
 }

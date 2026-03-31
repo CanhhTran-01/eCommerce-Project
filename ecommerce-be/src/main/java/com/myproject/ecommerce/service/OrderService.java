@@ -18,14 +18,15 @@ import com.myproject.ecommerce.repository.OrderRepository;
 import com.myproject.ecommerce.repository.ProductRepository;
 import com.myproject.ecommerce.utils.CurrentProductPriceUtils;
 import com.myproject.ecommerce.utils.OrderCodeRandomUtils;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -81,8 +82,9 @@ public class OrderService {
         List<Long> productIds = checkoutRequest.getItemRequestList().stream()
                 .map(OrderItemRequest::getProductId)
                 .toList();
-        Map<Long, Product> productMap =
-                productRepository.findAllById(productIds).stream().collect(Collectors.toMap(Product::getId, p -> p));
+
+        Map<Long, Product> productMap = productRepository.findAllByIdWithLock(productIds).stream()
+                .collect(Collectors.toMap(Product::getId, p -> p));
 
         // handle order items
         List<OrderItem> orderItems = new ArrayList<>();
