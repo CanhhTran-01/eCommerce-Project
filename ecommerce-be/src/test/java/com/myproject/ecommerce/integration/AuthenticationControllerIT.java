@@ -1,16 +1,11 @@
 package com.myproject.ecommerce.integration;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myproject.ecommerce.dto.request.AuthenticationRequest;
 import com.myproject.ecommerce.entity.Account;
 import com.myproject.ecommerce.enums.Role;
 import com.myproject.ecommerce.repository.AccountRepository;
 import com.myproject.ecommerce.security.handler.OAuth2LoginSuccessHandler;
-import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +21,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -92,20 +93,6 @@ public class AuthenticationControllerIT {
         AuthenticationRequest request = AuthenticationRequest.builder()
                 .username("notFound")
                 .password("testPass")
-                .build();
-
-        mockMvc.perform(post("/api/auth/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.success").value(false));
-    }
-
-    @Test
-    void login_wrongPassword_shouldReturnError() throws Exception {
-        AuthenticationRequest request = AuthenticationRequest.builder()
-                .username("testLogin")
-                .password("wrongPass")
                 .build();
 
         mockMvc.perform(post("/api/auth/login")

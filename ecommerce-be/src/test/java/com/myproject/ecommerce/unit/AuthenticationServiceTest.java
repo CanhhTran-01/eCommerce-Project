@@ -1,9 +1,5 @@
 package com.myproject.ecommerce.unit;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
-
 import com.myproject.ecommerce.dto.request.AuthenticationRequest;
 import com.myproject.ecommerce.dto.request.RefreshTokenRequest;
 import com.myproject.ecommerce.dto.response.AuthenticationResponse;
@@ -16,17 +12,24 @@ import com.myproject.ecommerce.security.jwt.JwtHandler;
 import com.myproject.ecommerce.service.AuthenticationService;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.JWTClaimsSet;
-import java.text.ParseException;
-import java.util.Date;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AuthenticationServiceTest {
@@ -42,16 +45,25 @@ public class AuthenticationServiceTest {
     @Mock
     private InvalidatedTokenRepository invalidatedTokenRepository;
 
+    @Mock
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Mock
+    private ValueOperations<String, String> valueOperations;
+
     @InjectMocks
     private AuthenticationService authenticationService;
 
     @BeforeEach
     void setup() {
         ReflectionTestUtils.setField(authenticationService, "REFRESHABLE_DURATION", 3600L);
+        lenient().when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
     }
 
     @Test
     void authenticate_accountNotFound_shouldThrow() {
+        when(stringRedisTemplate.hasKey("login_lock:canhtran")).thenReturn(false);
+
         when(accountRepository.findByUsername("canhtran")).thenReturn(Optional.empty());
 
         BaseException exception = assertThrows(
@@ -61,13 +73,16 @@ public class AuthenticationServiceTest {
                         .password("demo@123")
                         .build()));
 
-        assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.ACCOUNT_NOT_FOUND);
+        assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.USERNAME_INVALID);
 
         verify(jwtHandler, never()).generateToken(any());
     }
 
     @Test
     void authenticate_passwordInvalid_shouldThrow() {
+
+        when(stringRedisTemplate.hasKey("login_lock:canhtran")).thenReturn(false);
+        when(valueOperations.increment("login_attempt:canhtran")).thenReturn(1L);
 
         Account account =
                 Account.builder().username("canhtran").password("pass").build();
@@ -89,6 +104,9 @@ public class AuthenticationServiceTest {
 
     @Test
     void authenticate_success_shouldReturnToken() {
+
+        when(stringRedisTemplate.hasKey("login_lock:canhtran")).thenReturn(false);
+
         Account account =
                 Account.builder().username("canhtran").password("hasedPass").build();
 
