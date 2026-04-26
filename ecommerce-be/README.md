@@ -2,41 +2,49 @@
 
 Backend service for the eCommerce project built with **Spring Boot**.
 
-The backend provides REST APIs for authentication, product browsing, cart management, and order processing.
+Provides 40+ REST APIs covering authentication, product browsing, cart management, order processing, and more.
 
 ---
 
-# Tech Stack
+## Tech Stack
 
 - Java 21
-- Spring Boot
+- Spring Boot 3
 - Spring Security
-- Spring Data JPA
-- MySQL
-- Redis
-- JWT Authentication
-- OAuth2 (Google, Facebook)
-- Cloudinary
+- Spring Data JPA + Hibernate
+- MySQL + Redis
+- JWT + OAuth2 (Google, Facebook)
+- Cloudinary (image storage)
+- MapStruct (DTO mapping)
+- Swagger UI (API docs)
+- JUnit + Mockito (testing)
+- Docker + Docker Compose
 
 ---
 
-# Architecture
+## Architecture
 
-The project follows **Layered Architecture**.
+The project follows **Layered Architecture** inside a **Monolith Spring Boot application**.
 
+```
 Controller → Service → Repository → Database
+```
 
-Main layers:
-
-- **Controller** – handle incoming HTTP requests
-- **Service** – business logic
-- **Repository** – data access layer
-- **DTO** – request/response models
-- **Entity** – database mapping
+| Layer | Responsibility |
+|---|---|
+| Controller | Handle HTTP requests, route to service |
+| Service | Business logic |
+| Repository | Data access (JPA + custom queries) |
+| DTO | Request / Response models |
+| Entity | Database mapping |
+| Security | JWT, OAuth2, filters, auth handlers |
+| Mapper | Entity ↔ DTO (MapStruct) |
+| Validator | Custom input validation |
+| Exception | Global exception handling |
 
 ---
 
-# Folder Structure
+## Folder Structure
 
 ```
 src
@@ -49,20 +57,18 @@ src
     │       │   ├── request          # Request DTOs
     │       │   └── response         # Response DTOs
     │       ├── entity               # JPA entities
-    │       ├── enums                # Enum definitions
+    │       ├── enums                # Enum definitions (ErrorCode, Role, ...)
     │       ├── exception            # Global exception handling
-    │       ├── mapper               # Entity ↔ DTO mapping
+    │       ├── mapper               # Entity ↔ DTO mapping (MapStruct)
     │       ├── repository
-    │       │   └── custom           # Custom repository (product filter/search)
-    │       ├── security             # Security configs, JWT, auth handlers
+    │       │   └── custom           # Custom repository (product filter, search)
+    │       ├── security             # Security config, JWT, OAuth2, auth handlers
     │       ├── service              # Business logic layer
     │       ├── utils                # Utility classes
-    │       ├── validator            # Custom validations
+    │       ├── validator            # Custom validators
     │       └── EcommerceBeApplication
     │
     └── resources
-        ├── static
-        ├── templates
         ├── application.yaml
         ├── application-dev.yaml
         └── application-prod.yaml
@@ -70,31 +76,34 @@ src
 
 ---
 
-# Main Features
+## Main Features
 
-### Authentication
+### Authentication & Security
 
-- Register / Login
-- Google login
-- Facebook login
-- JWT authentication
-
-### User
-
-- Update profile
-- Change password
-- Forgot password using OTP (Redis)
+- Register / Login (Local + Google + Facebook via OAuth2)
+- Account merging — link OAuth2 account to existing local account (same email, unique constraint)
+- JWT with **refresh token rotation** (single token pattern: access + refresh combined, stored invalid tokens in Redis with expiry)
+- Bcrypt password encoding
+- Forgot password via OTP: generate → send via email → store in Redis with TTL
+- **Rate limiting** (Redis-backed) against brute force:
+  - `generateOTP()`: max 5 OTP requests; max 3 wrong OTP attempts
+  - `login()`: max 5 wrong password attempts → temporary account lock (15 minutes)
+- RBAC with 4 roles: `guest`, `user`, `admin`, `seller`
+- Method-level security with `@PreAuthorize`
+- Exception handling at Spring Security filter layer (standardized error response)
 
 ### Product
 
 - Get products on sale
 - Get categories
-- Filter & search products
-- Product detail
+- Get products by category
+- Product detail + images
+- Filter & search products (name, category, price range, sorting) via custom repository
+- Product suggestions (Redis ZSET — ranked by search frequency)
 
 ### Cart
 
-Cart is stored in **Redis**.
+Cart is stored in **Redis (Hash + TTL)**:
 
 - Add item
 - Remove item
@@ -102,130 +111,199 @@ Cart is stored in **Redis**.
 
 ### Order
 
-- Place order
+- Place order — protected with **Pessimistic Lock** to prevent overselling under concurrent requests
 - Order history
-- Order detail
+- Order detail (per product)
+- Pending/undelivered orders
 
 ### Wishlist
 
 - Add to wishlist
 - Remove from wishlist
+- Check if a product is in the current user's wishlist
 
 ### Review
 
 - Add review
-- View product reviews
+- Get reviews by product
 
-### Search Suggestion
+### User
 
-Redis **Sorted Set (ZSET)** is used to store search keywords and generate suggestions (both keywords and products).
+- View profile
+- Update profile
+- Change password
+- Upload avatar (Cloudinary)
+- Purchase history
+
+### Search
+
+- Product search with filter criteria
+- Search keyword suggestions ranked by popularity (Redis Sorted Set — ZSET)
+
+### Media
+
+Images are uploaded to **Cloudinary**. The database stores only the URL:
+
+- User avatar
+- Product images
+- Category images
 
 ---
 
-# Image Storage
+## API & Response Standards
 
-Images are uploaded to **Cloudinary**:
-
-- user avatar
-- product images
-- category images
+- Standardized response: `ApiResponse<T>` (Java generic) + `ResponseEntity`
+- Global exception handler: `@RestControllerAdvice` + `BaseException` + `ErrorCode` enums
+- Input validation on all request DTOs
+- Custom validator: date of birth (minimum age 15)
+- Swagger UI with controller-grouped documentation
 
 ---
 
-# Run Application
+## Database
 
-Requirements:
+**MySQL** (relational) + **Redis** (cache & session data)
 
-- Java 21
-- MySQL
-- Redis
+### Tables & Relationships
 
-Run:
+```
+accounts      (1) ─── (1)  users
+accounts      (1) ─── (n)  account_roles
+categories    (1) ─── (n)  products
+products      (1) ─── (n)  pro_thumbnail_images
+users         (1) ─── (1)  cart
+cart          (1) ─── (n)  cart_items
+users         (1) ─── (n)  orders
+orders        (1) ─── (n)  order_items
+order_items   (n) ─── (1)  products
+orders        (1) ─── (1)  payment
+users         (1) ─── (n)  reviews
+reviews       (n) ─── (1)  products
+users         (n) ─── (n)  products  (wishlist)
+```
+
+---
+
+## Performance & Query Optimization
+
+- `FetchType` tuned per entity (LAZY/EAGER) to avoid unnecessary queries and N+1 risks
+- Batch fetch + map lookup pattern in `getCartItems()`, `createOrder()`, `uploadProductImages()` to eliminate N+1 queries
+- Query count verified with **Hibernate Statistics**
+- `@Query` with JOIN for complex queries returning DTO directly at repository layer
+- **Pessimistic Lock** on inventory update to handle concurrent order placement (M users ordering same product with N stock, M > N)
+
+---
+
+## Testing
+
+### Unit Tests (JUnit + Mockito)
+
+| Class | Test Cases |
+|---|---|
+| `AccountService.register()` | success, duplicate username, duplicate local email, merge OAuth2 into local |
+| `AuthenticationService.login()` | success, account not found, wrong password |
+| `AuthenticationService.refreshToken()` | success, expired token, invalid token |
+| `JwtHandlerComponent` | valid claims, expired token, wrong signature |
+
+### Integration Tests (H2 in-memory database)
+
+| Endpoint | Test Cases |
+|---|---|
+| `POST /login` | success, wrong username, wrong password |
+| `GET /users` | admin → list returned, user → 403, no token → 401 |
+
+---
+
+## Docker
+
+### Run with Docker Compose (recommended)
 
 ```bash
-  cd ecommerce-be
- ./mvnw spring-boot:run
+docker compose up -d
 ```
 
----
+Docker Compose handles: network creation, container startup order, health checks (waits for MySQL before starting backend), and persistent volumes.
 
-# Run Application with Docker
+### Manual Docker Setup
 
-The backend can also be run using Docker containers for MySQL, Redis, and the Spring Boot application.
-Make sure the backend image exists:
+1. **Build backend image**
 
+```bash
+./mvnw package -DskipTests
+docker build -t ecommerce-backend:1.0 .
 ```
-docker images
-```
 
-1. Create Docker Network
+2. **Create Docker network**
 
-```
+```bash
 docker network create ecommerce-net
 ```
 
-2. Run MySQL Container
+3. **Run MySQL**
 
-```
-docker run -d --name ecom-db-internal --network ecommerce-net -p 3306:3306 -e MYSQL_ROOT_PASSWORD=canhtran2005 mysql:8.0.36
+```bash
+docker run -d --name ecom-db-internal --network ecommerce-net \
+  -p 3306:3306 -e MYSQL_ROOT_PASSWORD=your_password mysql:8.0.36
 ```
 
-```
--- Connect to MySQL container
+```sql
+-- Connect and create database
 docker exec -it ecom-db-internal mysql -u root -p
-
--- then run
 CREATE DATABASE ecommerce_db_docker;
 ```
 
-3. Run Redis Container
+4. **Run Redis**
 
-```
-docker run -d --name ecom-redis-internal --network ecommerce-net -p 6379:6379 redis
-```
-
-4. Run Backend Container
-
-```
-docker run -d \
---name ecom-be-internal \
---network ecommerce-net \
--p 8080:8080 \
--e SPRING_PROFILES_ACTIVE=dev \
--e SPRING_DATASOURCE_URL=jdbc:mysql://ecom-db-internal:3306/ecommerce_db_docker \
--e SPRING_DATASOURCE_USERNAME=root \
--e SPRING_DATASOURCE_PASSWORD=canhtran2005 \
-ecommerce-backend:1.0
+```bash
+docker run -d --name ecom-redis-internal --network ecommerce-net \
+  -p 6379:6379 redis
 ```
 
----
+5. **Run Backend**
 
-# Docker Architecture
+```bash
+docker run -d --name ecom-be-internal --network ecommerce-net \
+  -p 8080:8080 \
+  -e SPRING_PROFILES_ACTIVE=dev \
+  -e SPRING_DATASOURCE_URL=jdbc:mysql://ecom-db-internal:3306/ecommerce_db_docker \
+  -e SPRING_DATASOURCE_USERNAME=root \
+  -e SPRING_DATASOURCE_PASSWORD=your_password \
+  ecommerce-backend:1.0
+```
+
+### Docker Architecture
 
 ```
 Docker Network: ecommerce-net
 │
-├── MySQL Container
-│   name: ecom-db-internal
-│   port: 3306
-│
-├── Redis Container
-│   name: ecom-redis-internal
-│   port: 6379
-│
-└── Backend Container
-    name: ecom-be-internal
-    port: 8080
+├── MySQL Container      (ecom-db-internal)   port 3306
+├── Redis Container      (ecom-redis-internal) port 6379
+└── Backend Container    (ecom-be-internal)    port 8080
 ```
 
-# Test Backend
+---
+
+## Run Locally (without Docker)
+
+Requirements: Java 21, MySQL, Redis
+
+```bash
+cd ecommerce-be
+./mvnw spring-boot:run
+```
+
+---
+
+## API Documentation
+
+Swagger UI is available after starting the application:
 
 ```
--- All APIs are prefixed with:
-http://localhost:8080/eCommerce
+http://localhost:8080/eCommerce/swagger-ui/index.html
+```
 
--- Open browser, enter url:
+Test endpoints directly:
+
+```
 http://localhost:8080/eCommerce/api/products
 ```
-
-
