@@ -11,3 +11,5 @@
        MySQL  Redis  Cloudinary
 
 ```
+
+## Phase 2 - Completed
